@@ -1,4 +1,5 @@
 from worlds.AutoWorld import WebWorld, World
+from .options import AxiomVergeOptions
 
 
 class AxiomVergeWebWorld(WebWorld):
@@ -14,8 +15,8 @@ class AxiomVergeWorld(World):
     game = "Axiom Verge"
     web = AxiomVergeWebWorld()
 
-    options = None
-    options_dataclass = None
+    options = AxiomVergeOptions
+    options_dataclass = AxiomVergeOptions
 
     topology_present = True
 

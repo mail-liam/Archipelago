@@ -1,4 +1,5 @@
-from Options import Choice, Toggle
+from dataclasses import dataclass
+from Options import Choice, Toggle, PerGameCommonOptions
 
 
 class Goal(Choice):
@@ -11,13 +12,25 @@ class Goal(Choice):
 
 
 class ProgressiveCoat(Toggle):
-    """Combine Coat upgrades into a single progressive upgrade. White -> Brown -> Red."""
+    """Combine Coat upgrades into a single progressive upgrade. Lab -> Trench -> Red."""
     display_name = "Progressive Coat Upgrades"
-    default = False
+    default = True
 
 
 class ProgressiveDrone(Toggle):
     """Combine Drone upgrades into a single progressive upgrade. Drone -> Teleport."""
     display_name = "Progressive Drone Upgrades"
     default = True
-    
+
+
+class SecretWorldWeapons(Toggle):
+    """Randomize Secret world weapons into the item pool."""
+    default = True
+
+
+@dataclass
+class AxiomVergeOptions(PerGameCommonOptions):
+    goal: Goal
+    progressive_coat: ProgressiveCoat
+    progressive_drone: ProgressiveDrone
+    secret_world_weapons: SecretWorldWeapons
