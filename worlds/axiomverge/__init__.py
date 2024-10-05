@@ -1,9 +1,10 @@
 from worlds.AutoWorld import WebWorld, World
+from .items import item_groups
 from .options import AxiomVergeOptions
 
 
 class AxiomVergeWebWorld(WebWorld):
-    pass
+    rich_text_options_doc = True
 
 
 class AxiomVergeWorld(World):
@@ -25,3 +26,5 @@ class AxiomVergeWorld(World):
 
     item_names = None
     location_names = None
+
+    item_name_groups = item_groups
