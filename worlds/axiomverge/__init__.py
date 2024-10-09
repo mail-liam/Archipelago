@@ -1,5 +1,7 @@
 from worlds.AutoWorld import WebWorld, World
-from .items import item_groups
+from .item_data import item_data
+from .items import AVItem, ITEM_NAME_TO_ID
+from .location_data import LOCATION_NAME_TO_ID
 from .options import AxiomVergeOptions
 
 
@@ -16,15 +18,20 @@ class AxiomVergeWorld(World):
     game = "Axiom Verge"
     web = AxiomVergeWebWorld()
 
-    options = AxiomVergeOptions
+    options: AxiomVergeOptions
     options_dataclass = AxiomVergeOptions
 
     topology_present = True
 
-    item_name_to_id = None
-    location_name_to_id = None
+    item_name_to_id = ITEM_NAME_TO_ID
+    location_name_to_id = LOCATION_NAME_TO_ID
 
-    item_names = None
-    location_names = None
+    item_names = set(ITEM_NAME_TO_ID)
+    location_names = set(LOCATION_NAME_TO_ID)
 
-    item_name_groups = item_groups
+    # item_name_groups = item_groups
+
+
+    def create_item(self, item_name):
+        data = item_data[item_name]
+        return AVItem(item_name, data.ap_classification, data.id, self.player)

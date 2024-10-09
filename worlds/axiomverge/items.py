@@ -1,13 +1,24 @@
+import typing as t
 from collections import defaultdict
-from .item_data import item_data, ItemType
 
+from BaseClasses import Item
+
+from .item_data import item_data
+from .constants import AVItemType
+
+
+class AVItem(Item):
+    game = "Axiom Verge"
+
+
+ITEM_NAME_TO_ID: t.Dict[str, int] = {data.name: data.id for data in item_data.values()}
 
 item_groups = defaultdict(set)
-for group_name in ItemType:
-    item_groups[group_name] = {item.name for item in item_data if item.group_name == group_name}
+for group_name in AVItemType:
+    item_groups[group_name] = {item.name for item in item_data.values() if item.group_name == group_name}
 item_groups["Drill"] |= {"Drone"}
-item_groups["Health"] = item_groups[ItemType.HEALTH_NODE] | item_groups[ItemType.HEALTH_NODE_FRAGMENT]
-item_groups["Power"] = item_groups[ItemType.POWER_NODE] | item_groups[ItemType.POWER_NODE_FRAGMENT]
-item_groups["Nodes"] = item_groups["Health"] | item_groups["Power"]
-item_groups["Movement + Coat"] = item_groups[ItemType.MOVEMENT] | item_groups[ItemType.COAT]
-item_groups["Abilities"] = item_groups["Movement + Coat"] | item_groups[ItemType.DRONE] | item_groups[ItemType.DRILL] | item_groups[ItemType.GLITCH] | item_groups[ItemType.KEY] | item_groups[ItemType.TENDRILS]
+item_groups["Health"] = item_groups[AVItemType.HEALTH_NODE] | item_groups[AVItemType.HEALTH_NODE_FRAGMENT]
+item_groups["Power"] = item_groups[AVItemType.POWER_NODE] | item_groups[AVItemType.POWER_NODE_FRAGMENT]
+item_groups["Powerups"] = item_groups["Health"] | item_groups["Power"]
+item_groups["Movement + Coat"] = item_groups[AVItemType.MOVEMENT] | item_groups[AVItemType.COAT]
+item_groups["Abilities"] = item_groups["Movement + Coat"] | item_groups[AVItemType.DRONE] | item_groups[AVItemType.DRILL] | item_groups[AVItemType.GLITCH] | item_groups[AVItemType.KEY] | item_groups[AVItemType.TENDRILS]
