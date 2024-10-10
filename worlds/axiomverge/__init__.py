@@ -3,6 +3,9 @@ from .item_data import item_data
 from .items import AVItem, ITEM_NAME_TO_ID
 from .location_data import LOCATION_NAME_TO_ID
 from .options import AxiomVergeOptions
+from .regions import create_regions
+
+from Utils import visualize_regions
 
 
 class AxiomVergeWebWorld(WebWorld):
@@ -32,6 +35,22 @@ class AxiomVergeWorld(World):
     # item_name_groups = item_groups
 
 
+    def create_regions(self):
+        create_regions(self.player, self.multiworld)
+
+
     def create_item(self, item_name):
         data = item_data[item_name]
         return AVItem(item_name, data.ap_classification, data.id, self.player)
+
+
+    def create_items(self):
+        for data in item_data.values():
+            self.multiworld.itempool.append(AVItem(data.name, data.ap_classification, data.id, self.player))
+
+
+    def set_rules(self):
+        # Debug wincon
+        self.multiworld.completion_condition[self.player] = lambda state: state.has("Voranj", self.player)
+
+        visualize_regions(self.multiworld.get_region("Menu", self.player), "axiomverge.puml")
