@@ -50,7 +50,7 @@ def has_drone(state: CollectionState, player: int):
 
 
 def has_drone_tele(state: CollectionState, player: int):
-    return state.has("Drone Teleport") or state.has("Progressive Drone", count=3)
+    return state.has("Drone Teleport", player) or state.has("Progressive Drone", player, count=3)
 
 
 def has_glitch_2(state: CollectionState, player: int):
