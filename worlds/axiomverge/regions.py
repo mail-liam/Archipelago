@@ -4,37 +4,11 @@ import typing as t
 from BaseClasses import Location, MultiWorld, Region
 
 from .constants import AVRegions
-from .location_data import location_data
-from .logic import conditions
-
-if t.TYPE_CHECKING:
-    from BaseClasses import CollectionState
+from .location_data import entrance_data, location_data
 
 
 class AVLocation(Location):
     game = "Axiom Verge"
-
-
-# Start Region, Destination Region, Access Rule, Bidirectional
-entrance_data: t.Tuple[t.Tuple[str, str, t.Callable[[CollectionState, int], bool], bool]] = (
-    # TODO: Menu region connection to be dynamic with start location rando
-    (AVRegions.MENU, AVRegions.WEST_ERIBU, conditions.always_accessible, False),  # True in the purest sense, but it won't ever matter
-    (AVRegions.WEST_ERIBU, AVRegions.UPPER_ERIBU, conditions.can_damage, True),
-    (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_drill, True),
-    (AVRegions.LOWER_ERIBU, AVRegions.WEST_ABSU, conditions.always_accessible, True),
-    (
-        AVRegions.WEST_ABSU,
-        AVRegions.LOWER_ABSU,
-        lambda s, p: conditions.can_pierce_wall(s, p) or conditions.has_any_coat(s, p),
-        False,
-    ),
-    (
-        AVRegions.LOWER_ABSU,
-        AVRegions.WEST_ABSU,
-        lambda s, p: conditions.can_damage(s, p) or conditions.has_any_coat(s, p),
-        False,
-    )
-)
 
 
 def create_regions(player: int, multiworld: MultiWorld):

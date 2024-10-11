@@ -23,13 +23,16 @@ class AVItemType(StrEnum):
 
 
 class AVRegions(StrEnum):
+    EAST_ABSU = "East Absu"
     # E_KUR_MAH = "E-Kur-Mah"
-    # KUR = "Kur"
     LOWER_ABSU = "Lower Absu"
     LOWER_ERIBU = "Lower Eribu"
+    LOWER_KUR = "Lower Kur"
+    LOWER_ZI = "Lower Zi"
     # MAR_URU = "Mar-Uru"
     MENU = "Menu"
     UPPER_ERIBU = "Upper Eribu"
     WEST_ABSU = "West Absu"
     WEST_ERIBU = "West Eribu"
-    # ZI = "Zi"
+    WEST_UKKIN_NA = "West Ukkin-Na"
+    XEDUR = "Xedur"
