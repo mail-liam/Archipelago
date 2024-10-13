@@ -6,6 +6,9 @@ from ..constants import AVItemType
 from ..items import item_data
 
 
+ALL_WEAPONS = tuple(item.name for item in item_data.values() if item.group_name == AVItemType.WEAPON)
+
+
 if t.TYPE_CHECKING:
     from BaseClasses import CollectionState
 
@@ -24,13 +27,11 @@ def can_angle_shoot(state: CollectionState, player: int):
 
 
 def can_damage(state: CollectionState, player: int):
-    # guns = [item.name for item in item_data.values() if item.group_name == AVItemType.WEAPON]
-    # return state.has_any([*guns, "RedCoat"], player) or can_drill(state, player)
-    return state.has_any(("DataDisruptor", "Voranj"), player)
+    return state.has_any(ALL_WEAPONS, player) or can_drill(state, player)
 
 
 def can_drill(state: CollectionState, player: int):
-    return state.has_any(("Drill", "Drone", "Progressive Drone"), player)
+    return state.has_any(("Drill", "Drone", "Progressive Drone"), player) or has_red_coat(state, player)
 
 
 def can_pierce_wall(state: CollectionState, player: int):
