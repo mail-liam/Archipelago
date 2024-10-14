@@ -1,6 +1,6 @@
 from worlds.AutoWorld import WebWorld, World
-from .item_data import item_data
-from .items import AVItem, ITEM_NAME_TO_ID
+from .item_data import item_data, ITEM_NAME_TO_ID
+from .items import AVItem
 from .location_data import LOCATION_NAME_TO_ID
 from .options import AxiomVergeOptions
 from .regions import create_regions

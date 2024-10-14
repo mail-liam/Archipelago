@@ -158,3 +158,5 @@ item_data: t.Dict[str, AVItemData] = {
     name: AVItemData(id, name, group_name, ap_classification)
     for id, (name, group_name, ap_classification) in enumerate(raw_item_data, AP_ID_BASE)
 }
+
+ITEM_NAME_TO_ID: t.Dict[str, int] = {data.name: AP_ID_BASE + data.id for data in item_data.values()}

@@ -11,7 +11,6 @@ class AVItem(Item):
     game = "Axiom Verge"
 
 
-ITEM_NAME_TO_ID: t.Dict[str, int] = {data.name: data.id for data in item_data.values()}
 
 item_groups = defaultdict(set)
 for group_name in AVItemType:
