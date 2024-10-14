@@ -68,6 +68,7 @@ raw_location_data = (
     ('Eribu - Xedur Reward', AVRegions.XEDUR, conditions.always_accessible),
     ('Eribu - Below Xedur', AVRegions.XEDUR, conditions.can_drill),
 
+    ('Eribu - Passcode Room', AVRegions.LOWER_ERIBU, conditions.not_implemented),
     ('Eribu - Path to Absu', AVRegions.LOWER_ERIBU, conditions.always_accessible),
 
     ('Absu - Main Room Side', AVRegions.WEST_ABSU, conditions.can_drill),

@@ -62,6 +62,10 @@ def has_glitch_2(state: CollectionState, player: int):
     return state.has_any(("Address Disruptor 2", "Address Bomb"), player)
 
 
+def has_passcode(state: CollectionState, player: int):
+    return state.has("Passcode Tool", player)
+
+
 def has_red_coat(state: CollectionState, player: int):
     return state.has("Red Coat", player) or state.has("Progressive Coat", player, count=3)
 
@@ -70,9 +74,7 @@ def has_trenchcoat(state: CollectionState, player: int):
     return state.has_any(("Trenchcoat", "Red Coat"), player) or state.has("Progressive Coat", player, count=2)
 
 
-# has_trenchcoat
 # has_grapple
-# has_password
 # can_cross_high_jump
 # has_key
 # has_fatbeam
