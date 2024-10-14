@@ -31,11 +31,11 @@ def can_damage(state: CollectionState, player: int):
 
 
 def can_drill(state: CollectionState, player: int):
-    return state.has_any(("Drill", "Drone", "Progressive Drone"), player) or has_red_coat(state, player)
+    return state.has_any(("Laser Drill", "Remote Drone", "Progressive Drone"), player) or has_red_coat(state, player)
 
 
 def has_glitch_bomb(state: CollectionState, player: int):
-    return state.has(("GlitchBomb"), player) or has_red_coat(state, player)
+    return state.has(("Address Bomb"), player) or has_red_coat(state, player)
 
 
 def can_pierce_wall(state: CollectionState, player: int):
@@ -43,7 +43,7 @@ def can_pierce_wall(state: CollectionState, player: int):
 
 
 def has_any_glitch(state: CollectionState, player: int):
-    return state.has_any(("AddressDisruptor1", "AddressDisruptor2", "GlitchBomb"), player)
+    return state.has_any(("Address Disruptor 1", "Address Disruptor 2", "Address Bomb"), player)
 
 
 def has_any_coat(state: CollectionState, player: int):
@@ -51,15 +51,15 @@ def has_any_coat(state: CollectionState, player: int):
 
 
 def has_drone(state: CollectionState, player: int):
-    return state.has_any(("Drone", "Progressive Drone"), player)
+    return state.has_any(("Remote Drone", "Progressive Drone"), player)
 
 
 def has_drone_tele(state: CollectionState, player: int):
-    return state.has("Drone Teleport", player) or state.has("Progressive Drone", player, count=3)
+    return state.has_all(("Remote Drone", "Drone Teleport"), player)
 
 
 def has_glitch_2(state: CollectionState, player: int):
-    return state.has_any(("AddressDisruptor2", "GlitchBomb"), player)
+    return state.has_any(("Address Disruptor 2", "Address Bomb"), player)
 
 
 def has_red_coat(state: CollectionState, player: int):

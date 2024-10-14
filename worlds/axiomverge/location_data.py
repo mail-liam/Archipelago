@@ -43,9 +43,10 @@ entrance_data: t.Tuple[t.Tuple[str, str, t.Callable[[CollectionState, int], bool
     (AVRegions.EAST_ABSU, AVRegions.LOWER_ZI, conditions.always_accessible, True),
     (AVRegions.LOWER_ZI, AVRegions.LOWER_KUR, conditions.always_accessible, True),
     (AVRegions.LOWER_KUR, AVRegions.INDI, conditions.not_implemented, False),
+    (AVRegions.LOWER_KUR, AVRegions.UPPER_KUR, conditions.has_any_coat, True),
     (AVRegions.INDI, AVRegions.LOWER_KUR, conditions.not_implemented, False),
     (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, True),
-    (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, p: conditions.has_glitch_bomb(s, p) or conditions.has_trenchcoat(s, p))
+    (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, p: conditions.has_glitch_bomb(s, p) or conditions.has_trenchcoat(s, p), True),
 )
 
 
