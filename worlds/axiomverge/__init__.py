@@ -16,7 +16,7 @@ class AxiomVergeWorld(World):
     """
     Explore and uncover the mystery of a surreal alien world by blasting aliens and glitching your environment
     in this intense retro side-scrolling action/adventure.
-    """
+    """ # Source: Steam Store Page
 
     game = "Axiom Verge"
     web = AxiomVergeWebWorld()

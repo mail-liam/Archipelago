@@ -14,7 +14,7 @@ class TestOptionProgCoatOff(AVTestBase):
         self.assertListEqual([coat.name for coat in base_coats], ["Modified Lab Coat", "Trenchcoat", "Red Coat"])
 
 
-class TestOptionProgCoatOff(AVTestBase):
+class TestOptionProgCoatOn(AVTestBase):
     options = {
         "Progressive Drone": "true",
     }
