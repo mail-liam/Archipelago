@@ -34,6 +34,10 @@ def can_drill(state: CollectionState, player: int):
     return state.has_any(("Drill", "Drone", "Progressive Drone"), player) or has_red_coat(state, player)
 
 
+def has_glitch_bomb(state: CollectionState, player: int):
+    return state.has(("GlitchBomb"), player) or has_red_coat(state, player)
+
+
 def can_pierce_wall(state: CollectionState, player: int):
     return state.has_any(("Kilver",), player)
 
@@ -43,7 +47,7 @@ def has_any_glitch(state: CollectionState, player: int):
 
 
 def has_any_coat(state: CollectionState, player: int):
-    return state.has_any(("White Coat", "Trenchcoat", "RedCoat", "Progressive Coat"), player)
+    return state.has_any(("Modified Lab Coat", "Trenchcoat", "Red Coat", "Progressive Coat"), player)
 
 
 def has_drone(state: CollectionState, player: int):
@@ -59,11 +63,11 @@ def has_glitch_2(state: CollectionState, player: int):
 
 
 def has_red_coat(state: CollectionState, player: int):
-    return state.has("RedCoat", player) or state.has("Progressive Coat", player, count=3)
+    return state.has("Red Coat", player) or state.has("Progressive Coat", player, count=3)
 
 
 def has_trenchcoat(state: CollectionState, player: int):
-    return state.has_any(("Trenchcoat", "RedCoat"), player) or state.has("Progressive Coat", player, count=2)
+    return state.has_any(("Trenchcoat", "Red Coat"), player) or state.has("Progressive Coat", player, count=2)
 
 
 # has_trenchcoat
