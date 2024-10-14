@@ -3,7 +3,7 @@ from . import AVTestBase
 
 class TestOptionProgCoatOff(AVTestBase):
     options = {
-        "Progressive Drone": "false",
+        "progressive_coat": 0,
     }
 
     def test_prog_coat_off(self):
@@ -16,7 +16,7 @@ class TestOptionProgCoatOff(AVTestBase):
 
 class TestOptionProgCoatOn(AVTestBase):
     options = {
-        "Progressive Drone": "true",
+        "progressive_coat": 1,
     }
 
     def test_prog_coat_on(self):

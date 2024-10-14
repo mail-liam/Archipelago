@@ -1,6 +1,6 @@
 from worlds.AutoWorld import WebWorld, World
 from .item_data import item_data, ITEM_NAME_TO_ID
-from .items import AVItem
+from .items import AVItem, BASE_ITEMPOOL
 from .location_data import LOCATION_NAME_TO_ID
 from .options import AxiomVergeOptions
 from .regions import create_regions
@@ -45,8 +45,26 @@ class AxiomVergeWorld(World):
 
 
     def create_items(self):
-        for data in item_data.values():
-            self.multiworld.itempool.append(AVItem(data.name, data.ap_classification, data.id, self.player))
+        options = self.options
+        av_itempool = [self.create_item(name) for name in BASE_ITEMPOOL]
+
+        if False:
+            av_itempool.append(self.create_item("Progressive Address Disruptor"))
+            av_itempool.append(self.create_item("Progressive Address Disruptor"))
+        else:
+            av_itempool.append(self.create_item("Address Disruptor 1"))
+            av_itempool.append(self.create_item("Address Disruptor 2"))
+
+        if options.progressive_coat == 1:
+            av_itempool.append(self.create_item("Progressive Coat"))
+            av_itempool.append(self.create_item("Progressive Coat"))
+            av_itempool.append(self.create_item("Progressive Coat"))
+        else:
+            av_itempool.append(self.create_item("Modified Lab Coat"))
+            av_itempool.append(self.create_item("Trenchcoat"))
+            av_itempool.append(self.create_item("Red Coat"))
+
+        self.multiworld.itempool.extend(av_itempool)
 
 
     def set_rules(self):

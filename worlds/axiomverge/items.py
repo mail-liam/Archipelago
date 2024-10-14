@@ -11,6 +11,18 @@ class AVItem(Item):
     game = "Axiom Verge"
 
 
+BASE_ITEMPOOL = (
+    "Axiom Disruptor", "Inertial Pulse", "Multi-Disruptor", "Voranj", "Nova", "Kilver",
+    "Laser Drill", "Remote Drone", "Address Bomb", "Enhanced Drone Launch", "Drone Teleport",
+    "Passcode Tool", "TendrilsTop", "TendrilsBottom",
+    "HealthNode1", "HealthNode2", "HealthNode3",
+    "PowerNode1", "PowerNode2",
+    "HealthNodeFragment1", "HealthNodeFragment2", "HealthNodeFragment3", "HealthNodeFragment4", "HealthNodeFragment5",
+    "PowerNodeFragment1", "PowerNodeFragment2", "PowerNodeFragment3", "PowerNodeFragment4", "PowerNodeFragment5", "PowerNodeFragment6",
+    "RangeNode1", "RangeNode2",
+    "SizeNode1", "SizeNode2",
+)
+
 
 item_groups = defaultdict(set)
 for group_name in AVItemType:

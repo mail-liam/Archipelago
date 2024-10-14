@@ -98,6 +98,7 @@ raw_location_data = (
 
     ('Kur - High Jump Shrine', AVRegions.LOWER_KUR, conditions.always_accessible),
     ('Kur - High Jump Shrine - False Wall', AVRegions.LOWER_KUR, conditions.not_implemented),
+
     ('Kur - Inside Cliff', AVRegions.UPPER_KUR, conditions.has_red_coat),
 
     ('Indi - Path to Eribu', AVRegions.INDI, conditions.has_drone),
@@ -106,7 +107,7 @@ raw_location_data = (
     ('Ukkin-Na - Long Fall Shaft Base', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
     ('Ukkin-Na - Annihiwaiter Room', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
 
-    ('Edin - Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
+    ('Edin - Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
 
     ('Edin - False Wall Shrine', AVRegions.UPPER_EDIN, conditions.always_accessible),
     ('Edin - Upper Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, p: conditions.has_drone_tele(s, p) and conditions.has_trenchcoat(s, p))
