@@ -23,20 +23,20 @@ entrance_data: t.Tuple[t.Tuple[str, str, t.Callable[[CollectionState, int], bool
     # TODO: Menu region connection to be dynamic with start location rando
     (AVRegions.MENU, AVRegions.WEST_ERIBU, conditions.always_accessible, False),  # True in the purest sense, but it won't ever matter
     (AVRegions.WEST_ERIBU, AVRegions.UPPER_ERIBU, conditions.can_damage, True),
-    (AVRegions.UPPER_ERIBU, AVRegions.XEDUR, conditions.can_angle_shoot, True),  # REQUIRES_UPDATE
+    (AVRegions.UPPER_ERIBU, AVRegions.XEDUR, conditions.can_angle_shoot, False),  # REQUIRES_UPDATE
     (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_drill, True),
-    (AVRegions.LOWER_ABSU, AVRegions.WEST_UKKIN_NA, lambda s, p: conditions.has_glitch_2(s, p) or conditions.has_any_coat(s, p), True),
+    (AVRegions.LOWER_ABSU, AVRegions.WEST_UKKIN_NA, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_any_coat(s, c), True),
     (AVRegions.LOWER_ERIBU, AVRegions.WEST_ABSU, conditions.always_accessible, True),
     (
         AVRegions.WEST_ABSU,
         AVRegions.LOWER_ABSU,
-        lambda s, p: conditions.can_pierce_wall(s, p) or conditions.has_any_coat(s, p),
+        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.has_any_coat(s, c),
         False,
     ),
     (
         AVRegions.LOWER_ABSU,
         AVRegions.WEST_ABSU,
-        lambda s, p: conditions.can_damage(s, p) or conditions.has_any_coat(s, p),
+        lambda s, c: conditions.can_damage(s, c) or conditions.has_any_coat(s, c),
         False,
     ),
     (AVRegions.LOWER_ABSU, AVRegions.EAST_ABSU, conditions.not_implemented, True),
@@ -46,23 +46,24 @@ entrance_data: t.Tuple[t.Tuple[str, str, t.Callable[[CollectionState, int], bool
     (AVRegions.LOWER_KUR, AVRegions.UPPER_KUR, conditions.has_any_coat, True),
     (AVRegions.INDI, AVRegions.LOWER_KUR, conditions.not_implemented, False),
     (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, True),
-    (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, p: conditions.has_glitch_bomb(s, p) or conditions.has_trenchcoat(s, p), True),
+    (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, c: conditions.has_glitch_bomb(s, c) or conditions.has_trenchcoat(s, c), True),
 )
 
 
 raw_location_data = (
     ('Eribu - West of Spawn', AVRegions.WEST_ERIBU, conditions.always_accessible),
+    ('Eribu - Wheelchair Room', AVRegions.WEST_ERIBU, lambda s, c: conditions.can_displacement_warp(s, c) or conditions.has_drone_tele(s, c)),
 
     ('Eribu - Upper Right', AVRegions.UPPER_ERIBU, conditions.always_accessible),
     (
         'Eribu - Bubble Jail',
         AVRegions.UPPER_ERIBU,
-        lambda s, p: conditions.can_angle_shoot(s, p) or conditions.can_pierce_wall(s, p),
+        lambda s, c: conditions.can_angle_shoot(s, c) or conditions.can_pierce_wall(s, c),
     ),
     (
         'Eribu - Outside Lab',
         AVRegions.UPPER_ERIBU,
-        lambda s, p: conditions.can_drill and (conditions.can_angle_shoot(s, p) or conditions.can_pierce_wall(s, p))
+        lambda s, c: conditions.can_drill and (conditions.can_angle_shoot(s, c) or conditions.can_pierce_wall(s, c))
     ),
 
     ('Eribu - Xedur Reward', AVRegions.XEDUR, conditions.always_accessible),
@@ -84,17 +85,17 @@ raw_location_data = (
 
     ('Absu - Trapped Diatoms', AVRegions.EAST_ABSU, conditions.can_drill),
     ('Absu - Wall Alcove', AVRegions.EAST_ABSU, conditions.can_drill),
-    ('Absu - Hidden Shrine', AVRegions.EAST_ABSU, lambda s, p: conditions.has_any_coat(s, p) or conditions.has_drone(s, p)),
-    ('Absu - Chasm Room Tunnel', AVRegions.EAST_ABSU, lambda s, p: conditions.has_red_coat(s, p) or conditions.has_drone(s, p)),
-    ('Absu - Purple Shrine', AVRegions.EAST_ABSU, lambda s, p: conditions.has_red_coat(s, p) or conditions.has_glitch_2(s, p) and conditions.can_drill(s, p)),
+    ('Absu - Hidden Shrine', AVRegions.EAST_ABSU, lambda s, c: conditions.has_any_coat(s, c) or conditions.has_drone(s, c)),
+    ('Absu - Chasm Room Tunnel', AVRegions.EAST_ABSU, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),
+    ('Absu - Purple Shrine', AVRegions.EAST_ABSU, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_glitch_2(s, c) and conditions.can_drill(s, c)),
     ('Absu - Zi Entrance', AVRegions.EAST_ABSU, conditions.can_drill),
 
     ('Zi - Behind False Wall', AVRegions.LOWER_ZI, conditions.not_implemented),
     ('Zi - Disappointment Hill', AVRegions.LOWER_ZI, conditions.not_implemented),
     ('Zi - Roof Alcove', AVRegions.LOWER_ZI, conditions.not_implemented),
-    ('Zi - Above Veruska', AVRegions.LOWER_ZI, lambda s, p: conditions.has_trenchcoat(s, p) or conditions.has_drone(s, p)),
-    ('Zi - Behind Veruska Left', AVRegions.LOWER_ZI, lambda s, p: conditions.has_trenchcoat(s, p) or conditions.has_drone(s, p)),
-    ('Zi - Behind Veruska Right', AVRegions.LOWER_ZI, lambda s, p: conditions.has_trenchcoat(s, p) or conditions.has_drone(s, p)),
+    ('Zi - Above Veruska', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
+    ('Zi - Behind Veruska Left', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
+    ('Zi - Behind Veruska Right', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
 
     ('Kur - High Jump Shrine', AVRegions.LOWER_KUR, conditions.always_accessible),
     ('Kur - High Jump Shrine - False Wall', AVRegions.LOWER_KUR, conditions.not_implemented),
@@ -110,7 +111,7 @@ raw_location_data = (
     ('Edin - Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
 
     ('Edin - False Wall Shrine', AVRegions.UPPER_EDIN, conditions.always_accessible),
-    ('Edin - Upper Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, p: conditions.has_drone_tele(s, p) and conditions.has_trenchcoat(s, p))
+    ('Edin - Upper Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c))
 )
 
 

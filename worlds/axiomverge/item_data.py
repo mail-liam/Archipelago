@@ -49,7 +49,7 @@ raw_item_data: t.Tuple[int, str, AVItemType, ItemClassification] = (
     # (16, "DistortionField", AVItemType.WEAPON),
     # (17, "FlameThrower", AVItemType.WEAPON),
     (18, "Kilver", AVItemType.WEAPON, ItemClassification.progression),
-    # (19, "Scythe", AVItemType.WEAPON),
+    (19, "Reverse Slicer", AVItemType.WEAPON, ItemClassification.progression),
     # (20, "FatBeam", AVItemType.WEAPON),
     # (21, "HeatSeeker", AVItemType.WEAPON),
     # (22, "WebSlicer", AVItemType.WEAPON),

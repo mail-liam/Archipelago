@@ -12,7 +12,7 @@ class AVItem(Item):
 
 
 BASE_ITEMPOOL = (
-    "Axiom Disruptor", "Inertial Pulse", "Multi-Disruptor", "Voranj", "Nova", "Kilver",
+    "Axiom Disruptor", "Inertial Pulse", "Multi-Disruptor", "Voranj", "Nova", "Kilver", "Reverse Slicer",
     "Laser Drill", "Remote Drone", "Address Bomb", "Enhanced Drone Launch", "Drone Teleport",
     "Passcode Tool", "TendrilsTop", "TendrilsBottom",
     "HealthNode1", "HealthNode2", "HealthNode3",

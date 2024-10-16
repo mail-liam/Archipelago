@@ -4,6 +4,7 @@ from .items import AVItem, BASE_ITEMPOOL
 from .location_data import LOCATION_NAME_TO_ID
 from .options import AxiomVergeOptions
 from .regions import create_regions
+from .types import LogicContext
 
 from Utils import visualize_regions
 
@@ -35,8 +36,18 @@ class AxiomVergeWorld(World):
     # item_name_groups = item_groups
 
 
+    def generate_early(self):
+        options = self.options
+        self.context = LogicContext(
+            displacement_warp_enabled=bool(options.allow_displacement_warps),
+            flight_enabled=bool(options.allow_flight),
+            grapple_clip_enabled=bool(options.allow_grapple_clips),
+            player=self.player,
+        )
+
+
     def create_regions(self):
-        create_regions(self.player, self.multiworld)
+        create_regions(self.context, self.multiworld)
 
 
     def create_item(self, item_name):

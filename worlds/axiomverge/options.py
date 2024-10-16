@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Options import Choice, DefaultOnToggle, PerGameCommonOptions
+from Options import Choice, DefaultOnToggle, PerGameCommonOptions, Toggle
 
 
 class Goal(Choice):
@@ -10,7 +10,7 @@ class Goal(Choice):
     # option_gun_hunt = 2
     default = 0
 
-
+# Item Options
 class ProgressiveAddressDisruptor(DefaultOnToggle):
     """
     Combine Address Disruptors into a progressive upgrade.
@@ -33,8 +33,24 @@ class ShuffleSecretWorldWeapons(DefaultOnToggle):
     """Randomize Secret world weapons into the item pool."""
 
 
+# Logic Options
+class AllowDisplacementWarps(Toggle):
+    """Allows for displacement warps to be considered in logic generation."""
+
+
+class AllowFlight(Toggle):
+    """Allows for flying to be considered in logic generation."""
+
+
+class AllowGrappleClips(Toggle):
+    """Allows for grapple clips to be considered in logic generation."""
+
+
 @dataclass
 class AxiomVergeOptions(PerGameCommonOptions):
+    allow_displacement_warps: AllowDisplacementWarps
+    allow_flight: AllowFlight
+    allow_grapple_clips: AllowGrappleClips
     goal: Goal
     progressive_address_disruptor: ProgressiveAddressDisruptor
     progressive_coat: ProgressiveCoat
