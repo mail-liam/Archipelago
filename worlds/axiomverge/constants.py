@@ -23,9 +23,12 @@ class AVItemType(StrEnum):
 
 
 class AVRegions(StrEnum):
+    BLURST = "Blurst"
+    DINGER_GISBAR = "Dinger-Gisbar"
     EAST_ABSU = "East Absu"
     # E_KUR_MAH = "E-Kur-Mah"
     INDI = "Indi"
+    LABORATORY = "Laboratory"
     LOWER_ABSU = "Lower Absu"
     LOWER_EDIN = "Lower Edin"
     LOWER_ERIBU = "Lower Eribu"

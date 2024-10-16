@@ -42,6 +42,7 @@ class AxiomVergeWorld(World):
             displacement_warp_enabled=bool(options.allow_displacement_warps),
             flight_enabled=bool(options.allow_flight),
             grapple_clip_enabled=bool(options.allow_grapple_clips),
+            rocket_jump_enabled=bool(options.allow_rocket_jumps),
             player=self.player,
         )
 

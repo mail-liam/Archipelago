@@ -35,15 +35,19 @@ class ShuffleSecretWorldWeapons(DefaultOnToggle):
 
 # Logic Options
 class AllowDisplacementWarps(Toggle):
-    """Allows for displacement warps to be considered in logic generation."""
+    """Allows for displacement warps to be considered in logic."""
 
 
 class AllowFlight(Toggle):
-    """Allows for flying to be considered in logic generation."""
+    """Allows for flying to be considered in logic."""
 
 
 class AllowGrappleClips(Toggle):
-    """Allows for grapple clips to be considered in logic generation."""
+    """Allows for grapple clips to be considered in logic."""
+
+
+class AllowRocketJumps(Toggle):
+    """Allows for rocket jumps to be considered in logic."""
 
 
 @dataclass
@@ -51,6 +55,7 @@ class AxiomVergeOptions(PerGameCommonOptions):
     allow_displacement_warps: AllowDisplacementWarps
     allow_flight: AllowFlight
     allow_grapple_clips: AllowGrappleClips
+    allow_rocket_jumps: AllowRocketJumps
     goal: Goal
     progressive_address_disruptor: ProgressiveAddressDisruptor
     progressive_coat: ProgressiveCoat

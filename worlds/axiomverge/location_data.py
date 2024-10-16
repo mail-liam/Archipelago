@@ -3,11 +3,9 @@ from __future__ import annotations
 import typing as t
 from dataclasses import dataclass
 
-from .logic import conditions
+from . import conditions
 from .constants import AVRegions, AP_ID_BASE
-
-if t.TYPE_CHECKING:
-    from BaseClasses import CollectionState
+from .types import AccessRule
 
 
 @dataclass
@@ -15,16 +13,21 @@ class AVLocationData:
     id: int
     name: str
     region_name: str
-    access_rule: t.Callable[[CollectionState, int], bool]
+    access_rule: AccessRule
 
 
 # Start Region, Destination Region, Access Rule, Bidirectional
-entrance_data: t.Tuple[t.Tuple[str, str, t.Callable[[CollectionState, int], bool], bool]] = (
+# NOTE: several regions are bidirectional=False if they are dead-ends to avoid creating an unnecessary entrance
+entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     # TODO: Menu region connection to be dynamic with start location rando
     (AVRegions.MENU, AVRegions.WEST_ERIBU, conditions.always_accessible, False),  # True in the purest sense, but it won't ever matter
     (AVRegions.WEST_ERIBU, AVRegions.UPPER_ERIBU, conditions.can_damage, True),
-    (AVRegions.UPPER_ERIBU, AVRegions.XEDUR, conditions.can_angle_shoot, False),  # REQUIRES_UPDATE
+    (AVRegions.WEST_ERIBU, AVRegions.DINGER_GISBAR, conditions.dingergisbar_access, False),
+    (AVRegions.WEST_ERIBU, AVRegions.LABORATORY, conditions.can_displacement_warp, False),
+    (AVRegions.DINGER_GISBAR, AVRegions.BLURST, conditions.always_accessible, False),
+    (AVRegions.UPPER_ERIBU, AVRegions.XEDUR, conditions.xedur_access, False),
     (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_drill, True),
+    (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_displacement_warp, False),
     (AVRegions.LOWER_ABSU, AVRegions.WEST_UKKIN_NA, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_any_coat(s, c), True),
     (AVRegions.LOWER_ERIBU, AVRegions.WEST_ABSU, conditions.always_accessible, True),
     (
@@ -50,26 +53,31 @@ entrance_data: t.Tuple[t.Tuple[str, str, t.Callable[[CollectionState, int], bool
 )
 
 
-raw_location_data = (
+raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Eribu - West of Spawn', AVRegions.WEST_ERIBU, conditions.always_accessible),
     ('Eribu - Wheelchair Room', AVRegions.WEST_ERIBU, lambda s, c: conditions.can_displacement_warp(s, c) or conditions.has_drone_tele(s, c)),
+    ('Eribu - West Caves Below Pool', AVRegions.WEST_ERIBU, conditions.west_caves_pool_access),
+
+    ('Eribu - Dinger-Gisbar', AVRegions.DINGER_GISBAR, conditions.always_accessible),
 
     ('Eribu - Upper Right', AVRegions.UPPER_ERIBU, conditions.always_accessible),
-    (
-        'Eribu - Bubble Jail',
-        AVRegions.UPPER_ERIBU,
-        lambda s, c: conditions.can_angle_shoot(s, c) or conditions.can_pierce_wall(s, c),
-    ),
-    (
-        'Eribu - Outside Lab',
-        AVRegions.UPPER_ERIBU,
-        lambda s, c: conditions.can_drill and (conditions.can_angle_shoot(s, c) or conditions.can_pierce_wall(s, c))
-    ),
+    ('Eribu - Upper Eribu Bomb Check', AVRegions.UPPER_ERIBU, conditions.upper_eribu_bomb_access),
+    ('Eribu - Bubble Jail', AVRegions.UPPER_ERIBU, conditions.bubble_jail_access),
+    ('Eribu - Outside Laboratory', AVRegions.UPPER_ERIBU, conditions.outside_lab_access),
 
-    ('Eribu - Xedur Reward', AVRegions.XEDUR, conditions.always_accessible),
+    ('Eribu - Xedur Reward', AVRegions.XEDUR, conditions.can_damage_boss),
     ('Eribu - Below Xedur', AVRegions.XEDUR, conditions.can_drill),
 
-    ('Eribu - Passcode Room', AVRegions.LOWER_ERIBU, conditions.not_implemented),
+    (
+        'Eribu - Sentry Bot Tunnel',
+        AVRegions.LOWER_ERIBU,
+        lambda s, c: conditions.has_drone(s, c) and (c.grapple_clip_enabled or conditions.has_glitch_bomb(s, c)),
+    ),
+    (
+        'Eribu - Outside Passcode Room',
+        AVRegions.LOWER_ERIBU,
+        lambda s, c: conditions.has_any_glitch(s, c) or conditions.has_drone(s, c) or conditions.has_grapple(s, c) or conditions.has_trenchcoat(s, c),
+    ),
     ('Eribu - Path to Absu', AVRegions.LOWER_ERIBU, conditions.always_accessible),
 
     ('Absu - Main Room Side', AVRegions.WEST_ABSU, conditions.can_drill),
@@ -112,6 +120,8 @@ raw_location_data = (
 
     ('Edin - False Wall Shrine', AVRegions.UPPER_EDIN, conditions.always_accessible),
     ('Edin - Upper Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c))
+
+    ('Glitch a Blurst', AVRegions.BLURST, conditions.has_any_glitch),
 )
 
 
