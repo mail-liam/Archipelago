@@ -1,6 +1,6 @@
 from worlds.AutoWorld import WebWorld, World
 from .item_data import item_data, ITEM_NAME_TO_ID
-from .items import AVItem, BASE_ITEMPOOL
+from .items import AVItem
 from .location_data import LOCATION_NAME_TO_ID
 from .options import AxiomVergeOptions
 from .regions import create_regions
@@ -58,7 +58,7 @@ class AxiomVergeWorld(World):
 
     def create_items(self):
         options = self.options
-        av_itempool = [self.create_item(name) for name in BASE_ITEMPOOL]
+        av_itempool = [self.create_item(item.name) for item in item_data.values() if item.is_default]
 
         if bool(options.progressive_address_disruptor):
             av_itempool.append(self.create_item("Progressive Address Disruptor"))
