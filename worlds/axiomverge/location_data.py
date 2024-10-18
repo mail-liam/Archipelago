@@ -30,7 +30,7 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_drill, True),
     (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_displacement_warp, False, "Eribu Grapple Clip Exit"),
     (AVRegions.LOWER_ERIBU, AVRegions.WEST_UKKIN_NA, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_any_coat(s, c), True),
-    (AVRegions.LOWER_ERIBU, AVRegions.ERIBU_INDI, conditions.has_trenchcoat, True),  # TODO: Be more specific
+    (AVRegions.LOWER_ERIBU, AVRegions.ERIBU_INDI, conditions.has_trenchcoat, True),  # TODO: Update
     (AVRegions.ERIBU_INDI, AVRegions.INDI, conditions.always_accessible, True),
     (AVRegions.LOWER_ERIBU, AVRegions.WEST_ABSU, conditions.always_accessible, True),
     (
@@ -47,11 +47,14 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     ),
     (AVRegions.LOWER_ABSU, AVRegions.EAST_ABSU, conditions.not_implemented, True),
     (AVRegions.EAST_ABSU, AVRegions.LOWER_ZI, conditions.always_accessible, True),
+    (AVRegions.LOWER_ZI, AVRegions.UPPER_ZI, conditions.has_high_jump, False),  # TODO: Update
+    (AVRegions.UPPER_ZI, AVRegions.LOWER_ZI, conditions.always_accessible, False),
     (AVRegions.LOWER_ZI, AVRegions.LOWER_KUR, conditions.always_accessible, True),
     (AVRegions.LOWER_KUR, AVRegions.INDI, conditions.not_implemented, False),
     (AVRegions.LOWER_KUR, AVRegions.UPPER_KUR, conditions.has_any_coat, True),
     (AVRegions.INDI, AVRegions.LOWER_KUR, conditions.not_implemented, False),
     (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, True),
+    (AVRegions.INDI, AVRegions.BLURST, conditions.always_accessible, False),
     (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, c: conditions.has_glitch_bomb(s, c) or conditions.has_trenchcoat(s, c), True),
 )
 
@@ -112,6 +115,10 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Zi - Above Veruska', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
     ('Zi - Behind Veruska Left', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
     ('Zi - Behind Veruska Right', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
+
+    ('Zi - Drone Tunnel Upper', AVRegions.UPPER_ZI, conditions.has_drone),
+    ('Zi - Drone Tunnel End', AVRegions.UPPER_ZI, conditions.has_drone),
+    ('Zi - Uruku Room', AVRegions.UPPER_ZI, conditions.has_any_coat),
 
     ('Kur - High Jump Shrine', AVRegions.LOWER_KUR, conditions.always_accessible),
     ('Kur - High Jump Shrine - False Wall', AVRegions.LOWER_KUR, conditions.not_implemented),

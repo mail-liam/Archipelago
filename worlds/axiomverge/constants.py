@@ -40,6 +40,7 @@ class AVRegions(StrEnum):
     UPPER_EDIN = "Upper Edin"
     UPPER_ERIBU = "Upper Eribu"
     UPPER_KUR = "Upper Kur"
+    UPPER_ZI = "Upper Zi"
     WEST_ABSU = "West Absu"
     WEST_ERIBU = "West Eribu"
     WEST_UKKIN_NA = "West Ukkin-Na"
