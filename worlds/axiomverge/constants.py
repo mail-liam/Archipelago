@@ -27,6 +27,7 @@ class AVRegions(StrEnum):
     DINGER_GISBAR = "Dinger-Gisbar"
     EAST_ABSU = "East Absu"
     # E_KUR_MAH = "E-Kur-Mah"
+    ERIBU_INDI = "Eribu-Indi"
     INDI = "Indi"
     LABORATORY = "Laboratory"
     LOWER_ABSU = "Lower Absu"

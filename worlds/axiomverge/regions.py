@@ -22,10 +22,14 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
         multiworld.regions.append(region)
         regions[region_name] = region
 
-    for source_name, dest_name, condition_func, bidirectional in entrance_data:
+    for source_name, dest_name, condition_func, bidirectional, *name in entrance_data:
         source, destination = regions[source_name], regions[dest_name]
         access_rule = lambda state, func=condition_func: func(state, context)
-        source.connect(destination, rule=access_rule)
+
+        if name:
+            source.connect(destination, name[0], rule=access_rule)
+        else:
+            source.connect(destination, rule=access_rule)
 
         if bidirectional:
             destination.connect(source, rule=access_rule)

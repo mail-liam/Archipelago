@@ -64,6 +64,10 @@ def has_drone_tele(state: CollectionState, context: LogicContext):
     return has_drone(state, context) and state.has("Drone Teleport", context.player)
 
 
+def has_fat_beam(state: CollectionState, context: LogicContext):
+    return state.has("Fat Beam", context.player)
+
+
 def has_glitch_2(state: CollectionState, context: LogicContext):
     return state.has_any(("Address Disruptor 2", "Address Bomb"), context.player) or state.has("Progressive Address Disruptor", context.player, count=2)
 
@@ -147,3 +151,20 @@ def outside_lab_access(s: CollectionState, c: LogicContext):
 
 def xedur_access(s: CollectionState, c: LogicContext):
     return can_pierce_wall(s, c) or can_angle_shoot(s, c) or has_trenchcoat(s, c) or has_drone(s, c) or s.has_any(("Grapple", "Field Disruptor"), c.player)
+
+
+def laboratory_access(s: CollectionState, c: LogicContext):
+    return (
+        has_red_coat(s, c)
+        or can_drill(s, c) and (has_grapple(s, c) or has_strict_trenchcoat(s, c) and (c.rocket_jump_enabled or has_high_jump(s, c)))
+    ) and (has_fat_beam(s, c) or has_passcode(s, c)) or has_drone_tele(s, c) and has_passcode(s, c)
+
+
+def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
+    return has_passcode(s, c) and (
+        has_grapple(s, c)
+        or has_red_coat(s, c)
+        or has_drone_tele(s, c)
+        or has_drone(s, c) and has_any_glitch(s, c) and has_high_jump(s, c)
+        or has_strict_trenchcoat(s, c) and (has_drone(s, c) or has_high_jump(s, c))
+    )

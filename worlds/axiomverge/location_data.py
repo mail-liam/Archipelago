@@ -26,9 +26,12 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.WEST_ERIBU, AVRegions.LABORATORY, conditions.can_displacement_warp, False),
     (AVRegions.DINGER_GISBAR, AVRegions.BLURST, conditions.always_accessible, False),
     (AVRegions.UPPER_ERIBU, AVRegions.XEDUR, conditions.xedur_access, False),
+    (AVRegions.UPPER_ERIBU, AVRegions.LABORATORY, conditions.laboratory_access, False),
     (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_drill, True),
-    (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_displacement_warp, False),
-    (AVRegions.LOWER_ABSU, AVRegions.WEST_UKKIN_NA, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_any_coat(s, c), True),
+    (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_displacement_warp, False, "Eribu Grapple Clip Exit"),
+    (AVRegions.LOWER_ERIBU, AVRegions.WEST_UKKIN_NA, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_any_coat(s, c), True),
+    (AVRegions.LOWER_ERIBU, AVRegions.ERIBU_INDI, conditions.has_trenchcoat, True),  # TODO: Be more specific
+    (AVRegions.ERIBU_INDI, AVRegions.INDI, conditions.always_accessible, True),
     (AVRegions.LOWER_ERIBU, AVRegions.WEST_ABSU, conditions.always_accessible, True),
     (
         AVRegions.WEST_ABSU,
@@ -68,6 +71,8 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Eribu - Xedur Reward', AVRegions.XEDUR, conditions.can_damage_boss),
     ('Eribu - Below Xedur', AVRegions.XEDUR, conditions.can_drill),
 
+    ('Eribu - Laboratory Gauntlet', AVRegions.LABORATORY, conditions.always_accessible),
+
     (
         'Eribu - Sentry Bot Tunnel',
         AVRegions.LOWER_ERIBU,
@@ -76,9 +81,12 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     (
         'Eribu - Outside Passcode Room',
         AVRegions.LOWER_ERIBU,
-        lambda s, c: conditions.has_any_glitch(s, c) or conditions.has_drone(s, c) or conditions.has_grapple(s, c) or conditions.has_trenchcoat(s, c),
+        lambda s, c: conditions.has_any_glitch(s, c) and conditions.can_damage(s, c) or conditions.has_drone(s, c) or conditions.has_grapple(s, c) or conditions.has_trenchcoat(s, c),
     ),
+    ('Eribu - Passcode Room', AVRegions.LOWER_ERIBU, conditions.dalkhu_subtum_access),
     ('Eribu - Path to Absu', AVRegions.LOWER_ERIBU, conditions.always_accessible),
+
+    ('Eribu - Path to Indi Ceiling', AVRegions.ERIBU_INDI, conditions.not_implemented),
 
     ('Absu - Main Room Side', AVRegions.WEST_ABSU, conditions.can_drill),
     ('Absu - Diatom Room', AVRegions.WEST_ABSU, conditions.not_implemented),
@@ -119,7 +127,7 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Edin - Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
 
     ('Edin - False Wall Shrine', AVRegions.UPPER_EDIN, conditions.always_accessible),
-    ('Edin - Upper Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c))
+    ('Edin - Upper Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
 
     ('Glitch a Blurst', AVRegions.BLURST, conditions.has_any_glitch),
 )

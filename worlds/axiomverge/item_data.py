@@ -24,7 +24,7 @@ raw_item_data: t.Tuple[int, str, AVItemType, ItemClassification] = (
     # (1, "DataGrenade", AVItemType.WEAPON),
     # (2, "FireWall", AVItemType.WEAPON),
     (3, "Inertial Pulse", AVItemType.WEAPON, ItemClassification.progression_skip_balancing),
-    # (4, "IonBeam", AVItemType.WEAPON),
+    (4, "Ion Beam", AVItemType.WEAPON, ItemClassification.progression_skip_balancing),
     # (5, "LightningGun", AVItemType.WEAPON),
     (
         6,
@@ -47,7 +47,7 @@ raw_item_data: t.Tuple[int, str, AVItemType, ItemClassification] = (
     # (14, "VerticalSpread", AVItemType.WEAPON),
     # (15, "WallTrace", AVItemType.WEAPON),
     # (16, "DistortionField", AVItemType.WEAPON),
-    # (17, "FlameThrower", AVItemType.WEAPON),
+    (17, "FlameThrower", AVItemType.WEAPON, ItemClassification.progression_skip_balancing),
     (18, "Kilver", AVItemType.WEAPON, ItemClassification.progression),
     (19, "Reverse Slicer", AVItemType.WEAPON, ItemClassification.progression),
     # (20, "FatBeam", AVItemType.WEAPON),
