@@ -33,6 +33,8 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.LOWER_ERIBU, AVRegions.ERIBU_INDI, conditions.has_trenchcoat, True),  # TODO: Update
     (AVRegions.ERIBU_INDI, AVRegions.INDI, conditions.always_accessible, True),
     (AVRegions.LOWER_ERIBU, AVRegions.WEST_ABSU, conditions.always_accessible, True),
+    (AVRegions.WEST_ABSU, AVRegions.WEST_ATTIC, lambda s, c: conditions.can_drill(s, c) or conditions.has_strict_trenchcoat(s, c), True),
+    (AVRegions.WEST_ABSU, AVRegions.ELSENOVA, conditions.can_drill, True),
     (
         AVRegions.WEST_ABSU,
         AVRegions.LOWER_ABSU,
@@ -42,6 +44,18 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (
         AVRegions.LOWER_ABSU,
         AVRegions.WEST_ABSU,
+        lambda s, c: conditions.can_damage(s, c) or conditions.has_any_coat(s, c),
+        False,
+    ),
+    (
+        AVRegions.ELSENOVA,
+        AVRegions.LOWER_ABSU,
+        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.has_any_coat(s, c),
+        False,
+    ),
+    (
+        AVRegions.LOWER_ABSU,
+        AVRegions.ELSENOVA,
         lambda s, c: conditions.can_damage(s, c) or conditions.has_any_coat(s, c),
         False,
     ),
@@ -64,7 +78,7 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Eribu - Wheelchair Room', AVRegions.WEST_ERIBU, lambda s, c: conditions.can_displacement_warp(s, c) or conditions.has_drone_tele(s, c)),
     ('Eribu - West Caves Below Pool', AVRegions.WEST_ERIBU, conditions.west_caves_pool_access),
 
-    ('Eribu - Dinger-Gisbar', AVRegions.DINGER_GISBAR, conditions.always_accessible),
+    ('Eribu - FlameThrower', AVRegions.DINGER_GISBAR, conditions.always_accessible),
 
     ('Eribu - Upper Right', AVRegions.UPPER_ERIBU, conditions.always_accessible),
     ('Eribu - Upper Eribu Bomb Check', AVRegions.UPPER_ERIBU, conditions.upper_eribu_bomb_access),
@@ -91,13 +105,19 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
 
     ('Eribu - Path to Indi Ceiling', AVRegions.ERIBU_INDI, conditions.not_implemented),
 
-    ('Absu - Main Room Side', AVRegions.WEST_ABSU, conditions.can_drill),
-    ('Absu - Diatom Room', AVRegions.WEST_ABSU, conditions.not_implemented),
+    ('Absu - Main Room Rock Shaft', AVRegions.WEST_ABSU, conditions.can_drill),
+    (
+        'Absu - Diatom Room',
+        AVRegions.WEST_ABSU,
+        lambda s, c: conditions.has_red_coat(s, c) or conditions.has_any_glitch(s, c) and (conditions.has_any_coat(s, c) or conditions.can_pierce_wall(s, c)),
+    ),
     ('Absu - Skeleton Tunnel', AVRegions.WEST_ABSU, conditions.has_drone),
-    ('Absu - Below Skeleton Tunnel', AVRegions.WEST_ABSU, conditions.not_implemented),
+    ('Absu - Below Skeleton Tunnel', AVRegions.WEST_ABSU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
     ('Absu - Behind Glitch Barrier', AVRegions.WEST_ABSU, conditions.not_implemented),
-    ('Absu - Elsenova', AVRegions.WEST_ABSU, conditions.always_accessible),
-    ('Absu - Switch Cage', AVRegions.WEST_ABSU, conditions.can_pierce_wall),
+
+    ('Absu - Switch Cage', AVRegions.WEST_ATTIC, lambda s, c: conditions.can_pierce_wall(s, c) or conditions.has_any_coat(s, c)),
+
+    ('Absu - Elsenova', AVRegions.ELSENOVA, conditions.always_accessible),
 
     ('Absu - Zombie Jail', AVRegions.LOWER_ABSU, conditions.not_implemented),
     ('Absu - Telal Reward', AVRegions.LOWER_ABSU, conditions.always_accessible),
