@@ -17,10 +17,8 @@ class AVLocationData:
 
 
 # Start Region, Destination Region, Access Rule, Bidirectional
-# NOTE: several regions are bidirectional=False if they are dead-ends to avoid creating an unnecessary entrance
+# NOTE: several regions are bidirectional=False if they are dead-ends without spawns to avoid creating an unnecessary entrance
 entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
-    # TODO: Menu region connection to be dynamic with start location rando
-    (AVRegions.MENU, AVRegions.WEST_ERIBU, conditions.always_accessible, False),  # True in the purest sense, but it won't ever matter
     (AVRegions.WEST_ERIBU, AVRegions.UPPER_ERIBU, conditions.can_damage, True),
     (AVRegions.WEST_ERIBU, AVRegions.DINGER_GISBAR, conditions.dingergisbar_access, False),
     (AVRegions.WEST_ERIBU, AVRegions.LABORATORY, conditions.can_displacement_warp, False),
