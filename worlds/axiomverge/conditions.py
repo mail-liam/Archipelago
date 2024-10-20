@@ -16,11 +16,15 @@ ALL_WEAPONS = tuple(item.name for item in item_data.values() if item.group_name 
 # Logic primitives that are used either independently or part of more complex expressions
 def not_implemented(state: CollectionState, context: LogicContext):
     """Sentinel function for unimplemented logic."""
-    return True
+    return has_trenchcoat(state, context)
 
 
 def always_accessible(state: CollectionState, context: LogicContext):
     return True
+
+
+def any_height(state: CollectionState, context: LogicContext):
+    return has_trenchcoat(state, context) or has_drone_tele(state, context) or has_grapple(state, context) or has_high_jump(state, context)
 
 
 def can_angle_shoot(state: CollectionState, context: LogicContext):
@@ -131,15 +135,21 @@ def dingergisbar_access(s: CollectionState, c: LogicContext):
 
 def upper_eribu_bomb_access(s: CollectionState, c: LogicContext):
     return has_passcode(s, c) and (
-        has_trenchcoat(s, c) or has_drone_tele(s, c)
-        or s.has_all(("Grapple", "Field Disruptor"), c.player) or has_drone(s, c) and has_high_jump(s, c)
+        has_trenchcoat(s, c)
+        or has_drone_tele(s, c)
+        or s.has_all(("Grapple", "Field Disruptor"), c.player)
+        or has_drone(s, c) and has_high_jump(s, c)
     )
 
 
 def bubble_jail_access(s: CollectionState, c: LogicContext):
     return (
-        can_angle_shoot(s, c) or can_pierce_wall(s, c) or has_red_coat(s, c) or has_grapple(s, c)
-        or has_drone(s, c) or has_strict_trenchcoat(s, c) and can_damage_boss(s, c)
+        can_angle_shoot(s, c)
+        or can_pierce_wall(s, c)
+        or has_red_coat(s, c)
+        or has_grapple(s, c)
+        or has_drone(s, c)
+        or has_strict_trenchcoat(s, c) and can_damage_boss(s, c)
     )
 
 
