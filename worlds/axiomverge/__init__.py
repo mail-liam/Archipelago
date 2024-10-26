@@ -2,7 +2,7 @@ from worlds.AutoWorld import WebWorld, World
 from .item_data import item_data, ITEM_NAME_TO_ID
 from .items import AVItem
 from .location_data import LOCATION_NAME_TO_ID
-from .options import AxiomVergeOptions
+from .options import AxiomVergeOptions, AllowRocketJumps, AllowWallGrappleClips
 from .regions import create_regions
 from .types import LogicContext
 
@@ -41,8 +41,11 @@ class AxiomVergeWorld(World):
         self.context = LogicContext(
             displacement_warp_enabled=bool(options.allow_displacement_warps),
             flight_enabled=bool(options.allow_flight),
-            grapple_clip_enabled=bool(options.allow_grapple_clips),
-            rocket_jump_enabled=bool(options.allow_rocket_jumps),
+            floor_grapple_clip_enabled=bool(options.allow_floor_grapple_clips),
+            brown_rocket_jump_enabled=options.allow_rocket_jumps in {AllowRocketJumps.option_brown, AllowRocketJumps.option_both},
+            red_rocket_jump_enabled=options.allow_rocket_jumps in {AllowRocketJumps.option_red, AllowRocketJumps.option_both},
+            roof_grapple_clip_enabled=bool(options.allow_roof_grapple_clips),
+            wall_grapple_clip_difficulty=self.options.allow_wall_grapple_clips,
             player=self.player,
         )
 

@@ -4,6 +4,7 @@ import typing as t
 
 from .constants import AVItemType
 from .items import item_data
+from .options import AllowWallGrappleClips
 
 if t.TYPE_CHECKING:
     from BaseClasses import CollectionState
@@ -21,6 +22,14 @@ def not_implemented(state: CollectionState, context: LogicContext):
 
 def always_accessible(state: CollectionState, context: LogicContext):
     return True
+
+
+def any_coat(state: CollectionState, context: LogicContext):
+    return state.has_any(("Modified Lab Coat", "Trenchcoat", "Red Coat", "Progressive Coat"), context.player)
+
+
+def any_glitch(state: CollectionState, context: LogicContext):
+    return state.has_any(("Address Disruptor 1", "Address Disruptor 2", "Address Bomb", "Progressive Address Disruptor"), context.player)
 
 
 def any_height(state: CollectionState, context: LogicContext):
@@ -48,20 +57,24 @@ def can_drill(state: CollectionState, context: LogicContext):
     return state.has_any(("Laser Drill", "Remote Drone", "Progressive Drone"), context.player) or has_red_coat(state, context)
 
 
+def easy_grapple_clip(state: CollectionState, context: LogicContext):
+    return has_grapple(state, context) and context.wall_grapple_clip_difficulty >= AllowWallGrappleClips.option_easy
+
+
+def floor_grapple_clip(state: CollectionState, context: LogicContext):
+    return has_grapple(state, context) and context.floor_grapple_clip_enabled
+
+
 def can_pierce_wall(state: CollectionState, context: LogicContext):
     return state.has_any(("Kilver", "Reverse Slicer"), context.player)
 
 
-def has_any_glitch(state: CollectionState, context: LogicContext):
-    return state.has_any(("Address Disruptor 1", "Address Disruptor 2", "Address Bomb", "Progressive Address Disruptor"), context.player)
-
-
-def has_any_coat(state: CollectionState, context: LogicContext):
-    return state.has_any(("Modified Lab Coat", "Trenchcoat", "Red Coat", "Progressive Coat"), context.player)
-
-
 def has_drone(state: CollectionState, context: LogicContext):
     return state.has_any(("Remote Drone", "Progressive Drone"), context.player)
+
+
+def has_drone_launch(state: CollectionState, context: LogicContext):
+    return state.has_all(("Remote Drone", "Enhanced Drone Launch"), context.player) or state.has("Progressive Drone", context.player, count=2)
 
 
 def has_drone_tele(state: CollectionState, context: LogicContext):
@@ -104,10 +117,7 @@ def has_trenchcoat(state: CollectionState, context: LogicContext):
     return state.has_any(("Trenchcoat", "Red Coat"), context.player) or state.has("Progressive Coat", context.player, count=2)
 
 
-# has_grapple
-# can_cross_high_jump
 # has_key
-# has_fatbeam
 
 
 # Specific location checks, that are here mainly to avoid complexity in the data structure
@@ -125,8 +135,8 @@ def dingergisbar_access(s: CollectionState, c: LogicContext):
         has_passcode(s, c) and (
             has_red_coat(s, c) and (has_grapple(s, c) or has_drone_tele(s, c))
             or has_glitch_2(s, c) and has_drone_tele(s, c) and (
-                s.has("Enhanced Drone Launch", c.player) or c.flight_enabled or (
-                    has_strict_trenchcoat(s, c) and (has_grapple(s, c) or c.rocket_jump_enabled and has_high_jump(s, c))
+                has_drone_launch(s, c) or c.flight_enabled or (
+                    has_strict_trenchcoat(s, c) and (has_grapple(s, c) or c.brown_rocket_jump_enabled and has_high_jump(s, c))
                 )
             )
         )
@@ -134,11 +144,10 @@ def dingergisbar_access(s: CollectionState, c: LogicContext):
 
 
 def upper_eribu_bomb_access(s: CollectionState, c: LogicContext):
-    return has_passcode(s, c) and (
+    return has_glitch_bomb(s, c) and (
         has_trenchcoat(s, c)
         or has_drone_tele(s, c)
-        or s.has_all(("Grapple", "Field Disruptor"), c.player)
-        or has_drone(s, c) and has_high_jump(s, c)
+        or has_high_jump(s, c) and (has_grapple(s, c) or has_drone(s, c))
     )
 
 
@@ -166,7 +175,7 @@ def xedur_access(s: CollectionState, c: LogicContext):
 def laboratory_access(s: CollectionState, c: LogicContext):
     return (
         has_red_coat(s, c)
-        or can_drill(s, c) and (has_grapple(s, c) or has_strict_trenchcoat(s, c) and (c.rocket_jump_enabled or has_high_jump(s, c)))
+        or can_drill(s, c) and (has_grapple(s, c) or has_strict_trenchcoat(s, c) and (c.brown_rocket_jump_enabled or has_high_jump(s, c)))
     ) and (has_fat_beam(s, c) or has_passcode(s, c)) or has_drone_tele(s, c) and has_passcode(s, c)
 
 
@@ -175,6 +184,6 @@ def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
         has_grapple(s, c)
         or has_red_coat(s, c)
         or has_drone_tele(s, c)
-        or has_drone(s, c) and has_any_glitch(s, c) and has_high_jump(s, c)
+        or has_drone(s, c) and any_glitch(s, c) and has_high_jump(s, c)
         or has_strict_trenchcoat(s, c) and (has_drone(s, c) or has_high_jump(s, c))
     )

@@ -26,6 +26,7 @@ class AVRegions(StrEnum):
     BLURST = "Blurst"
     DINGER_GISBAR = "Dinger-Gisbar"
     EAST_ABSU = "East Absu"
+    EAST_ABSU_LEDGE = "East Absu Ledge"
     EAST_ATTIC = "East Attic"
     # E_KUR_MAH = "E-Kur-Mah"
     ELSENOVA = "Elsenova"

@@ -155,11 +155,11 @@ raw_item_data: t.Tuple[int, str, AVItemType, ItemClassification] = (
     # (118, "PowerNodeFragment30", AVItemType.POWER_NODE_FRAGMENT),
     (119, "RangeNode1", AVItemType.RANGE_NODE, ItemClassification.useful, True),
     (120, "RangeNode2", AVItemType.RANGE_NODE, ItemClassification.useful, True),
-    # (121, "RangeNode3", AVItemType.RANGE_NODE),
+    (121, "RangeNode3", AVItemType.RANGE_NODE, ItemClassification.useful, True),
     # (122, "RangeNode4", AVItemType.RANGE_NODE),
     (123, "SizeNode1", AVItemType.SIZE_NODE, ItemClassification.useful, True),
     (124, "SizeNode2", AVItemType.SIZE_NODE, ItemClassification.useful, True),
-    # (125, "SizeNode3", AVItemType.SIZE_NODE),
+    (125, "SizeNode3", AVItemType.SIZE_NODE, ItemClassification.useful, True),
     # (126, "SizeNode4", AVItemType.SIZE_NODE),
 )
 

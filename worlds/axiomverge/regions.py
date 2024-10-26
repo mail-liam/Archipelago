@@ -34,9 +34,8 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
         if bidirectional:
             destination.connect(source, rule=access_rule)
 
-    menu = Region(AVRegions.MENU, context.player, multiworld)
     # TODO: Menu region connection to be dynamic with start location rando
-    menu.connect(AVRegions.WEST_ERIBU)
+    regions[AVRegions.MENU].connect(regions[AVRegions.WEST_ERIBU])
 
     for data in location_data:
         region = regions[data.region_name]

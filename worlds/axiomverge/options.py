@@ -25,7 +25,10 @@ class ProgressiveCoat(DefaultOnToggle):
 
 
 class ProgressiveDrone(DefaultOnToggle):
-    """Combine Drone upgrades into a single progressive upgrade. Drone -> Launcher -> Teleport."""
+    """
+    Combine Drone upgrades into a single progressive upgrade. Drone -> Launcher.
+    Drone Teleport remains separate.
+    """
     display_name = "Progressive Drone Upgrades"
 
 
@@ -42,20 +45,40 @@ class AllowFlight(Toggle):
     """Allows for flying to be considered in logic."""
 
 
-class AllowGrappleClips(Toggle):
-    """Allows for grapple clips to be considered in logic."""
+class AllowRoofGrappleClips(Toggle):
+    """Allows for upwards coat dashes with grapple to be considered in logic."""
 
 
-class AllowRocketJumps(Toggle):
+class AllowWallGrappleClips(Choice):
+    """Allows for grapple clips through 1 width walls to be considered in logic."""
+
+    option_off = 0
+    option_easy = 1
+    option_hard = 2
+    options_insane = 3
+
+
+class AllowFloorGrappleClips(Toggle):
+    """Allows for grapple clips through floors to be considered in logic."""
+
+
+class AllowRocketJumps(Choice):
     """Allows for rocket jumps to be considered in logic."""
+
+    option_off = 0
+    option_brown = 1
+    option_red = 2
+    option_both = 3
 
 
 @dataclass
 class AxiomVergeOptions(PerGameCommonOptions):
     allow_displacement_warps: AllowDisplacementWarps
     allow_flight: AllowFlight
-    allow_grapple_clips: AllowGrappleClips
+    allow_floor_grapple_clips: AllowFloorGrappleClips
+    allow_roof_grapple_clips: AllowRoofGrappleClips
     allow_rocket_jumps: AllowRocketJumps
+    allow_wall_grapple_clips: AllowWallGrappleClips
     goal: Goal
     progressive_address_disruptor: ProgressiveAddressDisruptor
     progressive_coat: ProgressiveCoat
