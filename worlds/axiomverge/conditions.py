@@ -57,16 +57,22 @@ def can_drill(state: CollectionState, context: LogicContext):
     return state.has_any(("Laser Drill", "Remote Drone", "Progressive Drone"), context.player) or has_red_coat(state, context)
 
 
+def can_pierce_wall(state: CollectionState, context: LogicContext):
+    return state.has_any(("Kilver", "Reverse Slicer"), context.player)
+
+
 def easy_grapple_clip(state: CollectionState, context: LogicContext):
     return has_grapple(state, context) and context.wall_grapple_clip_difficulty >= AllowWallGrappleClips.option_easy
 
 
+def extra_brown_height(state: CollectionState, context: LogicContext):
+    return has_strict_trenchcoat(state, context) and (
+        context.brown_rocket_jump_enabled or has_high_jump(state, context)
+    )
+
+
 def floor_grapple_clip(state: CollectionState, context: LogicContext):
     return has_grapple(state, context) and context.floor_grapple_clip_enabled
-
-
-def can_pierce_wall(state: CollectionState, context: LogicContext):
-    return state.has_any(("Kilver", "Reverse Slicer"), context.player)
 
 
 def has_drone(state: CollectionState, context: LogicContext):
@@ -105,6 +111,15 @@ def has_passcode(state: CollectionState, context: LogicContext):
     return state.has("Passcode Tool", context.player)
 
 
+def has_power_nodes(state: CollectionState, context: LogicContext, count: int):
+    return True  # TODO: Implement properly when decided upon
+    # if not context.node_requirements_enabled:
+    #     return True  # Short-circuit if not enabled
+    # NOTE: This doesn't work atm due to specific names for Nodes
+    # May need the mod to treat Nodes/Fragments like Progressive Items?
+    # return state.has("Power Node", context.player, count=2) or state.has("Power Node Fragment", context.player, count=12)
+
+
 def has_red_coat(state: CollectionState, context: LogicContext):
     return state.has("Red Coat", context.player) or state.has("Progressive Coat", context.player, count=3)
 
@@ -115,6 +130,12 @@ def has_strict_trenchcoat(state: CollectionState, context: LogicContext):
 
 def has_trenchcoat(state: CollectionState, context: LogicContext):
     return state.has_any(("Trenchcoat", "Red Coat"), context.player) or state.has("Progressive Coat", context.player, count=2)
+
+
+def roof_grapple_clip(state: CollectionState, context: LogicContext):
+    return has_grapple(state, context) and context.roof_grapple_clip_enabled
+
+
 
 
 # has_key
@@ -187,3 +208,56 @@ def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
         or has_drone(s, c) and any_glitch(s, c) and has_high_jump(s, c)
         or has_strict_trenchcoat(s, c) and (has_drone(s, c) or has_high_jump(s, c))
     )
+
+
+def basic_attic_access(s: CollectionState, c: LogicContext):
+    return has_red_coat(s, c) or has_grapple(s, c) or has_drone(s, c) or extra_brown_height(s, c)
+
+
+def attic_transition_upper(s: CollectionState, c: LogicContext):
+    return has_glitch_bomb(s, c) and (
+        has_red_coat(s, c) or has_grapple(s, c) or has_drone_tele(s, c) or extra_brown_height(s, c)
+    )
+
+
+def attic_far_right_access(s: CollectionState, c: LogicContext):
+    return (
+        has_red_coat(s, c)
+        or has_drone(s, c) and (
+            has_grapple(s, c) or has_drone_tele(s, c) or has_high_jump(s, c) or has_drone_launch(s, c) or has_strict_trenchcoat(s, c)
+        )
+        or has_strict_trenchcoat(s, c) and (has_grapple(s, c) or has_high_jump(s, c))
+    )
+
+
+def elsenova_east_attic_access(s: CollectionState, c: LogicContext):
+    return has_glitch_2(s, c) and (
+        has_drone_tele(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c)
+    )
+
+
+def floating_platform_access(s: CollectionState, c: LogicContext):
+    return has_drone(s, c) or has_trenchcoat(s, c) or (
+        can_drill(s, c) and (has_high_jump(s, c) or has_grapple(s, c) or any_glitch(s, c))
+    )
+
+
+def zombie_tunnel_access(s: CollectionState, c: LogicContext):
+    return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and (
+        c.brown_rocket_jump_enabled or has_drone_tele(s, c) or has_grapple(s, c) or has_high_jump(s, c)
+    )
+
+
+def basement_regular_access(s: CollectionState, c: LogicContext):
+    return has_glitch_2(s, c) and any_coat(s, c) and (has_drone(s, c) or has_red_coat(s, c) and roof_grapple_clip(s, c))
+
+
+def gated_alcove_access(s: CollectionState, c: LogicContext):
+    return can_drill(s, c) and (
+        any_glitch(s, c) or easy_grapple_clip(s, c) or any_coat(s, c)
+        or s.has_any(("Flamethrower", "Scissor Beam", "Reverse Slicer", "Fat Beam"), c.player)
+    )
+
+
+def lower_east_zi_access(s: CollectionState, c: LogicContext):
+    return can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c)

@@ -23,11 +23,14 @@ class AVItemType(StrEnum):
 
 
 class AVRegions(StrEnum):
+    ABSU_BASEMENT = "Absu Basement"
+    ABSU_ZI_ENTRANCE = "Absu Zi Entrance"
     BLURST = "Blurst"
     DINGER_GISBAR = "Dinger-Gisbar"
     EAST_ABSU = "East Absu"
     EAST_ABSU_LEDGE = "East Absu Ledge"
     EAST_ATTIC = "East Attic"
+    EAST_ZI = "East Zi"
     # E_KUR_MAH = "E-Kur-Mah"
     ELSENOVA = "Elsenova"
     ERIBU_INDI = "Eribu-Indi"
@@ -40,6 +43,7 @@ class AVRegions(StrEnum):
     LOWER_ZI = "Lower Zi"
     # MAR_URU = "Mar-Uru"
     MENU = "Menu"
+    TELAL = "Telal"
     UPPER_EDIN = "Upper Edin"
     UPPER_ERIBU = "Upper Eribu"
     UPPER_KUR = "Upper Kur"
