@@ -79,6 +79,14 @@ class AxiomVergeWorld(World):
             av_itempool.append(self.create_item("Trenchcoat"))
             av_itempool.append(self.create_item("Red Coat"))
 
+        if bool(options.progressive_drone):
+            av_itempool.append(self.create_item("Progressive Drone"))
+            av_itempool.append(self.create_item("Progressive Drone"))
+        else:
+            av_itempool.append(self.create_item("Remote Drone"))
+            av_itempool.append(self.create_item("Enhanced Drone Launch"))
+
+
         self.multiworld.itempool.extend(av_itempool)
 
 
