@@ -27,7 +27,7 @@ class TestOptionProgCoatOn(AVTestBase):
         self.assertEqual(len(prog_items), 3)
 
 
-class TestOptionProgCoatOff(AVTestBase):
+class TestOptionProgDisruptorOff(AVTestBase):
     options = {
         "progressive_address_disruptor": 0,
     }
@@ -50,4 +50,30 @@ class TestOptionProgDisruptorOn(AVTestBase):
         self.assertListEqual(base_items, [])
 
         prog_items = self.get_items_by_name(("Progressive Address Disruptor",))
+        self.assertEqual(len(prog_items), 2)
+
+
+class TestOptionProgDroneOff(AVTestBase):
+    options = {
+        "progressive_drone": 0,
+    }
+
+    def test_prog_drone_off(self):
+        prog_items = self.get_items_by_name(("Progressive Drone",))
+        self.assertListEqual(prog_items, [])
+
+        base_items = self.get_items_by_name(("Remote Drone", "Enhanced Drone Launch"))
+        self.assertListEqual([item.name for item in base_items], ["Remote Drone", "Enhanced Drone Launch"])
+
+
+class TestOptionProgDroneOn(AVTestBase):
+    options = {
+        "progressive_drone": 1,
+    }
+
+    def test_prog_drone_on(self):
+        base_items = self.get_items_by_name(("Remote Drone", "Enhanced Drone Launch"))
+        self.assertListEqual(base_items, [])
+
+        prog_items = self.get_items_by_name(("Progressive Drone",))
         self.assertEqual(len(prog_items), 2)
