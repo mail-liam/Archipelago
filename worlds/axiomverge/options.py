@@ -55,7 +55,7 @@ class AllowWallGrappleClips(Choice):
     option_off = 0
     option_easy = 1
     option_hard = 2
-    options_insane = 3
+    option_insane = 3
 
 
 class AllowFloorGrappleClips(Toggle):

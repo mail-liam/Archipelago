@@ -75,6 +75,10 @@ def floor_grapple_clip(state: CollectionState, context: LogicContext):
     return has_grapple(state, context) and context.floor_grapple_clip_enabled
 
 
+def hard_grapple_clip(state: CollectionState, context: LogicContext):
+    return has_grapple(state, context) and context.wall_grapple_clip_difficulty >= AllowWallGrappleClips.option_hard
+
+
 def has_drone(state: CollectionState, context: LogicContext):
     return state.has_any(("Remote Drone", "Progressive Drone"), context.player)
 
@@ -130,6 +134,10 @@ def has_strict_trenchcoat(state: CollectionState, context: LogicContext):
 
 def has_trenchcoat(state: CollectionState, context: LogicContext):
     return state.has_any(("Trenchcoat", "Red Coat"), context.player) or state.has("Progressive Coat", context.player, count=2)
+
+
+def insane_grapple_clip(state: CollectionState, context: LogicContext):
+    return has_grapple(state, context) and context.wall_grapple_clip_difficulty == AllowWallGrappleClips.option_insane
 
 
 def roof_grapple_clip(state: CollectionState, context: LogicContext):
@@ -196,8 +204,9 @@ def xedur_access(s: CollectionState, c: LogicContext):
 def laboratory_access(s: CollectionState, c: LogicContext):
     return (
         has_red_coat(s, c)
-        or can_drill(s, c) and (has_grapple(s, c) or has_strict_trenchcoat(s, c) and (c.brown_rocket_jump_enabled or has_high_jump(s, c)))
+        or can_drill(s, c) and (has_grapple(s, c) or extra_brown_height(s, c))
     ) and (has_fat_beam(s, c) or has_passcode(s, c)) or has_drone_tele(s, c) and has_passcode(s, c)
+
 
 
 def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
@@ -208,6 +217,10 @@ def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
         or has_drone(s, c) and any_glitch(s, c) and has_high_jump(s, c)
         or has_strict_trenchcoat(s, c) and (has_drone(s, c) or has_high_jump(s, c))
     )
+
+
+def basement_regular_access(s: CollectionState, c: LogicContext):
+    return has_glitch_2(s, c) and any_coat(s, c) and (has_drone(s, c) or has_red_coat(s, c) and roof_grapple_clip(s, c))
 
 
 def basic_attic_access(s: CollectionState, c: LogicContext):
@@ -230,9 +243,9 @@ def attic_far_right_access(s: CollectionState, c: LogicContext):
     )
 
 
-def elsenova_east_attic_access(s: CollectionState, c: LogicContext):
-    return has_glitch_2(s, c) and (
-        has_drone_tele(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c)
+def elsenova_west_attic_access(s: CollectionState, c: LogicContext):
+    return can_drill(s, c) and (
+        has_drone_tele(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c) or any_glitch(s, c)
     )
 
 
@@ -243,13 +256,35 @@ def floating_platform_access(s: CollectionState, c: LogicContext):
 
 
 def zombie_tunnel_access(s: CollectionState, c: LogicContext):
-    return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and (
-        c.brown_rocket_jump_enabled or has_drone_tele(s, c) or has_grapple(s, c) or has_high_jump(s, c)
+    return (
+        has_red_coat(s, c)
+        or has_strict_trenchcoat(s, c) and (
+            c.brown_rocket_jump_enabled or has_drone_tele(s, c) or has_grapple(s, c) or has_high_jump(s, c)
+        )
+        or has_high_jump(s, c) and any_coat(s, c) and insane_grapple_clip(s, c)
     )
 
 
-def basement_regular_access(s: CollectionState, c: LogicContext):
-    return has_glitch_2(s, c) and any_coat(s, c) and (has_drone(s, c) or has_red_coat(s, c) and roof_grapple_clip(s, c))
+def lower_east_absu_access(s: CollectionState, c: LogicContext):
+    return has_trenchcoat(s, c) or has_drone_tele(s, c) or any_glitch(s, c) or has_grapple(s, c)
+
+
+def telal_east_absu_access(s: CollectionState, c: LogicContext):
+    # NOTE: This rule is concerned with conditions not permitted by the above access rule (Lower to East)
+    # Hence really the "any" here should be white, but a higher coat works here and via Lower to East, so it's ok
+    return (
+        any_coat(s, c) and s.has_any(("Reverse Slicer", "Flamethrower"), c.player)
+        or s.has("RangeNode", c.player, count=2) and s.has("Flamethrower", c.player)  # TODO: Make the RangeNode check work
+        or s.has_any(("Fat Beam", "Scissor Beam"), c.player)
+    )
+
+
+def east_absu_indi_tunnel_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c)
+        or any_coat(s, c) and (has_drone_tele(s, c) or has_grapple(s, c))
+        or hard_grapple_clip(s, c)
+    )
 
 
 def gated_alcove_access(s: CollectionState, c: LogicContext):
@@ -257,6 +292,11 @@ def gated_alcove_access(s: CollectionState, c: LogicContext):
         any_glitch(s, c) or easy_grapple_clip(s, c) or any_coat(s, c)
         or s.has_any(("Flamethrower", "Scissor Beam", "Reverse Slicer", "Fat Beam"), c.player)
     )
+
+
+def zi_vanilla_exit(s: CollectionState, c: LogicContext):
+    # NOTE: Maybe Damage Boost here for the masochists
+    return has_trenchcoat(s, c) or has_grapple(s, c) or has_drone_tele(s, c)
 
 
 def lower_east_zi_access(s: CollectionState, c: LogicContext):

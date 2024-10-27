@@ -49,7 +49,7 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (
         AVRegions.WEST_ABSU,
         AVRegions.LOWER_ABSU,
-        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c),
+        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c) or conditions.easy_grapple_clip(s, c),
         False,
     ),
     (
@@ -59,15 +59,17 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
         False,
     ),
     (AVRegions.WEST_ATTIC, AVRegions.EAST_ATTIC, conditions.attic_transition_upper, True),
-    (AVRegions.WEST_ATTIC, AVRegions.ELSENOVA, conditions.can_drill, True),
+    (AVRegions.WEST_ATTIC, AVRegions.EAST_ATTIC, lambda s, c: conditions.can_drill(s, c) and conditions.has_glitch_2(s, c), False, "West to East Attic Default"),
+    (AVRegions.EAST_ATTIC, AVRegions.WEST_ATTIC, lambda s, c: conditions.can_drill(s, c) and conditions.has_glitch_2(s, c), False, "East to West Attic Default"),
+    (AVRegions.WEST_ATTIC, AVRegions.ELSENOVA, conditions.can_drill, False),
+    (AVRegions.ELSENOVA, AVRegions.WEST_ATTIC, conditions.elsenova_west_attic_access, False),
     (
         AVRegions.ELSENOVA,
         AVRegions.LOWER_ABSU,
-        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c),
+        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c) or conditions.easy_grapple_clip(s, c),
         False,
     ),
-    (AVRegions.EAST_ATTIC, AVRegions.ELSENOVA, conditions.has_glitch_2, False),
-    (AVRegions.ELSENOVA, AVRegions.EAST_ATTIC, conditions.elsenova_east_attic_access, False),
+    (AVRegions.EAST_ATTIC, AVRegions.ELSENOVA, conditions.has_glitch_2, True),
     (
         AVRegions.LOWER_ABSU,
         AVRegions.ELSENOVA,
@@ -83,21 +85,28 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
         "Basement Displacement Warp",
     ),
     (AVRegions.LOWER_ABSU, AVRegions.TELAL, conditions.can_damage_boss, False),
-    (AVRegions.LOWER_ABSU, AVRegions.EAST_ABSU, conditions.not_implemented, False),
+    (AVRegions.LOWER_ABSU, AVRegions.EAST_ABSU, conditions.lower_east_absu_access, False),
     (AVRegions.LOWER_ABSU, AVRegions.EAST_ABSU_LEDGE, conditions.has_drone_launch, False),
+    (AVRegions.TELAL, AVRegions.EAST_ABSU, conditions.telal_east_absu_access, False),
     (AVRegions.EAST_ABSU, AVRegions.LOWER_ABSU, conditions.always_accessible, False),
-    (AVRegions.EAST_ABSU, AVRegions.TELAL, conditions.any_height, False), # Verify
+    (AVRegions.EAST_ABSU, AVRegions.TELAL, conditions.any_height, False),
+    (AVRegions.EAST_ABSU, AVRegions.INDI_TUNNEL, conditions.east_absu_indi_tunnel_access, False),
+    (AVRegions.INDI_TUNNEL, AVRegions.EAST_ABSU, lambda s, c: conditions.hard_grapple_clip(s, c) or conditions.any_coat(s, c), False),
+    (AVRegions.INDI_TUNNEL, AVRegions.INDI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c), False),
     (AVRegions.EAST_ABSU, AVRegions.EAST_ABSU_LEDGE, conditions.always_accessible, False),
     (AVRegions.EAST_ABSU, AVRegions.ABSU_ZI_ENTRANCE, conditions.always_accessible, True),
     (AVRegions.ABSU_ZI_ENTRANCE, AVRegions.LOWER_ZI, conditions.always_accessible, False),
-    (AVRegions.LOWER_ZI, AVRegions.ABSU_ZI_ENTRANCE, conditions.not_implemented, False),
-    (AVRegions.LOWER_ZI, AVRegions.UPPER_ZI, conditions.has_high_jump, False),  # TODO: Update
-    (AVRegions.LOWER_ZI, AVRegions.EAST_ZI, conditions.lower_east_zi_access, True),
+    (AVRegions.LOWER_ZI, AVRegions.ABSU_ZI_ENTRANCE, conditions.zi_vanilla_exit, False),
+    (AVRegions.LOWER_ZI, AVRegions.UPPER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c), False),
     (AVRegions.UPPER_ZI, AVRegions.LOWER_ZI, conditions.always_accessible, False),
-    (AVRegions.LOWER_ZI, AVRegions.LOWER_KUR, conditions.always_accessible, True),
-    (AVRegions.LOWER_KUR, AVRegions.INDI, conditions.not_implemented, False),
+    (AVRegions.LOWER_ZI, AVRegions.EAST_ZI, conditions.lower_east_zi_access, True),
+    (AVRegions.UPPER_ZI, AVRegions.EAST_ZI, conditions.always_accessible, False),
+    (AVRegions.EAST_ZI, AVRegions.UPPER_ZI, conditions.any_height, False),
+    (AVRegions.EAST_ZI, AVRegions.LOWER_KUR, conditions.always_accessible, True),
     (AVRegions.LOWER_KUR, AVRegions.UPPER_KUR, conditions.any_coat, True),
-    (AVRegions.INDI, AVRegions.LOWER_KUR, conditions.not_implemented, False),
+    (AVRegions.LOWER_KUR, AVRegions.INDI, conditions.not_implemented, False),
+    (AVRegions.INDI, AVRegions.INDI_TUNNEL, conditions.always_accessible, False),
+    (AVRegions.INDI, AVRegions.LOWER_KUR, conditions.any_coat, False),
     (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, True),
     (AVRegions.INDI, AVRegions.BLURST, conditions.always_accessible, False),
     (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, c: conditions.has_glitch_bomb(s, c) or conditions.has_trenchcoat(s, c), True),
@@ -151,7 +160,6 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ),
     ('Absu - Skeleton Tunnel', AVRegions.WEST_ABSU, conditions.has_drone),
     ('Absu - Below Skeleton Tunnel', AVRegions.WEST_ABSU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
-    ('Absu - Behind Glitch Barrier', AVRegions.WEST_ABSU, conditions.not_implemented),
 
     ('Absu - Switch Cage', AVRegions.WEST_ATTIC, lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c)),
     ('Absu - Attic Far Left', AVRegions.WEST_ATTIC, conditions.basic_attic_access),
@@ -162,7 +170,7 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
 
     ('Absu - Elsenova', AVRegions.ELSENOVA, conditions.always_accessible),
 
-    ('Absu - Below Zombie Jail', AVRegions.ABSU_BASEMENT, conditions.always_accessible),
+    ('Absu - Behind Glitch Barrier', AVRegions.ABSU_BASEMENT, conditions.always_accessible),
 
     ('Absu - Zombie Jail', AVRegions.LOWER_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c)),
     ('Absu - Lowest Point', AVRegions.LOWER_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c)),
@@ -170,6 +178,8 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Absu - Zombie Tunnel', AVRegions.LOWER_ABSU, conditions.zombie_tunnel_access),
 
     ('Absu - Telal Reward', AVRegions.TELAL, conditions.always_accessible),
+
+    ('Absu - Indi Tunnel Side Room', AVRegions.INDI_TUNNEL, conditions.any_height),
 
     ('Absu - Trapped Diatoms', AVRegions.EAST_ABSU_LEDGE, lambda s, c: conditions.can_drill(s, c) or conditions.any_glitch(s, c)),
 
@@ -188,7 +198,7 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
         AVRegions.LOWER_ZI,
         lambda s, c: conditions.can_drill and (conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
     ),
-    ('Zi - Roof Alcove', AVRegions.LOWER_ZI, conditions.not_implemented),
+    ('Zi - Hidden Roof Alcove', AVRegions.LOWER_ZI, conditions.not_implemented),
 
     ('Zi - Above Veruska', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
     ('Zi - Behind Veruska Left', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),

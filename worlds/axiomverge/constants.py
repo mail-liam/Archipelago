@@ -24,7 +24,7 @@ class AVItemType(StrEnum):
 
 class AVRegions(StrEnum):
     ABSU_BASEMENT = "Absu Basement"
-    ABSU_ZI_ENTRANCE = "Absu Zi Entrance"
+    ABSU_ZI_ENTRANCE = "Absu-Zi Entrance"
     BLURST = "Blurst"
     DINGER_GISBAR = "Dinger-Gisbar"
     EAST_ABSU = "East Absu"
@@ -35,6 +35,7 @@ class AVRegions(StrEnum):
     ELSENOVA = "Elsenova"
     ERIBU_INDI = "Eribu-Indi"
     INDI = "Indi"
+    INDI_TUNNEL = "Indi Tunnel"
     LABORATORY = "Laboratory"
     LOWER_ABSU = "Lower Absu"
     LOWER_EDIN = "Lower Edin"
