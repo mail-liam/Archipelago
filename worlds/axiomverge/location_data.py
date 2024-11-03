@@ -200,7 +200,7 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     (
         'Zi - Secret Room near lower Save',
         AVRegions.LOWER_ZI,
-        lambda s, c: conditions.can_drill and (conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
+        lambda s, c: conditions.can_drill(s, c) and (conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
     ),
     ('Zi - Furglot Tunnel', AVRegions.LOWER_ZI, conditions.furglot_tunnel_access),
     ('Zi - False Roof Alcove', AVRegions.LOWER_ZI, conditions.zi_false_roof_access),
