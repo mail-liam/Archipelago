@@ -11,7 +11,8 @@ if t.TYPE_CHECKING:
     from .types import LogicContext
 
 
-ALL_WEAPONS = tuple(item.name for item in item_data.values() if item.group_name == AVItemType.WEAPON)
+ALL_WEAPONS = {item.name for item in item_data.values() if item.group_name == AVItemType.WEAPON}
+RANGED_WEAPONS = ALL_WEAPONS - {"Tethered Charge", "Kilver", "Distortion Field", "Multi-Disruptor", "Firewall", "Lightning Gun", "Shards", "Quantum Variegator"}
 
 
 # Logic primitives that are used either independently or part of more complex expressions
@@ -297,6 +298,14 @@ def gated_alcove_access(s: CollectionState, c: LogicContext):
 def zi_vanilla_exit(s: CollectionState, c: LogicContext):
     # NOTE: Maybe Damage Boost here for the masochists
     return has_trenchcoat(s, c) or has_grapple(s, c) or has_drone_tele(s, c)
+
+
+def furglot_tunnel_access(s: CollectionState, c: LogicContext):
+    return has_glitch_2(s, c) and any_height(s, c) or has_trenchcoat(s, c) and (any_glitch(s, c) or s.has_any(RANGED_WEAPONS, c.player))
+
+
+def zi_false_roof_access(s: CollectionState, c: LogicContext):
+    return any_height(s, c) and (can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c))
 
 
 def lower_east_zi_access(s: CollectionState, c: LogicContext):

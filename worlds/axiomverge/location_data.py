@@ -40,7 +40,7 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
         lambda s, c: conditions.has_drone_tele(s, c) or conditions.has_trenchcoat(s, c) or conditions.has_grapple(s, c) or conditions.has_high_jump(s, c),
         False,
     ),
-    (AVRegions.ERIBU_INDI, AVRegions.INDI, conditions.always_accessible, True),
+    (AVRegions.ERIBU_INDI, AVRegions.WEST_INDI, conditions.always_accessible, True),
     (AVRegions.LOWER_ERIBU, AVRegions.WEST_ABSU, conditions.always_accessible, True),
     (AVRegions.WEST_ABSU, AVRegions.WEST_ATTIC, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.can_drill(s, c), True),
     (AVRegions.WEST_ABSU, AVRegions.ELSENOVA, conditions.can_drill, True),
@@ -102,11 +102,15 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.LOWER_ZI, AVRegions.EAST_ZI, conditions.lower_east_zi_access, True),
     (AVRegions.UPPER_ZI, AVRegions.EAST_ZI, conditions.always_accessible, False),
     (AVRegions.EAST_ZI, AVRegions.UPPER_ZI, conditions.any_height, False),
+    (AVRegions.EAST_ZI, AVRegions.PREVIEW_ROOM, lambda s, c: conditions.any_coat(s, c) and conditions.any_height(s, c), False),
     (AVRegions.EAST_ZI, AVRegions.LOWER_KUR, conditions.always_accessible, True),
+    (AVRegions.UPPER_ZI, AVRegions.PREVIEW_ROOM, conditions.floor_grapple_clip, False),
     (AVRegions.LOWER_KUR, AVRegions.UPPER_KUR, conditions.any_coat, True),
-    (AVRegions.LOWER_KUR, AVRegions.INDI, conditions.not_implemented, False),
+    # (AVRegions.LOWER_KUR, AVRegions.INDI, conditions.not_implemented, False),
+    (AVRegions.WEST_INDI, AVRegions.INDI, conditions.any_height, False),
+    (AVRegions.INDI, AVRegions.WEST_INDI, conditions.always_accessible, False),
     (AVRegions.INDI, AVRegions.INDI_TUNNEL, conditions.always_accessible, False),
-    (AVRegions.INDI, AVRegions.LOWER_KUR, conditions.any_coat, False),
+    # (AVRegions.INDI, AVRegions.LOWER_KUR, conditions.any_coat, False),
     (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, True),
     (AVRegions.INDI, AVRegions.BLURST, conditions.always_accessible, False),
     (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, c: conditions.has_glitch_bomb(s, c) or conditions.has_trenchcoat(s, c), True),
@@ -198,7 +202,8 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
         AVRegions.LOWER_ZI,
         lambda s, c: conditions.can_drill and (conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
     ),
-    ('Zi - Hidden Roof Alcove', AVRegions.LOWER_ZI, conditions.not_implemented),
+    ('Zi - Furglot Tunnel', AVRegions.LOWER_ZI, conditions.furglot_tunnel_access),
+    ('Zi - False Roof Alcove', AVRegions.LOWER_ZI, conditions.zi_false_roof_access),
 
     ('Zi - Above Veruska', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
     ('Zi - Behind Veruska Left', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
@@ -207,6 +212,9 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Zi - Ceiling Alcove Below Uruku', AVRegions.UPPER_ZI, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c) or conditions.can_drill(s, c) and conditions.any_height(s, c)),
     ('Zi - Drone Tunnel Upper', AVRegions.UPPER_ZI, lambda s, c: conditions.has_drone(s, c) and conditions.has_power_nodes(s, c, 2)),
     ('Zi - Drone Tunnel End', AVRegions.UPPER_ZI, lambda s, c: conditions.has_drone(s, c) and conditions.has_power_nodes(s, c, 2)),
+
+    ('Zi - Preview Node', AVRegions.PREVIEW_ROOM, conditions.always_accessible),
+
     ('Zi - Uruku Room', AVRegions.UPPER_ZI, conditions.any_coat),
 
     ('Kur - High Jump Shrine', AVRegions.LOWER_KUR, conditions.always_accessible),
@@ -215,7 +223,8 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Kur - Near Indi Entrance', AVRegions.UPPER_KUR, conditions.always_accessible),
     ('Kur - Inside Cliff', AVRegions.UPPER_KUR, conditions.has_red_coat),
 
-    ('Indi - Path to Eribu', AVRegions.INDI, conditions.has_drone),
+    ('Indi - Path to Eribu', AVRegions.WEST_INDI, conditions.has_drone),
+
     ('Indi - Outside Save Room', AVRegions.INDI, conditions.has_trenchcoat),
 
     ('Ukkin-Na - Long Fall Shaft Base', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
