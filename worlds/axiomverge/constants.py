@@ -56,3 +56,9 @@ class AVRegions(StrEnum):
     WEST_INDI = "West Indi"
     WEST_UKKIN_NA = "West Ukkin-Na"
     XEDUR = "Xedur"
+
+
+START_OPTION_MAP = {
+    0: (AVRegions.WEST_ERIBU, "Area1", "SaveRoom1"),
+    1: (AVRegions.ELSENOVA, "Area2", "SaveRoom2"),
+}

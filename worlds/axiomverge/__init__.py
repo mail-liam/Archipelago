@@ -1,4 +1,5 @@
 from worlds.AutoWorld import WebWorld, World
+from .constants import START_OPTION_MAP
 from .item_data import item_data, ITEM_NAME_TO_ID
 from .items import AVItem
 from .location_data import LOCATION_NAME_TO_ID
@@ -45,6 +46,7 @@ class AxiomVergeWorld(World):
             brown_rocket_jump_enabled=options.allow_rocket_jumps in {AllowRocketJumps.option_brown, AllowRocketJumps.option_both},
             red_rocket_jump_enabled=options.allow_rocket_jumps in {AllowRocketJumps.option_red, AllowRocketJumps.option_both},
             roof_grapple_clip_enabled=bool(options.allow_roof_grapple_clips),
+            start_location=options.start_location,
             wall_grapple_clip_difficulty=self.options.allow_wall_grapple_clips,
             player=self.player,
         )
@@ -95,3 +97,9 @@ class AxiomVergeWorld(World):
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Voranj", self.player)
 
         visualize_regions(self.multiworld.get_region("Menu", self.player), "axiomverge.puml")
+
+
+    def fill_slot_data(self):
+        _, area, room = START_OPTION_MAP[self.options.start_location]
+
+        return {"start_area": area, "start_room": room}

@@ -3,7 +3,7 @@ from __future__ import annotations
 import typing as t
 from BaseClasses import Location, MultiWorld, Region
 
-from .constants import AVRegions
+from .constants import AVRegions, START_OPTION_MAP
 from .location_data import entrance_data, location_data
 
 if t.TYPE_CHECKING:
@@ -34,8 +34,9 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
         if bidirectional:
             destination.connect(source, rule=access_rule)
 
-    # TODO: Menu region connection to be dynamic with start location rando
-    regions[AVRegions.MENU].connect(regions[AVRegions.WEST_ERIBU])
+    # Dynamically set Menu region connection based on options
+    start_region = START_OPTION_MAP[context.start_location][0]
+    regions[AVRegions.MENU].connect(regions[start_region])
 
     for data in location_data:
         region = regions[data.region_name]

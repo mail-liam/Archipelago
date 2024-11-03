@@ -10,6 +10,17 @@ class Goal(Choice):
     # option_gun_hunt = 2
     default = 0
 
+
+class StartLocation(Choice):
+    """
+    Changes the initial save room you will spawn in, and the reset to start point.
+    WARNING: Later save rooms may have difficulty generating with progressive items.
+    """
+    display_name = "Randomize start location"
+    option_eribu = 0
+    option_elsenova = 1
+    default = 0
+
 # Item Options
 class ProgressiveAddressDisruptor(DefaultOnToggle):
     """
@@ -84,3 +95,4 @@ class AxiomVergeOptions(PerGameCommonOptions):
     progressive_coat: ProgressiveCoat
     progressive_drone: ProgressiveDrone
     secret_world_weapons: ShuffleSecretWorldWeapons
+    start_location: StartLocation

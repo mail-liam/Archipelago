@@ -11,6 +11,7 @@ class LogicContext:
     brown_rocket_jump_enabled: bool
     red_rocket_jump_enabled: bool
     roof_grapple_clip_enabled: bool
+    start_location: int
     wall_grapple_clip_difficulty: int
     player: int
 
