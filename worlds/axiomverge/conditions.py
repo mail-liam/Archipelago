@@ -141,6 +141,10 @@ def insane_grapple_clip(state: CollectionState, context: LogicContext):
     return has_grapple(state, context) and context.wall_grapple_clip_difficulty == AllowWallGrappleClips.option_insane
 
 
+def non_grapple_height(state: CollectionState, context: LogicContext):
+    return has_trenchcoat(state, context) or has_drone_tele(state, context) or has_high_jump(state, context)
+
+
 def roof_grapple_clip(state: CollectionState, context: LogicContext):
     return has_grapple(state, context) and context.roof_grapple_clip_enabled
 

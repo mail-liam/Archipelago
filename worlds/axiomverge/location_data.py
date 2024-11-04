@@ -94,9 +94,9 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.INDI_TUNNEL, AVRegions.EAST_ABSU, lambda s, c: conditions.hard_grapple_clip(s, c) or conditions.any_coat(s, c), False),
     (AVRegions.INDI_TUNNEL, AVRegions.INDI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c), False),
     (AVRegions.EAST_ABSU, AVRegions.EAST_ABSU_LEDGE, conditions.always_accessible, False),
-    (AVRegions.EAST_ABSU, AVRegions.ABSU_ZI_ENTRANCE, conditions.always_accessible, True),
-    (AVRegions.ABSU_ZI_ENTRANCE, AVRegions.LOWER_ZI, conditions.always_accessible, False),
-    (AVRegions.LOWER_ZI, AVRegions.ABSU_ZI_ENTRANCE, conditions.zi_vanilla_exit, False),
+    (AVRegions.EAST_ABSU, AVRegions.ABSU_ZI, conditions.always_accessible, True),
+    (AVRegions.ABSU_ZI, AVRegions.LOWER_ZI, conditions.always_accessible, False),
+    (AVRegions.LOWER_ZI, AVRegions.ABSU_ZI, conditions.zi_vanilla_exit, False),
     (AVRegions.LOWER_ZI, AVRegions.UPPER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c), False),
     (AVRegions.UPPER_ZI, AVRegions.LOWER_ZI, conditions.always_accessible, False),
     (AVRegions.LOWER_ZI, AVRegions.EAST_ZI, conditions.lower_east_zi_access, True),
@@ -105,6 +105,10 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.EAST_ZI, AVRegions.PREVIEW_ROOM, lambda s, c: conditions.any_coat(s, c) and conditions.any_height(s, c), False),
     (AVRegions.EAST_ZI, AVRegions.LOWER_KUR, conditions.always_accessible, True),
     (AVRegions.UPPER_ZI, AVRegions.PREVIEW_ROOM, conditions.floor_grapple_clip, False),
+    (AVRegions.UPPER_ZI, AVRegions.URUKU, conditions.non_grapple_height, False),
+    (AVRegions.UPPER_ZI, AVRegions.ZI_INDI, conditions.non_grapple_height, False),
+    (AVRegions.ZI_INDI, AVRegions.UPPER_ZI, conditions.any_height, False),
+    (AVRegions.ZI_INDI, AVRegions.URUKU, conditions.any_height, False),
     (AVRegions.LOWER_KUR, AVRegions.UPPER_KUR, conditions.any_coat, True),
     # (AVRegions.LOWER_KUR, AVRegions.INDI, conditions.not_implemented, False),
     (AVRegions.WEST_INDI, AVRegions.INDI, conditions.any_height, False),
@@ -215,7 +219,7 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
 
     ('Zi - Preview Node', AVRegions.PREVIEW_ROOM, conditions.always_accessible),
 
-    ('Zi - Uruku Room', AVRegions.UPPER_ZI, conditions.any_coat),
+    ('Zi - Uruku Cage', AVRegions.UPPER_ZI, conditions.any_coat),
 
     ('Kur - High Jump Shrine', AVRegions.LOWER_KUR, conditions.always_accessible),
     ('Kur - High Jump Shrine False Wall', AVRegions.LOWER_KUR, conditions.not_implemented),
