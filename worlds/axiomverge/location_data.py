@@ -109,6 +109,7 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.UPPER_ZI, AVRegions.ZI_INDI, conditions.non_grapple_height, False),
     (AVRegions.ZI_INDI, AVRegions.UPPER_ZI, conditions.any_height, False),
     (AVRegions.ZI_INDI, AVRegions.URUKU, conditions.any_height, False),
+    (AVRegions.ZI_INDI, AVRegions.INDI, conditions.always_accessible, True),
     (AVRegions.LOWER_KUR, AVRegions.UPPER_KUR, conditions.any_coat, True),
     # (AVRegions.LOWER_KUR, AVRegions.INDI, conditions.not_implemented, False),
     (AVRegions.WEST_INDI, AVRegions.INDI, conditions.any_height, False),
@@ -117,7 +118,18 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     # (AVRegions.INDI, AVRegions.LOWER_KUR, conditions.any_coat, False),
     (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, True),
     (AVRegions.INDI, AVRegions.BLURST, conditions.always_accessible, False),
+
+    # WIP
+    (AVRegions.WEST_UKKIN_NA, AVRegions.EAST_UKKIN_NA, conditions.not_implemented, True),
+    (AVRegions.EAST_UKKIN_NA, AVRegions.UKKIN_NA_EAST_EXIT, conditions.has_trenchcoat, False),
+    (AVRegions.UKKIN_NA_EAST_EXIT, AVRegions.EAST_UKKIN_NA, conditions.any_coat, False),
+    (AVRegions.UKKIN_NA_EAST_EXIT, AVRegions.LOWER_EDIN, conditions.always_accessible, True),
     (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, c: conditions.has_glitch_bomb(s, c) or conditions.has_trenchcoat(s, c), True),
+    (AVRegions.LOWER_EDIN, AVRegions.EAST_EDIN, conditions.not_implemented, True),
+    (AVRegions.EAST_EDIN, AVRegions.UPPER_KUR, conditions.not_implemented, True),
+
+    (AVRegions.UPPER_KUR, AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented, True),
+    (AVRegions.LOWER_E_KUR_MAH, AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented, True),
 )
 
 
@@ -226,6 +238,7 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
 
     ('Kur - Near Indi Entrance', AVRegions.UPPER_KUR, conditions.always_accessible),
     ('Kur - Inside Cliff', AVRegions.UPPER_KUR, conditions.has_red_coat),
+    ('Kur - Peak Cliff Ledge', AVRegions.UPPER_KUR, conditions.not_implemented),
 
     ('Indi - Path to Eribu', AVRegions.WEST_INDI, conditions.has_drone),
 
@@ -234,10 +247,45 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
     ('Ukkin-Na - Long Fall Shaft Base', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
     ('Ukkin-Na - Annihiwaiter Room', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
 
+    ('Ukkin-Na - Secret Room Below Floor', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Blurst Room', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Midway Shaft Lower', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Midway Shaft Upper', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Hidden Shrine', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Chamber Above Vision Room', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Tunnel Below Vision Room', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Outside Ophelia', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Above Ophelia Ledge', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+
+    ('Edin - Roof Ledge Near Ukkin-Na', AVRegions.LOWER_EDIN, conditions.not_implemented),
+    ('Edin - Roof Cage', AVRegions.LOWER_EDIN, conditions.not_implemented),
     ('Edin - Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
+    ('Edin - Secret Tunnel Below Zombies', AVRegions.LOWER_EDIN, conditions.not_implemented),
+    ('Edin - Above Indi Entrace', AVRegions.LOWER_EDIN, conditions.not_implemented),
+    ('Edin - Clone Path Inside Blocks', AVRegions.LOWER_EDIN, conditions.not_implemented),
+    ('Edin - Clone Path Rooftop Ledge', AVRegions.LOWER_EDIN, conditions.not_implemented),
+    ('Edin - Clone Path Roof Before Save', AVRegions.LOWER_EDIN, conditions.not_implemented),
 
     ('Edin - False Wall Shrine', AVRegions.UPPER_EDIN, conditions.always_accessible),
     ('Edin - Upper Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
+    ('Edin - Ukhu Path Side Room', AVRegions.UPPER_EDIN, conditions.not_implemented),
+    ('Edin - In Structure Ruins', AVRegions.UPPER_EDIN, conditions.not_implemented),
+    ('Edin - Ukhu Reward', AVRegions.UPPER_EDIN, conditions.not_implemented),
+
+    ('Edin - Clone Reward', AVRegions.EAST_EDIN, conditions.not_implemented),
+    ('Edin - Double Check Tunnel Left', AVRegions.EAST_EDIN, conditions.not_implemented),
+    ('Edin - Double Check Tunnel Right', AVRegions.EAST_EDIN, conditions.not_implemented),
+
+    ('E-Kur-Mah - Entry Chamber Breakable Wall', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
+    ('E-Kur-Mah - Key Door on Key Chamber Path', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
+    ('E-Kur-Mah - Key Chamber Upper', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
+    ('E-Kur-Mah - Key Chamber Lower', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
+
+    ('E-Kur-Mah - Midway Down East Shaft', AVRegions.LOWER_E_KUR_MAH, conditions.has_red_coat),
+    ('E-Kur-Mah - Passcode Check', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    ('E-Kur-Mah - Hidden Drone Tunnel', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    ('E-Kur-Mah - Area Reward', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    ('E-Kur-Mah - Lowest Area Inside Wall', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
 
     ('Glitch a Blurst', AVRegions.BLURST, conditions.any_glitch),
 )
