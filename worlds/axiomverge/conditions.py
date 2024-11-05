@@ -314,3 +314,7 @@ def zi_false_roof_access(s: CollectionState, c: LogicContext):
 
 def lower_east_zi_access(s: CollectionState, c: LogicContext):
     return can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c)
+
+
+def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
+    return has_drone(s, c) and (has_glitch_2(s, c) or has_red_coat(s, c) or easy_grapple_clip(s, c))

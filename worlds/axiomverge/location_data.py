@@ -122,6 +122,7 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     # WIP
     (AVRegions.WEST_UKKIN_NA, AVRegions.EAST_UKKIN_NA, conditions.not_implemented, True),
     (AVRegions.EAST_UKKIN_NA, AVRegions.UKKIN_NA_EAST_EXIT, conditions.has_trenchcoat, False),
+    (AVRegions.EAST_UKKIN_NA, AVRegions.BLURST, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c), False),
     (AVRegions.UKKIN_NA_EAST_EXIT, AVRegions.EAST_UKKIN_NA, conditions.any_coat, False),
     (AVRegions.UKKIN_NA_EAST_EXIT, AVRegions.LOWER_EDIN, conditions.always_accessible, True),
     (AVRegions.LOWER_EDIN, AVRegions.UPPER_EDIN, lambda s, c: conditions.has_glitch_bomb(s, c) or conditions.has_trenchcoat(s, c), True),
@@ -244,16 +245,16 @@ raw_location_data: t.Tuple[str, str, AccessRule] = (
 
     ('Indi - Outside Save Room', AVRegions.INDI, conditions.has_trenchcoat),
 
-    ('Ukkin-Na - Long Fall Shaft Base', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Long Fall Shaft Base', AVRegions.WEST_UKKIN_NA, conditions.any_height),
     ('Ukkin-Na - Annihiwaiter Room', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
 
-    ('Ukkin-Na - Secret Room Below Floor', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
-    ('Ukkin-Na - Blurst Room', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
-    ('Ukkin-Na - Midway Shaft Lower', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Secret Room Below Floor', AVRegions.EAST_UKKIN_NA, conditions.has_trenchcoat),
+    ('Ukkin-Na - Blurst Room', AVRegions.EAST_UKKIN_NA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
+    ('Ukkin-Na - Midway Shaft Lower', AVRegions.EAST_UKKIN_NA, conditions.has_trenchcoat),
     ('Ukkin-Na - Midway Shaft Upper', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
-    ('Ukkin-Na - Hidden Shrine', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Hidden Shrine', AVRegions.EAST_UKKIN_NA, conditions.ukkin_na_shrine_access),
     ('Ukkin-Na - Chamber Above Vision Room', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
-    ('Ukkin-Na - Tunnel Below Vision Room', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    ('Ukkin-Na - Tunnel Below Vision Room', AVRegions.EAST_UKKIN_NA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
     ('Ukkin-Na - Outside Ophelia', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
     ('Ukkin-Na - Above Ophelia Ledge', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
 
