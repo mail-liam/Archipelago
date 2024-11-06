@@ -133,6 +133,10 @@ def has_strict_trenchcoat(state: CollectionState, context: LogicContext):
     return state.has("Trenchcoat", context.player) or state.has("Progressive Coat", context.player, count=2)
 
 
+def has_sudran_key(state: CollectionState, context: LogicContext):
+    return state.has("Sudran Key", context.player)
+
+
 def has_trenchcoat(state: CollectionState, context: LogicContext):
     return state.has_any(("Trenchcoat", "Red Coat"), context.player) or state.has("Progressive Coat", context.player, count=2)
 
@@ -147,11 +151,6 @@ def non_grapple_height(state: CollectionState, context: LogicContext):
 
 def roof_grapple_clip(state: CollectionState, context: LogicContext):
     return has_grapple(state, context) and context.roof_grapple_clip_enabled
-
-
-
-
-# has_key
 
 
 # Specific location checks, that are here mainly to avoid complexity in the data structure

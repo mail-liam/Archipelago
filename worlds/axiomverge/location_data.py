@@ -263,8 +263,8 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(66, 'Kur - Upper Cliffs Shrine', AVRegions.UPPER_KUR, conditions.has_drone),
     AVLocationData(67, 'Kur - Drone Odyssey Behind Wall', AVRegions.UPPER_KUR, conditions.has_drone),
     AVLocationData(68, 'Kur - Drone Odyssey Reward', AVRegions.UPPER_KUR, conditions.has_drone),
-    AVLocationData(69, 'Kur - Outside Cliff Ledge Upper', AVRegions.UPPER_KUR, conditions.not_implemented),
-    AVLocationData(70, 'Kur - Outside Cliff Ledge Lower', AVRegions.UPPER_KUR, conditions.has_red_coat),
+    AVLocationData(69, 'Kur - Snowy Cliffs Ledge Upper', AVRegions.UPPER_KUR, conditions.not_implemented),
+    AVLocationData(70, 'Kur - Snowy Cliffs Ledge Lower', AVRegions.UPPER_KUR, conditions.has_red_coat),
     AVLocationData(71, 'Kur - Loop Room', AVRegions.UPPER_KUR, conditions.not_implemented),
     AVLocationData(72, 'Kur - Peak Cliff Ledge', AVRegions.UPPER_KUR, conditions.not_implemented),
 
@@ -301,7 +301,7 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(98, 'Edin - Clone Path Roof Before Save', AVRegions.LOWER_EDIN, conditions.not_implemented),
 
     AVLocationData(99, 'Edin - False Wall Shrine', AVRegions.UPPER_EDIN, conditions.always_accessible),
-    AVLocationData(100, 'Edin - Upper Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
+    AVLocationData(100, 'Edin - Ukhu Path Drone Tunnel', AVRegions.UPPER_EDIN, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
     AVLocationData(101, 'Edin - Ukhu Path Side Room', AVRegions.UPPER_EDIN, conditions.not_implemented),
     AVLocationData(102, 'Edin - In Structure Ruins', AVRegions.UPPER_EDIN, conditions.not_implemented),
     AVLocationData(103, 'Edin - Ukhu Reward', AVRegions.UPPER_EDIN, conditions.not_implemented),
@@ -311,7 +311,7 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(106, 'Edin - Double Check Tunnel Right', AVRegions.EAST_EDIN, conditions.not_implemented),
 
     AVLocationData(107, 'E-Kur-Mah - Entry Chamber Breakable Wall', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
-    AVLocationData(108, 'E-Kur-Mah - Key Door on Key Chamber Path', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(108, 'E-Kur-Mah - Key Door on Key Chamber Path', AVRegions.UPPER_E_KUR_MAH, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_sudran_key(s, c)),
     AVLocationData(109, 'E-Kur-Mah - Key Chamber Upper', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
     AVLocationData(110, 'E-Kur-Mah - Key Chamber Lower', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
 
