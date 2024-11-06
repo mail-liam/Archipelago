@@ -318,3 +318,8 @@ def lower_east_zi_access(s: CollectionState, c: LogicContext):
 
 def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
     return has_drone(s, c) and (has_glitch_2(s, c) or has_red_coat(s, c) or easy_grapple_clip(s, c))
+
+
+def mar_uru_access(s: CollectionState, c: LogicContext):
+    # TODO: Vanilla wincon, return to later
+    return has_red_coat(s, c) and has_drone_launch(s, c) and has_drone_tele(s, c)

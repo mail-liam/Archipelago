@@ -56,6 +56,7 @@ class AVRegions(StrEnum):
     # Kur
     LOWER_KUR = "Lower Kur"
     UPPER_KUR = "Upper Kur"
+    GIR_TAB = "Gir-Tab"
 
     # Indi
     INDI = "Indi"
@@ -76,7 +77,7 @@ class AVRegions(StrEnum):
     LOWER_E_KUR_MAH = "Lower E-Kur-Mah"
 
     # Mar-Uru
-    # MAR_URU = "Mar-Uru"
+    MAR_URU = "Mar-Uru"
 
     MENU = "Menu"
     BLURST = "Blurst"
