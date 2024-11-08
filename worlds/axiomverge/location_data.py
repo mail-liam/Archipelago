@@ -109,7 +109,7 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.EAST_ZI, AVRegions.LOWER_KUR, conditions.always_accessible, True),
     (AVRegions.UPPER_ZI, AVRegions.PREVIEW_ROOM, conditions.floor_grapple_clip, False),
     (AVRegions.UPPER_ZI, AVRegions.URUKU, conditions.non_grapple_height, False),
-    (AVRegions.UPPER_ZI, AVRegions.ZI_INDI, conditions.non_grapple_height, False),
+    (AVRegions.UPPER_ZI, AVRegions.ZI_INDI, conditions.non_jump_height, False),
     (AVRegions.ZI_INDI, AVRegions.UPPER_ZI, conditions.any_height, False),
     (AVRegions.ZI_INDI, AVRegions.URUKU, conditions.any_height, False),
     (AVRegions.ZI_INDI, AVRegions.INDI, conditions.always_accessible, True),
@@ -251,9 +251,9 @@ location_data: t.Tuple[AVLocationData] = (
 
     AVLocationData(56, 'Kur - Drone Tunnel Before Gauntlet', AVRegions.LOWER_KUR, conditions.has_drone),
     AVLocationData(57, 'Kur - High Jump Shrine', AVRegions.LOWER_KUR, conditions.always_accessible),
-    AVLocationData(58, 'Kur - High Jump Shrine False Wall', AVRegions.LOWER_KUR, conditions.not_implemented),
-    AVLocationData(59, 'Kur - Above Lower Save Room', AVRegions.LOWER_KUR, conditions.not_implemented),
-    AVLocationData(60, 'Kur - Gauntlet Reward', AVRegions.LOWER_KUR, conditions.not_implemented),
+    AVLocationData(58, 'Kur - High Jump Shrine False Wall', AVRegions.LOWER_KUR, lambda s, c: conditions.has_drone(s, c) or conditions.any_height(s, c)),
+    AVLocationData(59, 'Kur - Above Lower Save Room', AVRegions.LOWER_KUR, conditions.above_lower_kur_save_access),
+    AVLocationData(60, 'Kur - Gauntlet Reward', AVRegions.LOWER_KUR, conditions.kur_gauntlet_access),
 
     AVLocationData(61, 'Kur - Near Indi Entrance', AVRegions.UPPER_KUR, conditions.always_accessible),
     AVLocationData(62, 'Kur - Cliffside Cave Shrine', AVRegions.UPPER_KUR, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),

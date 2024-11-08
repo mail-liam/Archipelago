@@ -149,6 +149,10 @@ def non_grapple_height(state: CollectionState, context: LogicContext):
     return has_trenchcoat(state, context) or has_drone_tele(state, context) or has_high_jump(state, context)
 
 
+def non_jump_height(state: CollectionState, context: LogicContext):
+    return has_trenchcoat(state, context) or has_drone_tele(state, context) or has_grapple(state, context)
+
+
 def roof_grapple_clip(state: CollectionState, context: LogicContext):
     return has_grapple(state, context) and context.roof_grapple_clip_enabled
 
@@ -313,6 +317,20 @@ def zi_false_roof_access(s: CollectionState, c: LogicContext):
 
 def lower_east_zi_access(s: CollectionState, c: LogicContext):
     return can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c)
+
+
+def above_lower_kur_save_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c)
+        or has_glitch_2(s, c) and can_drill(s, c)
+        or has_drone(s, c) and any_coat(s, c)
+    )
+
+
+def kur_gauntlet_access(s: CollectionState, c: LogicContext):
+    return (
+        True
+    )
 
 
 def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
