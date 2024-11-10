@@ -54,9 +54,16 @@ class AVRegions(StrEnum):
     URUKU = "Uruku"
 
     # Kur
-    LOWER_KUR = "Lower Kur"
-    UPPER_KUR = "Upper Kur"
-    GIR_TAB = "Gir-Tab"
+    LOWER_CAVES = "Lower Caves"
+    KUR_INDI = "Kur-Indi Link"
+    GAUNTLET_ROOM = "Gauntlet Room"
+    GAUNTLET_REWARD = "Gauntlet Reward"
+    UPPER_CAVES = "Upper Caves"
+    KUR_EDIN = "Kur-Edin Link"
+    MOUNTAIN_BASE = "Mountain Base"
+    LOWER_GIR_TAB = "Lower Gir-Tab"
+    UPPER_GIR_TAB = "Upper Gir-Tab"
+    BEHIND_GIR_TAB = "Behind Gir-Tab"
 
     # Indi
     INDI = "Indi"

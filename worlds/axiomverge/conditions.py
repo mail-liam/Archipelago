@@ -58,6 +58,12 @@ def can_drill(state: CollectionState, context: LogicContext):
     return state.has_any(("Laser Drill", "Remote Drone", "Progressive Drone"), context.player) or has_red_coat(state, context)
 
 
+def can_fly(state: CollectionState, context: LogicContext):
+    return has_drone_tele(state, context) and context.flight_enabled and (
+        state.has_any(("Address Disruptor 1", "Address Disruptor 2", "Progressive Address Disruptor"), context.player)
+    )
+
+
 def can_pierce_wall(state: CollectionState, context: LogicContext):
     return state.has_any(("Kilver", "Reverse Slicer"), context.player)
 
@@ -328,9 +334,20 @@ def above_lower_kur_save_access(s: CollectionState, c: LogicContext):
 
 
 def kur_gauntlet_access(s: CollectionState, c: LogicContext):
+    # TODO: Verify
     return (
-        True
+        has_red_coat(s, c) and (any_glitch(s, c) or can_fly(s, c)) and (has_grapple(s, c) or has_high_jump(s, c) or c.red_rocket_jump_enabled)
+        or has_grapple(s, c) and any_coat(s, c) and can_drill(s, c)
+        or has_drone_tele(s, c) and (has_trenchcoat(s, c) or any_coat(s, c) and has_high_jump(s, c))
     )
+
+
+def caves_to_base_access(s: CollectionState, c: LogicContext):
+    return has_trenchcoat(s, c) or can_drill(s, c) and any_coat(s, c) and any_height(s, c) or (has_grapple(s, c) and any_height(s, c))  # TODO: Verify this last one
+
+
+def lower_gir_tab_access(s: CollectionState, c: LogicContext):
+    return has_trenchcoat(s, c) or has_glitch_2(s, c) or has_drone_tele(s, c) and hard_grapple_clip(s, c)
 
 
 def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
