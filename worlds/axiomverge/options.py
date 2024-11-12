@@ -19,6 +19,7 @@ class StartLocation(Choice):
     display_name = "Randomize start location"
     option_eribu = 0
     option_elsenova = 1
+    option_purple_absu = 2
     default = 0
 
 # Item Options
