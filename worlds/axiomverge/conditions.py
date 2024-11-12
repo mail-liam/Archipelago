@@ -280,7 +280,10 @@ def zombie_tunnel_access(s: CollectionState, c: LogicContext):
 
 
 def lower_east_absu_access(s: CollectionState, c: LogicContext):
-    return has_trenchcoat(s, c) or has_drone_tele(s, c) or any_glitch(s, c) or has_grapple(s, c)
+    return (
+        has_trenchcoat(s, c)
+        or can_drill(s, c) and (has_drone_tele(s, c) or any_glitch(s, c) or has_grapple(s, c))
+    )
 
 
 def telal_east_absu_access(s: CollectionState, c: LogicContext):

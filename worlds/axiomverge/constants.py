@@ -38,6 +38,7 @@ class AVRegions(StrEnum):
     EAST_ATTIC = "East Attic"
     ELSENOVA = "Elsenova"
     LOWER_ABSU = "Lower Absu"
+    LOWER_CORRIDOR = "Lower Corridor"
     EAST_ABSU_LEDGE = "East Absu Ledge"
     ABSU_BASEMENT = "Absu Basement"
     TELAL = "Telal"

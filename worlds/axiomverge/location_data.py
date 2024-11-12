@@ -88,10 +88,11 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
         "Basement Displacement Warp",
     ),
     (AVRegions.LOWER_ABSU, AVRegions.TELAL, conditions.can_damage_boss, False),
-    (AVRegions.LOWER_ABSU, AVRegions.EAST_ABSU, conditions.lower_east_absu_access, False),
+    (AVRegions.LOWER_ABSU, AVRegions.LOWER_CORRIDOR, lambda s, c: conditions.can_drill(s, c) or conditions.has_trenchcoat(s, c), True),
+    (AVRegions.LOWER_CORRIDOR, AVRegions.EAST_ABSU, conditions.lower_east_absu_access, False),
     (AVRegions.LOWER_ABSU, AVRegions.EAST_ABSU_LEDGE, conditions.has_drone_launch, False),
     (AVRegions.TELAL, AVRegions.EAST_ABSU, conditions.telal_east_absu_access, False),
-    (AVRegions.EAST_ABSU, AVRegions.LOWER_ABSU, conditions.always_accessible, False),
+    (AVRegions.EAST_ABSU, AVRegions.LOWER_CORRIDOR, lambda s, c: conditions.can_drill(s, c) or conditions.has_trenchcoat(s, c) or conditions.any_glitch(s, c), False),
     (AVRegions.EAST_ABSU, AVRegions.TELAL, conditions.any_height, False),
     (AVRegions.EAST_ABSU, AVRegions.INDI_TUNNEL, conditions.east_absu_indi_tunnel_access, False),
     (AVRegions.INDI_TUNNEL, AVRegions.EAST_ABSU, lambda s, c: conditions.hard_grapple_clip(s, c) or conditions.any_coat(s, c), False),
@@ -211,8 +212,8 @@ location_data: t.Tuple[AVLocationData] = (
 
     AVLocationData(27, 'Absu - Zombie Jail', AVRegions.LOWER_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c)),
     AVLocationData(28, 'Absu - Lowest Point', AVRegions.LOWER_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c)),
-    AVLocationData(29, 'Absu - Floating Platform', AVRegions.LOWER_ABSU, conditions.floating_platform_access),
-    AVLocationData(30, 'Absu - Zombie Tunnel', AVRegions.LOWER_ABSU, conditions.zombie_tunnel_access),
+
+    AVLocationData(29, 'Absu - Floating Platform', AVRegions.LOWER_CORRIDOR, conditions.floating_platform_access),
 
     AVLocationData(31, 'Absu - Telal Reward', AVRegions.TELAL, conditions.always_accessible),
 
@@ -220,6 +221,7 @@ location_data: t.Tuple[AVLocationData] = (
 
     AVLocationData(33, 'Absu - Trapped Diatoms', AVRegions.EAST_ABSU_LEDGE, lambda s, c: conditions.can_drill(s, c) or conditions.any_glitch(s, c)),
 
+    AVLocationData(30, 'Absu - Zombie Tunnel', AVRegions.EAST_ABSU, conditions.zombie_tunnel_access),
     AVLocationData(34, 'Absu - Vertical Shaft Behind Telal', AVRegions.EAST_ABSU, conditions.always_accessible),
     AVLocationData(35, 'Absu - Wall Alcove', AVRegions.EAST_ABSU, conditions.can_drill),
     AVLocationData(36, 'Absu - Hidden Shrine', AVRegions.EAST_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.has_drone(s, c) or conditions.easy_grapple_clip(s, c)),
