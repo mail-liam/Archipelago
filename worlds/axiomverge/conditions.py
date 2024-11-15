@@ -18,7 +18,7 @@ RANGED_WEAPONS = ALL_WEAPONS - {"Tethered Charge", "Kilver", "Distortion Field",
 # Logic primitives that are used either independently or part of more complex expressions
 def not_implemented(state: CollectionState, context: LogicContext):
     """Sentinel function for unimplemented logic."""
-    return has_trenchcoat(state, context)
+    return has_red_coat(state, context) and has_drone_tele(state, context)
 
 
 def always_accessible(state: CollectionState, context: LogicContext):
