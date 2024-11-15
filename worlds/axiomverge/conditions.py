@@ -345,8 +345,20 @@ def kur_gauntlet_access(s: CollectionState, c: LogicContext):
     )
 
 
+def indi_upper_caves_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c)
+        or non_grapple_height(s, c) and (any_coat(s, c) or hard_grapple_clip(s, c))
+    )
+
+
 def caves_to_base_access(s: CollectionState, c: LogicContext):
-    return has_trenchcoat(s, c) or can_drill(s, c) and any_coat(s, c) and any_height(s, c) or (has_grapple(s, c) and any_height(s, c))  # TODO: Verify this last one
+    return (
+        has_trenchcoat(s, c)
+        or has_drone_tele(s, c)
+        or has_grapple(s, c) and has_high_jump(s, c)
+        or can_drill(s, c) and any_coat(s, c) and (has_grapple(s, c) or has_high_jump(s, c))
+    )
 
 
 def lower_gir_tab_access(s: CollectionState, c: LogicContext):

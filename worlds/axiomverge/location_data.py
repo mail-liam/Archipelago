@@ -114,11 +114,13 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.ZI_INDI, AVRegions.UPPER_ZI, conditions.any_height, False),
     (AVRegions.ZI_INDI, AVRegions.URUKU, conditions.any_height, False),
     (AVRegions.ZI_INDI, AVRegions.INDI, conditions.always_accessible, True),
-    (AVRegions.LOWER_CAVES, AVRegions.UPPER_CAVES, lambda s, c: conditions.any_coat(s, c) and conditions.any_height(s, c), True),
     (AVRegions.LOWER_CAVES, AVRegions.GAUNTLET_ROOM, conditions.kur_gauntlet_access, False),
     (AVRegions.GAUNTLET_ROOM, AVRegions.GAUNTLET_REWARD, conditions.not_implemented, False),
     (AVRegions.LOWER_CAVES, AVRegions.GAUNTLET_REWARD, lambda s, c: conditions.has_fat_beam(s, c) and conditions.has_trenchcoat(s, c), False),
-    (AVRegions.LOWER_CAVES, AVRegions.KUR_INDI, conditions.any_coat, True),
+    (AVRegions.LOWER_CAVES, AVRegions.KUR_INDI, lambda s, c: conditions.any_coat(s, c) or conditions.easy_grapple_clip(s, c), False),
+    (AVRegions.KUR_INDI, AVRegions.LOWER_CAVES, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c), False),
+    (AVRegions.KUR_INDI, AVRegions.UPPER_CAVES, conditions.indi_upper_caves_access, False),
+    (AVRegions.UPPER_CAVES, AVRegions.KUR_INDI, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c), False),
     (AVRegions.UPPER_CAVES, AVRegions.KUR_EDIN, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_glitch_2(s, c), True),
     (AVRegions.KUR_EDIN, AVRegions.EAST_EDIN, conditions.always_accessible, True),
     (AVRegions.UPPER_CAVES, AVRegions.MOUNTAIN_BASE, conditions.caves_to_base_access, False),
@@ -274,7 +276,9 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(60, 'Kur - Gauntlet Reward', AVRegions.GAUNTLET_REWARD, conditions.always_accessible),
 
     AVLocationData(61, 'Kur - Near Indi Entrance', AVRegions.UPPER_CAVES, conditions.always_accessible),
-    AVLocationData(62, 'Kur - Cliffside Cave Shrine', AVRegions.UPPER_CAVES, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),
+
+    AVLocationData(62, 'Kur - Cliffside Cave Shrine', AVRegions.MOUNTAIN_BASE, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),
+
     AVLocationData(63, 'Kur - Above Twin Save Rooms', AVRegions.UPPER_CAVES, conditions.not_implemented),
     AVLocationData(64, 'Kur - Floating Ledge', AVRegions.UPPER_CAVES, conditions.has_drone),
     AVLocationData(65, 'Kur - Inside Cliff', AVRegions.UPPER_CAVES, conditions.has_red_coat),
@@ -341,7 +345,7 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(114, 'E-Kur-Mah - Area Reward', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
     AVLocationData(115, 'E-Kur-Mah - Lowest Area Inside Wall', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
 
-    AVLocationData(116, 'Mar-Uru - Post-Sentry Alcove', AVRegions.MAR_URU, conditions.not_implemented),
+    AVLocationData(116, 'Mar-Uru - Alcove After Sentinel', AVRegions.MAR_URU, conditions.not_implemented),
     AVLocationData(117, 'Mar-Uru - Sentry Bot Puzzle', AVRegions.MAR_URU, conditions.not_implemented),
     AVLocationData(118, 'Mar-Uru - Below Sentry Bot Puzzle', AVRegions.MAR_URU, conditions.not_implemented),
     AVLocationData(119, 'Mar-Uru - Below Sentry Bot Puzzle In Wall', AVRegions.MAR_URU, conditions.not_implemented),
