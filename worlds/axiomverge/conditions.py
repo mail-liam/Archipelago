@@ -362,7 +362,7 @@ def caves_to_base_access(s: CollectionState, c: LogicContext):
 
 
 def lower_gir_tab_access(s: CollectionState, c: LogicContext):
-    return has_trenchcoat(s, c) or has_glitch_2(s, c) or has_drone_tele(s, c) and hard_grapple_clip(s, c)
+    return has_trenchcoat(s, c) or has_glitch_2(s, c) or has_drone_tele(s, c) and floor_grapple_clip(s, c)
 
 
 def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
