@@ -38,7 +38,7 @@ def any_height(state: CollectionState, context: LogicContext):
 
 
 def can_angle_shoot(state: CollectionState, context: LogicContext):
-    return state.has_any(("Nova",), context.player)
+    return state.has_any(("Nova", "Orbital Discharge"), context.player)
 
 
 def can_damage_boss(state: CollectionState, context: LogicContext):
@@ -65,7 +65,7 @@ def can_fly(state: CollectionState, context: LogicContext):
 
 
 def can_pierce_wall(state: CollectionState, context: LogicContext):
-    return state.has_any(("Kilver", "Reverse Slicer"), context.player)
+    return state.has_any(("Kilver", "Reverse Slicer", "FlameThrower", "Fat Beam"), context.player)
 
 
 def easy_grapple_clip(state: CollectionState, context: LogicContext):
@@ -212,7 +212,10 @@ def outside_lab_access(s: CollectionState, c: LogicContext):
 
 
 def xedur_access(s: CollectionState, c: LogicContext):
-    return can_pierce_wall(s, c) or can_angle_shoot(s, c) or has_trenchcoat(s, c) or has_drone(s, c) or s.has_any(("Grapple", "Field Disruptor"), c.player)
+    return (
+        has_trenchcoat(s, c) or has_grapple(s, c) or has_drone(s, c) or can_pierce_wall(s, c) or can_angle_shoot(s, c)
+        or has_high_jump(s, c) and can_damage(s, c)
+    )
 
 
 def laboratory_access(s: CollectionState, c: LogicContext):
@@ -264,9 +267,7 @@ def elsenova_west_attic_access(s: CollectionState, c: LogicContext):
 
 
 def floating_platform_access(s: CollectionState, c: LogicContext):
-    return has_drone(s, c) or has_trenchcoat(s, c) or (
-        can_drill(s, c) and (has_high_jump(s, c) or has_grapple(s, c) or any_glitch(s, c))
-    )
+    return has_drone(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c) or has_grapple(s, c) or any_glitch(s, c)
 
 
 def zombie_tunnel_access(s: CollectionState, c: LogicContext):

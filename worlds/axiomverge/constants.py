@@ -27,8 +27,8 @@ class AVRegions(StrEnum):
     WEST_ERIBU = "West Eribu"
     DINGER_GISBAR = "Dinger-Gisbar"
     UPPER_ERIBU = "Upper Eribu"
-    XEDUR = "Xedur"
     LABORATORY = "Laboratory"
+    XEDUR = "Xedur"
     LOWER_ERIBU = "Lower Eribu"
     ERIBU_INDI = "Eribu-Indi"
 
@@ -38,12 +38,20 @@ class AVRegions(StrEnum):
     EAST_ATTIC = "East Attic"
     ELSENOVA = "Elsenova"
     LOWER_ABSU = "Lower Absu"
-    LOWER_CORRIDOR = "Lower Corridor"
-    EAST_ABSU_LEDGE = "East Absu Ledge"
     ABSU_BASEMENT = "Absu Basement"
     TELAL = "Telal"
-    INDI_TUNNEL = "Indi Tunnel"
+    LOWER_CORRIDOR = "Lower Corridor"
     EAST_ABSU = "East Absu"
+    EAST_ABSU_DRONE = "East Absu Drone"
+    INDI_TUNNEL = "Indi Tunnel"
+
+    # Absu microregions (Thanks Drone)
+    EA_LEDGE = "East Absu Ledge"
+    EA_BEHIND_TELAL = "Behind Telal"
+    EA_ALCOVE = "East Absu Alcove"
+    EA_HIDDEN_SHRINE = "Hidden Shrine"
+    EA_CHASM_TUNNEL = "Chasm Tunnel"
+    EA_ZI_ENTRANCE = "Zi Entrance"
 
     # Zi
     ABSU_ZI = "Absu-Zi"
