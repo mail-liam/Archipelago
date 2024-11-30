@@ -102,4 +102,4 @@ class AxiomVergeWorld(World):
     def fill_slot_data(self):
         _, area, room = START_OPTION_MAP[self.options.start_location]
 
-        return {"start_area": area, "start_room": room}
+        return {"goal": self.options.goal, "start_area": area, "start_room": room}
