@@ -107,7 +107,7 @@ def has_glitch_2(state: CollectionState, context: LogicContext):
 
 
 def has_glitch_bomb(state: CollectionState, context: LogicContext):
-    return state.has(("Address Bomb",), context.player) or has_red_coat(state, context)
+    return state.has("Address Bomb", context.player) or state.has("Progressive Address Disruptor", context.player, count=3)
 
 
 def has_grapple(state: CollectionState, context: LogicContext):

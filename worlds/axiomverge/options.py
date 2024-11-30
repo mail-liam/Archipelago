@@ -23,12 +23,13 @@ class StartLocation(Choice):
     default = 0
 
 # Item Options
-class ProgressiveAddressDisruptor(DefaultOnToggle):
+class ProgressiveAddressDisruptor(Choice):
     """
-    Combine Address Disruptors into a progressive upgrade.
-    Address Bomb remains separate
+    Combine Address Disruptors into a progressive upgrade. Can optionally keep bomb seperate.
     """
-    display_name = "Progressive Address Disruptor"
+    option_off = 0
+    option_exclude_bomb = 1
+    option_on = 2
 
 
 class ProgressiveCoat(DefaultOnToggle):
