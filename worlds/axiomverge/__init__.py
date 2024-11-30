@@ -88,6 +88,8 @@ class AxiomVergeWorld(World):
             av_itempool.append(self.create_item("Remote Drone"))
             av_itempool.append(self.create_item("Enhanced Drone Launch"))
 
+        av_itempool.extend(self.create_item("Health Node") for _ in range(10))
+
 
         self.multiworld.itempool.extend(av_itempool)
 
