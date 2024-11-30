@@ -46,7 +46,7 @@ raw_item_data: t.Tuple[AVItemData] = (
     AVItemData(24, "Address Disruptor 2", AVItemType.GLITCH, ItemClassification.progression, False),
     AVItemData(25, "Laser Drill", AVItemType.DRILL, ItemClassification.progression, True),
     AVItemData(26, "Remote Drone", AVItemType.DRONE, ItemClassification.progression, False),
-    AVItemData(27, "Address Bomb", AVItemType.GLITCH, ItemClassification.progression, True),
+    AVItemData(27, "Address Bomb", AVItemType.GLITCH, ItemClassification.progression, False),
     AVItemData(28, "Grapple", AVItemType.MOVEMENT, ItemClassification.progression, True),
     AVItemData(29, "Field Disruptor", AVItemType.MOVEMENT, ItemClassification.progression, True),
     AVItemData(30, "Modified Lab Coat", AVItemType.COAT, ItemClassification.progression, False),

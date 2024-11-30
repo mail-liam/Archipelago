@@ -65,12 +65,16 @@ class AxiomVergeWorld(World):
         options = self.options
         av_itempool = [self.create_item(item.name) for item in item_data.values() if item.is_default]
 
-        if bool(options.progressive_address_disruptor):
+        if options.progressive_address_disruptor > 0:
             av_itempool.append(self.create_item("Progressive Address Disruptor"))
             av_itempool.append(self.create_item("Progressive Address Disruptor"))
         else:
             av_itempool.append(self.create_item("Address Disruptor 1"))
             av_itempool.append(self.create_item("Address Disruptor 2"))
+        if options.progressive_address_disruptor == 2:
+            av_itempool.append(self.create_item("Progressive Address Disruptor"))
+        else:
+            av_itempool.append(self.create_item("Address Bomb"))
 
         if bool(options.progressive_coat):
             av_itempool.append(self.create_item("Progressive Coat"))
