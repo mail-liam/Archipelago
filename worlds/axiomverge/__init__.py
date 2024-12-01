@@ -93,6 +93,13 @@ class AxiomVergeWorld(World):
             av_itempool.append(self.create_item("Enhanced Drone Launch"))
 
         av_itempool.extend(self.create_item("Health Node") for _ in range(10))
+        av_itempool.extend(self.create_item("Health Node Fragment") for _ in range(30))
+
+        av_itempool.extend(self.create_item("Power Node") for _ in range(8))
+        av_itempool.extend(self.create_item("Power Node Fragment") for _ in range(30))
+
+        av_itempool.extend(self.create_item("Range Node") for _ in range(4))
+        av_itempool.extend(self.create_item("Size Node") for _ in range(4))
 
 
         self.multiworld.itempool.extend(av_itempool)
@@ -108,4 +115,4 @@ class AxiomVergeWorld(World):
     def fill_slot_data(self):
         _, area, room = START_OPTION_MAP[self.options.start_location]
 
-        return {"goal": self.options.goal, "start_area": area, "start_room": room}
+        return {"goal": int(self.options.goal), "start_area": area, "start_room": room}
