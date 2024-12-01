@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import typing as t
-from BaseClasses import Location, MultiWorld, Region
+from BaseClasses import ItemClassification, Location, MultiWorld, Region
 
 from .constants import AVRegions, START_OPTION_MAP
 from .location_data import entrance_data, location_data
+from .items import AVItem
 
 if t.TYPE_CHECKING:
     from .types import LogicContext
@@ -43,3 +44,8 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
         location = AVLocation(context.player, data.name, data.id, region)
         location.access_rule = lambda state, data=data: data.access_rule(state, context)
         region.locations.append(location)
+
+    # TODO: Other goals
+    athetos = AVLocation(context.player, 'Athetos', None, regions[AVRegions.ATHETOS])
+    athetos.place_locked_item(AVItem("Athetos Defeated", ItemClassification.progression, None, context.player))
+    regions[AVRegions.ATHETOS].locations.append(athetos)

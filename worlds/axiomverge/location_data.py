@@ -160,7 +160,8 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.UPPER_CAVES, AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented, True),
     (AVRegions.LOWER_E_KUR_MAH, AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented, True),
 
-    (AVRegions.UPPER_E_KUR_MAH, AVRegions.MAR_URU, conditions.mar_uru_access, True),
+    (AVRegions.UPPER_E_KUR_MAH, AVRegions.MAR_URU, conditions.mar_uru_access, False),
+    (AVRegions.MAR_URU, AVRegions.ATHETOS, conditions.not_implemented, False),
 )
 
 

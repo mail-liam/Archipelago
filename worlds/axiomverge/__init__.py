@@ -1,4 +1,5 @@
 from worlds.AutoWorld import WebWorld, World
+
 from .constants import START_OPTION_MAP
 from .item_data import item_data, ITEM_NAME_TO_ID
 from .items import AVItem
@@ -106,10 +107,10 @@ class AxiomVergeWorld(World):
 
 
     def set_rules(self):
-        # Debug wincon
-        self.multiworld.completion_condition[self.player] = lambda state: state.has("Voranj", self.player)
+        # TODO: Other goals
+        self.multiworld.completion_condition[self.player] = lambda state: state.has("Athetos Defeated", self.player)
 
-        visualize_regions(self.multiworld.get_region("Menu", self.player), "axiomverge.puml")
+        # visualize_regions(self.multiworld.get_region("Menu", self.player), "axiomverge.puml")
 
 
     def fill_slot_data(self):

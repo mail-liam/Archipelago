@@ -94,6 +94,7 @@ class AVRegions(StrEnum):
 
     # Mar-Uru
     MAR_URU = "Mar-Uru"
+    ATHETOS = "Athetos"
 
     MENU = "Menu"
     BLURST = "Blurst"
