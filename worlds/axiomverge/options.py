@@ -27,9 +27,10 @@ class ProgressiveAddressDisruptor(Choice):
     """
     Combine Address Disruptors into a progressive upgrade. Can optionally keep bomb seperate.
     """
-    option_off = 0
+    option_false = 0
     option_exclude_bomb = 1
-    option_on = 2
+    option_true = 2
+    display_name = "Progressive Address Disruptor"
 
 
 class ProgressiveCoat(DefaultOnToggle):
