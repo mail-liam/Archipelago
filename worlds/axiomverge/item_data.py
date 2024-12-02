@@ -10,7 +10,7 @@ from .constants import AVItemType, AP_ID_BASE
 class AVItemData:
     id: int
     name: str
-    group_name: str
+    group_name: AVItemType
     ap_classification: ItemClassification
     is_default: bool
 

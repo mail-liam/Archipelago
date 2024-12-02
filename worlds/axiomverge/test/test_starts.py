@@ -3,11 +3,11 @@ from . import AVTestBase
 
 class TestElsenovaStart(AVTestBase):
     options = {
-        "starting_location": "Elsenova",
+        "start_location": 1,
     }
 
 
 class TestPurpleAbsuStart(AVTestBase):
     options = {
-        "starting_location": "Purple Absu",
+        "start_location": 2,
     }
