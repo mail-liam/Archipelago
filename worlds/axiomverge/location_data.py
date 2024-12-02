@@ -285,7 +285,7 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(62, 'Kur - Cliffside Cave Shrine', AVRegions.MOUNTAIN_BASE, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),
 
     AVLocationData(63, 'Kur - Above Twin Save Rooms', AVRegions.UPPER_CAVES, conditions.not_implemented),
-    AVLocationData(64, 'Kur - Floating Ledge', AVRegions.UPPER_CAVES, conditions.has_drone),
+    AVLocationData(64, 'Kur - Floating Ledge', AVRegions.UPPER_CAVES, conditions.not_implemented),
     AVLocationData(65, 'Kur - Inside Cliff', AVRegions.UPPER_CAVES, conditions.has_red_coat),
     AVLocationData(66, 'Kur - Upper Cliffs Shrine', AVRegions.UPPER_CAVES, conditions.has_drone),
     AVLocationData(67, 'Kur - Drone Odyssey Behind Wall', AVRegions.UPPER_CAVES, conditions.has_drone),
@@ -307,8 +307,8 @@ location_data: t.Tuple[AVLocationData] = (
 
     AVLocationData(79, 'Indi - Outside Save Room', AVRegions.INDI, conditions.has_trenchcoat),
 
-    AVLocationData(80, 'Ukkin-Na - Long Fall Shaft Base', AVRegions.WEST_UKKIN_NA, conditions.any_height),
-    AVLocationData(81, 'Ukkin-Na - Annihiwaiter Room', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
+    AVLocationData(80, 'Ukkin-Na - Long Fall Shaft Base', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
+    AVLocationData(81, 'Ukkin-Na - Annihiwaiter Room', AVRegions.WEST_UKKIN_NA, conditions.any_height),
 
     AVLocationData(82, 'Ukkin-Na - Secret Room Below Floor', AVRegions.EAST_UKKIN_NA, conditions.has_trenchcoat),
     AVLocationData(83, 'Ukkin-Na - Blurst Room', AVRegions.EAST_UKKIN_NA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
@@ -324,7 +324,7 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(92, 'Edin - Roof Cage', AVRegions.LOWER_EDIN, conditions.not_implemented),
     AVLocationData(93, 'Edin - Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
     AVLocationData(94, 'Edin - Secret Tunnel Below Zombies', AVRegions.LOWER_EDIN, conditions.not_implemented),
-    AVLocationData(95, 'Edin - Above Indi Entrace', AVRegions.LOWER_EDIN, conditions.not_implemented),
+    AVLocationData(95, 'Edin - Above Indi Entrance', AVRegions.LOWER_EDIN, conditions.not_implemented),
     AVLocationData(96, 'Edin - Clone Path Inside Blocks', AVRegions.LOWER_EDIN, conditions.not_implemented),
     AVLocationData(97, 'Edin - Clone Path Rooftop Ledge', AVRegions.LOWER_EDIN, conditions.not_implemented),
     AVLocationData(98, 'Edin - Clone Path Roof Before Save', AVRegions.LOWER_EDIN, conditions.not_implemented),
@@ -355,7 +355,7 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(118, 'Mar-Uru - Below Sentry Bot Puzzle', AVRegions.MAR_URU, conditions.not_implemented),
     AVLocationData(119, 'Mar-Uru - Below Sentry Bot Puzzle In Wall', AVRegions.MAR_URU, conditions.not_implemented),
     AVLocationData(120, 'Mar-Uru - Inside Corridor Block', AVRegions.MAR_URU, conditions.not_implemented),
-    AVLocationData(121, 'Mar-Uru - Behind Wall Before Athetos Ascent', AVRegions.MAR_URU, conditions.not_implemented),
+    AVLocationData(121, 'Mar-Uru - Behind Wall Before Athetos Ascent', AVRegions.MAR_URU, conditions.always_accessible),
     AVLocationData(122, 'Mar-Uru - Tie-Flighter Puzzle', AVRegions.MAR_URU, conditions.has_glitch_2),
     AVLocationData(123, 'Mar-Uru - Athethos Ascent Drone Tunnel', AVRegions.MAR_URU, conditions.has_drone),
 
