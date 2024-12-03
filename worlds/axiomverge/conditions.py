@@ -14,6 +14,8 @@ if t.TYPE_CHECKING:
 ALL_WEAPONS = {item.name for item in item_data.values() if item.group_name == AVItemType.WEAPON}
 RANGED_WEAPONS = ALL_WEAPONS - {"Tethered Charge", "Kilver", "Distortion Field", "Multi-Disruptor", "Firewall", "Lightning Gun", "Shards", "Quantum Variegator"}
 
+OBSCURE_SKIP = False
+
 
 # Logic primitives that are used either independently or part of more complex expressions
 def not_implemented(state: CollectionState, context: LogicContext):
@@ -366,10 +368,69 @@ def lower_gir_tab_access(s: CollectionState, c: LogicContext):
     return has_trenchcoat(s, c) or has_glitch_2(s, c) or has_drone_tele(s, c) and floor_grapple_clip(s, c)
 
 
+def kur_peak_access(s: CollectionState, c: LogicContext):
+    return (
+        has_drone_tele(s, c) and has_drone_launch(s, c) or (
+            has_trenchcoat(s, c) and roof_grapple_clip(s, c) and has_drone(s, c)
+        )
+    )
+
+
 def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
     return has_drone(s, c) and (has_glitch_2(s, c) or has_red_coat(s, c) or easy_grapple_clip(s, c))
 
 
+def ukhu_access(s: CollectionState, c: LogicContext):
+    return has_glitch_bomb(s, c) or has_red_coat(s, c) or has_trenchcoat(s, c) and (
+        roof_grapple_clip(s, c) or OBSCURE_SKIP
+    )
+
+def ukhu_exit_access(s: CollectionState, c: LogicContext):
+    return has_glitch_bomb(s, c) or has_red_coat(s, c) or has_strict_trenchcoat(s, c) and OBSCURE_SKIP
+
+
+def structure_ruins_access(s: CollectionState, c: LogicContext):
+    return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and can_drill(s, c) and (
+        has_drone_tele(s, c) or floor_grapple_clip(s, c)
+    )
+
+
+def vanilla_clone_access(s: CollectionState, c: LogicContext):
+    return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and (
+        has_high_jump(s, c) or has_drone_tele(s, c) or has_grapple(s, c) and roof_grapple_clip(s, c)
+    )
+
+
+def clone_path_blocks_access(s: CollectionState, c: LogicContext):
+    return
+
+
+def edin_hangar_left_access(s: CollectionState, c: LogicContext):
+    return has_glitch_bomb(s, c) or has_red_coat(s, c) and OBSCURE_SKIP
+
+
+def double_check_tunnel_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c) and (
+            can_fly(s, c)
+            or has_drone_tele(s, c) and has_drone_launch(s, c)
+            or has_high_jump(s, c) and has_grapple(s, c)
+            or has_glitch_bomb(s, c) and (
+                has_grapple(s, c) or has_high_jump(s, c) or has_drone_tele(s, c)
+            )
+        ) or has_red_coat(s, c) and has_grapple(s, c) and (
+            has_high_jump(s, c) or c.red_rocket_jump_enabled
+        )
+    )
+
+
 def mar_uru_access(s: CollectionState, c: LogicContext):
-    # TODO: Vanilla wincon, return to later
-    return has_red_coat(s, c) and has_drone_launch(s, c) and has_drone_tele(s, c)
+    return (
+        has_red_coat(s, c) and (
+            can_fly(s, c)
+            or has_drone_tele(s, c) and (
+                has_drone_launch(s, c) or has_high_jump(s, c) and c.red_rocket_jump_enabled
+            )
+        )
+        or has_high_jump(s, c) and has_grapple(s, c) and c.red_rocket_jump_enabled
+    )

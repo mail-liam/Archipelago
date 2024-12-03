@@ -81,11 +81,13 @@ class AVRegions(StrEnum):
     # Ukkin-Na
     WEST_UKKIN_NA = "West Ukkin-Na"
     EAST_UKKIN_NA = "East Ukkin-Na"
-    UKKIN_NA_EAST_EXIT = "Ukkin-Na East Exit"
+    EAST_UKKIN_NA_EXIT = "East Ukkin-Na Exit"
 
     # Edin
     LOWER_EDIN = "Lower Edin"
-    UPPER_EDIN = "Upper Edin"
+    UKHU = "Ukhu"
+    CLONE = "Clone"
+    HANGAR = "Hangar"
     EAST_EDIN = "East Edin"
 
     # E-Kur-Mah
