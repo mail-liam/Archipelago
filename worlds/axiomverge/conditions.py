@@ -376,8 +376,82 @@ def kur_peak_access(s: CollectionState, c: LogicContext):
     )
 
 
+def ophelia_ascent_access(s: CollectionState, c: LogicContext):
+    return s.has("Vision Defeated", c.player) and (
+        has_trenchcoat(s, c) or has_high_jump(s, c)
+    )
+
+
+def ukkin_na_secret_floor_access(s: CollectionState, c: LogicContext):
+    return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and has_fat_beam(s, c)
+
+
 def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
     return has_drone(s, c) and (has_glitch_2(s, c) or has_red_coat(s, c) or easy_grapple_clip(s, c))
+
+
+def ophelia_ledge_access(s: CollectionState, c: LogicContext):
+    return has_drone_tele(s, c) or has_red_coat(s, c) or (
+        has_strict_trenchcoat(s, c) and has_grapple(s, c)
+        or has_strict_trenchcoat(s, c) and has_high_jump(s, c)
+        or has_high_jump(s, c) and has_grapple(s, c)
+    )
+
+
+def edin_roof_ledge_access(s: CollectionState, c: LogicContext):
+    return (
+        can_fly(s, c)
+        or has_trenchcoat(s, c) and has_drone_launch(s, c) and has_drone_tele(s, c)
+        or has_red_coat(s, c) and has_high_jump(s, c) and c.red_rocket_jump_enabled and (
+            has_grapple(s, c) and has_drone_tele(s, c) or has_drone_launch(s, c)
+        )
+    )
+
+
+def roof_cage_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c) and (
+            can_fly(s, c)
+            or has_high_jump(s, c) and (has_grapple(s, c) or has_drone_tele(s, c))
+            or has_drone_tele(s, c) and has_drone_launch(s, c)
+        )
+        or has_trenchcoat(s, c) and has_drone_launch(s, c) and has_drone_tele(s, c)
+        or has_red_coat(s, c) and has_high_jump(s, c) and c.red_rocket_jump_enabled and (
+            has_grapple(s, c) and has_drone_tele(s, c) or has_drone_launch(s, c)
+        )
+    )
+
+
+def clone_rooftop_ledge_access(s: CollectionState, c: LogicContext):
+    return (
+        can_fly(s, c)
+        or has_trenchcoat(s, c) and has_grapple(s, c) and (
+            has_drone(s, c) or roof_grapple_clip(s, c)
+        )
+        or has_red_coat(s, c) and has_high_jump(s, c) and has_drone_launch(s, c)  # TODO: Coyote?
+    )
+
+
+def clone_roof_save_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c) and (
+            can_fly(s, c) or has_drone_tele(s, c) and has_drone_launch(s, c)
+        )
+        or has_red_coat(s, c) and (
+            has_grapple(s, c) or (
+                has_drone_tele(s, c) and has_high_jump(s, c) and c.red_rocket_jump_enabled
+            )
+        )
+    )
+
+
+def clone_to_hangar_access(s: CollectionState, c: LogicContext):
+    return (
+        has_red_coat(s, c)
+        or has_strict_trenchcoat(s, c) and (
+            has_drone_tele(s, c) or has_grapple(s, c) or has_high_jump(s, c)
+        )
+    )
 
 
 def ukhu_access(s: CollectionState, c: LogicContext):
@@ -387,6 +461,19 @@ def ukhu_access(s: CollectionState, c: LogicContext):
 
 def ukhu_exit_access(s: CollectionState, c: LogicContext):
     return has_glitch_bomb(s, c) or has_red_coat(s, c) or has_strict_trenchcoat(s, c) and OBSCURE_SKIP
+
+
+def can_kill_ukhu(s: CollectionState, c: LogicContext):
+    return True
+
+
+def ukhu_reward_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c) and (
+            has_drone_tele(s, c)
+            or can_kill_ukhu(s, c) and (has_drone(s, c) or c.floor_grapple_clip_enabled)
+        )
+    )
 
 
 def structure_ruins_access(s: CollectionState, c: LogicContext):
@@ -399,10 +486,6 @@ def vanilla_clone_access(s: CollectionState, c: LogicContext):
     return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and (
         has_high_jump(s, c) or has_drone_tele(s, c) or has_grapple(s, c) and roof_grapple_clip(s, c)
     )
-
-
-def clone_path_blocks_access(s: CollectionState, c: LogicContext):
-    return
 
 
 def edin_hangar_left_access(s: CollectionState, c: LogicContext):
@@ -434,3 +517,23 @@ def mar_uru_access(s: CollectionState, c: LogicContext):
         )
         or has_high_jump(s, c) and has_grapple(s, c) and c.red_rocket_jump_enabled
     )
+
+
+def can_defeat_sentinel(s: CollectionState, c: LogicContext):
+    return True
+
+
+# NOTE: All Mar-Uru rules assume Red
+def sentinel_alcove_access(s: CollectionState, c: LogicContext):
+    return can_fly(s, c) or has_high_jump(s, c) and (has_drone_tele(s, c) or c.red_rocket_jump_enabled)
+
+
+def post_sentinel_access(s: CollectionState, c: LogicContext):
+    return (
+        can_defeat_sentinel(s, c) and (
+            can_fly(s, c) or has_drone_tele(s, c) and (
+                has_drone_launch(s, c) or has_grapple(s, c)
+            )
+        )
+    )
+

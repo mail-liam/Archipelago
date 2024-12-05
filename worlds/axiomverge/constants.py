@@ -30,6 +30,7 @@ class AVRegions(StrEnum):
     LABORATORY = "Laboratory"
     XEDUR = "Xedur"
     LOWER_ERIBU = "Lower Eribu"
+    ERIBU_UKKIN_NA = "Eribu-Ukkin-Na"
     ERIBU_INDI = "Eribu-Indi"
 
     # Absu
@@ -64,11 +65,11 @@ class AVRegions(StrEnum):
 
     # Kur
     LOWER_CAVES = "Lower Caves"
-    KUR_INDI = "Kur-Indi Link"
+    KUR_INDI = "Kur-Indi"
     GAUNTLET_ROOM = "Gauntlet Room"
     GAUNTLET_REWARD = "Gauntlet Reward"
     UPPER_CAVES = "Upper Caves"
-    KUR_EDIN = "Kur-Edin Link"
+    KUR_EDIN = "Kur-Edin"
     MOUNTAIN_BASE = "Mountain Base"
     LOWER_GIR_TAB = "Lower Gir-Tab"
     UPPER_GIR_TAB = "Upper Gir-Tab"
@@ -79,8 +80,11 @@ class AVRegions(StrEnum):
     WEST_INDI = "West Indi"
 
     # Ukkin-Na
-    WEST_UKKIN_NA = "West Ukkin-Na"
-    EAST_UKKIN_NA = "East Ukkin-Na"
+    WEST_UKKIN_NA_EXIT = "West Ukkin-Na Exit"
+    UKKIN_NA_BASE = "Ukkin-Na Base"
+    SOUTH_UKKIN_NA_EXIT = "South Ukkin-Na Exit"
+    VISION = "Vision"
+    OPHELIA = "Ophelia"
     EAST_UKKIN_NA_EXIT = "East Ukkin-Na Exit"
 
     # Edin
@@ -95,7 +99,9 @@ class AVRegions(StrEnum):
     LOWER_E_KUR_MAH = "Lower E-Kur-Mah"
 
     # Mar-Uru
-    MAR_URU = "Mar-Uru"
+    MAR_URU_ENTRANCE = "Mar-Uru Entrance"
+    POST_SENTINEL = "Post Sentinel"
+    SENTRY_BOT_ROOM = "Sentry Bot Room"
     ATHETOS = "Athetos"
 
     MENU = "Menu"

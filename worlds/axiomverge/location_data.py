@@ -30,7 +30,8 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.UPPER_ERIBU, AVRegions.LABORATORY, conditions.laboratory_access, False),
     (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.can_drill, True),
     (AVRegions.UPPER_ERIBU, AVRegions.LOWER_ERIBU, conditions.floor_grapple_clip, False, "Eribu Grapple Clip Exit"),
-    (AVRegions.LOWER_ERIBU, AVRegions.WEST_UKKIN_NA, lambda s, c: conditions.has_glitch_2(s, c) or conditions.any_coat(s, c), True),  # TODO Revisit
+    (AVRegions.LOWER_ERIBU, AVRegions.ERIBU_UKKIN_NA, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_red_coat(s, c), True),
+    (AVRegions.ERIBU_UKKIN_NA, AVRegions.WEST_UKKIN_NA_EXIT, conditions.always_accessible, True),
     (
         AVRegions.LOWER_ERIBU,
         AVRegions.ERIBU_INDI,
@@ -131,7 +132,13 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, True),
     (AVRegions.INDI, AVRegions.BLURST, conditions.always_accessible, False),
 
-    (AVRegions.EAST_UKKIN_NA, AVRegions.EAST_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.easy_grapple_clip(s, c), True),
+    (AVRegions.WEST_UKKIN_NA_EXIT, AVRegions.UKKIN_NA_BASE, conditions.any_coat, True),
+    (AVRegions.UKKIN_NA_BASE, AVRegions.VISION, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_high_jump(s, c), False),
+    (AVRegions.UKKIN_NA_BASE, AVRegions.OPHELIA, conditions.ophelia_ascent_access, True),
+    (AVRegions.OPHELIA, AVRegions.BLURST, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.easy_grapple_clip(s, c), False),
+    (AVRegions.OPHELIA, AVRegions.SOUTH_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.easy_grapple_clip(s, c), False),
+    (AVRegions.SOUTH_UKKIN_NA_EXIT, AVRegions.OPHELIA, lambda s, c: conditions.any_coat(s, c) or conditions.easy_grapple_clip(s, c), False),
+    (AVRegions.SOUTH_UKKIN_NA_EXIT, AVRegions.EAST_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.easy_grapple_clip(s, c), True),
     (AVRegions.EAST_UKKIN_NA_EXIT, AVRegions.LOWER_EDIN, conditions.always_accessible, True),
 
     (AVRegions.LOWER_EDIN, AVRegions.UKHU, conditions.ukhu_access, False),
@@ -139,9 +146,13 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     (AVRegions.LOWER_EDIN, AVRegions.CLONE, conditions.vanilla_clone_access, False),
     (AVRegions.CLONE, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, False),
     (AVRegions.LOWER_EDIN, AVRegions.HANGAR, conditions.edin_hangar_left_access, True),
-    (AVRegions.CLONE, AVRegions.HANGAR, conditions.not_implemented, False),
-    (AVRegions.HANGAR, AVRegions.CLONE, conditions.not_implemented, False),
+    (AVRegions.CLONE, AVRegions.HANGAR, conditions.clone_to_hangar_access, False),
     (AVRegions.HANGAR, AVRegions.EAST_EDIN, conditions.has_glitch_bomb, True),
+
+    (AVRegions.OPHELIA, AVRegions.MAR_URU_ENTRANCE, conditions.mar_uru_access, False),
+    (AVRegions.MAR_URU_ENTRANCE, AVRegions.POST_SENTINEL, conditions.post_sentinel_access, False),
+    (AVRegions.POST_SENTINEL, AVRegions.SENTRY_BOT_ROOM, lambda s, c: conditions.has_glitch_2(s, c) or conditions.floor_grapple_clip(s, c), False),
+    (AVRegions.POST_SENTINEL, AVRegions.ATHETOS, conditions.not_implemented, False),
 
     # Microregions (Separated for sanity)
     (AVRegions.EAST_ABSU, AVRegions.EA_LEDGE, lambda s, c: conditions.can_drill(s, c) or conditions.any_glitch(s, c), False),
@@ -160,14 +171,9 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
     # WIP
     (AVRegions.LOWER_GIR_TAB, AVRegions.BEHIND_GIR_TAB, conditions.not_implemented, False),
     (AVRegions.BEHIND_GIR_TAB, AVRegions.UPPER_GIR_TAB, conditions.not_implemented, False),
-    (AVRegions.WEST_UKKIN_NA, AVRegions.EAST_UKKIN_NA, conditions.not_implemented, True),
-    (AVRegions.EAST_UKKIN_NA, AVRegions.BLURST, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.easy_grapple_clip(s, c), False),
 
     (AVRegions.UPPER_CAVES, AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented, True),
     (AVRegions.LOWER_E_KUR_MAH, AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented, True),
-
-    (AVRegions.UPPER_E_KUR_MAH, AVRegions.MAR_URU, conditions.mar_uru_access, False),
-    (AVRegions.MAR_URU, AVRegions.ATHETOS, conditions.not_implemented, False),
 )
 
 
@@ -312,33 +318,33 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(78, 'Indi - Path to Eribu', AVRegions.WEST_INDI, conditions.has_drone),
     AVLocationData(79, 'Indi - Outside Save Room', AVRegions.INDI, conditions.has_trenchcoat),
 
-    AVLocationData(80, 'Ukkin-Na - Long Fall Shaft Base', AVRegions.WEST_UKKIN_NA, conditions.not_implemented),
-    AVLocationData(81, 'Ukkin-Na - Annihiwaiter Room', AVRegions.WEST_UKKIN_NA, conditions.any_height),
+    AVLocationData(81, 'Ukkin-Na - Annihiwaiter Room', AVRegions.UKKIN_NA_BASE, conditions.not_implemented),
 
-    AVLocationData(82, 'Ukkin-Na - Secret Room Below Floor', AVRegions.EAST_UKKIN_NA, conditions.has_trenchcoat),
-    AVLocationData(83, 'Ukkin-Na - Blurst Room', AVRegions.EAST_UKKIN_NA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
-    AVLocationData(84, 'Ukkin-Na - Midway Shaft Lower', AVRegions.EAST_UKKIN_NA, conditions.has_trenchcoat),
-    AVLocationData(85, 'Ukkin-Na - Midway Shaft Upper', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
-    AVLocationData(86, 'Ukkin-Na - Hidden Shrine', AVRegions.EAST_UKKIN_NA, conditions.ukkin_na_shrine_access),
-    AVLocationData(87, 'Ukkin-Na - Chamber Above Vision Room', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
-    AVLocationData(88, 'Ukkin-Na - Tunnel Below Vision Room', AVRegions.EAST_UKKIN_NA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
-    AVLocationData(89, 'Ukkin-Na - Outside Ophelia', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
-    AVLocationData(90, 'Ukkin-Na - Above Ophelia Ledge', AVRegions.EAST_UKKIN_NA, conditions.not_implemented),
+    AVLocationData(80, 'Ukkin-Na - Long Fall Shaft Base', AVRegions.OPHELIA, conditions.has_trenchcoat),
+    AVLocationData(82, 'Ukkin-Na - Secret Room Below Floor', AVRegions.OPHELIA, conditions.ukkin_na_secret_floor_access),
+    AVLocationData(83, 'Ukkin-Na - Blurst Room', AVRegions.OPHELIA, lambda s, c: (conditions.has_trenchcoat(s, c) or conditions.floor_grapple_clip(s, c)) and conditions.has_drone(s, c)),
+    AVLocationData(84, 'Ukkin-Na - Midway Shaft Lower', AVRegions.OPHELIA, conditions.has_trenchcoat),
+    AVLocationData(85, 'Ukkin-Na - Midway Shaft Upper', AVRegions.OPHELIA, conditions.always_accessible),
+    AVLocationData(86, 'Ukkin-Na - Hidden Shrine', AVRegions.OPHELIA, conditions.ukkin_na_shrine_access),
+    AVLocationData(87, 'Ukkin-Na - Chamber Above Vision Room', AVRegions.OPHELIA, conditions.not_implemented),
+    AVLocationData(88, 'Ukkin-Na - Tunnel Below Vision Room', AVRegions.OPHELIA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
+    AVLocationData(89, 'Ukkin-Na - Outside Ophelia', AVRegions.OPHELIA, conditions.always_accessible),
+    AVLocationData(90, 'Ukkin-Na - Above Ophelia Ledge', AVRegions.OPHELIA, conditions.ophelia_ledge_access),
 
-    AVLocationData(91, 'Edin - Roof Ledge Near Ukkin-Na', AVRegions.LOWER_EDIN, conditions.not_implemented),
-    AVLocationData(92, 'Edin - Roof Cage', AVRegions.LOWER_EDIN, conditions.not_implemented),
+    AVLocationData(91, 'Edin - Roof Ledge Near Ukkin-Na', AVRegions.LOWER_EDIN, conditions.edin_roof_ledge_access),
+    AVLocationData(92, 'Edin - Roof Cage', AVRegions.LOWER_EDIN, conditions.roof_cage_access),
     AVLocationData(93, 'Edin - Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
     AVLocationData(94, 'Edin - Secret Tunnel Below Zombies', AVRegions.LOWER_EDIN, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
-    AVLocationData(95, 'Edin - Above Indi Entrance', AVRegions.LOWER_EDIN, conditions.not_implemented),
-    AVLocationData(96, 'Edin - Clone Path Inside Blocks', AVRegions.LOWER_EDIN, conditions.not_implemented),
-    AVLocationData(97, 'Edin - Clone Path Rooftop Ledge', AVRegions.LOWER_EDIN, conditions.not_implemented),
-    AVLocationData(98, 'Edin - Clone Path Roof Before Save', AVRegions.LOWER_EDIN, conditions.not_implemented),
+    AVLocationData(95, 'Edin - Above Indi Entrance', AVRegions.LOWER_EDIN, lambda s, c: conditions.any_glitch(s, c) and conditions.can_drill(s, c)),
+    AVLocationData(96, 'Edin - Clone Path Inside Blocks', AVRegions.LOWER_EDIN, lambda s, c: conditions.any_glitch(s, c) and conditions.can_drill(s, c)),
+    AVLocationData(97, 'Edin - Clone Path Rooftop Ledge', AVRegions.LOWER_EDIN, conditions.clone_rooftop_ledge_access),
+    AVLocationData(98, 'Edin - Clone Path Roof Before Save', AVRegions.LOWER_EDIN, conditions.clone_roof_save_access),
 
     AVLocationData(99, 'Edin - False Wall Shrine', AVRegions.UKHU, conditions.always_accessible),
     AVLocationData(100, 'Edin - Ukhu Path Drone Tunnel', AVRegions.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
     AVLocationData(101, 'Edin - Ukhu Path Side Room', AVRegions.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
     AVLocationData(102, 'Edin - In Structure Ruins', AVRegions.UKHU, conditions.structure_ruins_access),
-    AVLocationData(103, 'Edin - Ukhu Reward', AVRegions.UKHU, conditions.not_implemented),
+    AVLocationData(103, 'Edin - Ukhu Reward', AVRegions.UKHU, conditions.ukhu_reward_access),
 
     AVLocationData(104, 'Edin - Hangar', AVRegions.EAST_EDIN, conditions.always_accessible),
 
@@ -356,14 +362,14 @@ location_data: t.Tuple[AVLocationData] = (
     AVLocationData(114, 'E-Kur-Mah - Area Reward', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
     AVLocationData(115, 'E-Kur-Mah - Lowest Area Inside Wall', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
 
-    AVLocationData(116, 'Mar-Uru - Alcove After Sentinel', AVRegions.MAR_URU, conditions.not_implemented),
-    AVLocationData(117, 'Mar-Uru - Sentry Bot Puzzle', AVRegions.MAR_URU, conditions.not_implemented),
-    AVLocationData(118, 'Mar-Uru - Below Sentry Bot Puzzle', AVRegions.MAR_URU, conditions.not_implemented),
-    AVLocationData(119, 'Mar-Uru - Below Sentry Bot Puzzle In Wall', AVRegions.MAR_URU, conditions.not_implemented),
-    AVLocationData(120, 'Mar-Uru - Inside Corridor Block', AVRegions.MAR_URU, conditions.not_implemented),
-    AVLocationData(121, 'Mar-Uru - Behind Wall Before Athetos Ascent', AVRegions.MAR_URU, conditions.always_accessible),
-    AVLocationData(122, 'Mar-Uru - Tie-Flighter Puzzle', AVRegions.MAR_URU, conditions.has_glitch_2),
-    AVLocationData(123, 'Mar-Uru - Athethos Ascent Drone Tunnel', AVRegions.MAR_URU, conditions.has_drone),
+    AVLocationData(116, 'Mar-Uru - Alcove After Sentinel', AVRegions.POST_SENTINEL, conditions.sentinel_alcove_access),
+    AVLocationData(117, 'Mar-Uru - Sentry Bot Puzzle', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
+    AVLocationData(118, 'Mar-Uru - Below Sentry Bot Puzzle', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
+    AVLocationData(119, 'Mar-Uru - Below Sentry Bot Puzzle In Wall', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
+    AVLocationData(120, 'Mar-Uru - Inside Corridor Block', AVRegions.POST_SENTINEL, conditions.always_accessible),
+    AVLocationData(121, 'Mar-Uru - Behind Wall Before Athetos Ascent', AVRegions.POST_SENTINEL, conditions.always_accessible),
+    AVLocationData(122, 'Mar-Uru - Tie-Flighter Puzzle', AVRegions.POST_SENTINEL, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_fat_beam(s, c)),
+    AVLocationData(123, 'Mar-Uru - Athethos Ascent Drone Tunnel', AVRegions.POST_SENTINEL, conditions.not_implemented),
 
     AVLocationData(124, 'Glitch a Blurst', AVRegions.BLURST, conditions.any_glitch),
 )
