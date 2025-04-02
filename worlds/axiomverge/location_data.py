@@ -1,27 +1,28 @@
 from __future__ import annotations
 
-import typing as t
 from dataclasses import dataclass
 
 from . import conditions
-from .constants import AVRegions, AP_ID_BASE
+from .constants import AVArea, AVRegions, AP_ID_BASE
 from .types import AccessRule
 
 
 @dataclass
 class AVLocationData:
     id: int
-    name: str
+    area_name: str
+    location_name: str
     region_name: str
     access_rule: AccessRule
 
     def __post_init__(self):
         self.id += AP_ID_BASE
+        self.name = f'{self.area_name} - {self.location_name}' if self.area_name else self.location_name
 
 
 # Start Region, Destination Region, Access Rule, Bidirectional
 # NOTE: several regions are bidirectional=False if they are dead-ends without spawns to avoid creating an unnecessary entrance
-entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
+entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.WEST_ERIBU, AVRegions.UPPER_ERIBU, conditions.can_damage, True),
     (AVRegions.WEST_ERIBU, AVRegions.DINGER_GISBAR, conditions.dingergisbar_access, False),
     (AVRegions.WEST_ERIBU, AVRegions.LABORATORY, conditions.can_displacement_warp, False),
@@ -177,41 +178,41 @@ entrance_data: t.Tuple[t.Tuple[str, str, AccessRule, bool]] = (
 )
 
 
-location_data: t.Tuple[AVLocationData] = (
-    AVLocationData(0, 'Eribu - West of Spawn', AVRegions.WEST_ERIBU, conditions.always_accessible),
-    AVLocationData(1, 'Eribu - Wheelchair Room', AVRegions.WEST_ERIBU, lambda s, c: conditions.can_displacement_warp(s, c) or conditions.has_drone_tele(s, c)),
-    AVLocationData(2, 'Eribu - West Caves Below Pool', AVRegions.WEST_ERIBU, conditions.west_caves_pool_access),
+location_data: tuple[AVLocationData] = (
+    AVLocationData(0, AVArea.ERIBU, 'West of Spawn', AVRegions.WEST_ERIBU, conditions.always_accessible),
+    AVLocationData(1, AVArea.ERIBU, 'Wheelchair Room', AVRegions.WEST_ERIBU, lambda s, c: conditions.can_displacement_warp(s, c) or conditions.has_drone_tele(s, c)),
+    AVLocationData(2, AVArea.ERIBU, 'West Caves Below Pool', AVRegions.WEST_ERIBU, conditions.west_caves_pool_access),
 
-    AVLocationData(3, 'Eribu - FlameThrower', AVRegions.DINGER_GISBAR, conditions.always_accessible),
+    AVLocationData(3, AVArea.ERIBU, 'FlameThrower', AVRegions.DINGER_GISBAR, conditions.always_accessible),
 
-    AVLocationData(4, 'Eribu - Upper Right', AVRegions.UPPER_ERIBU, conditions.always_accessible),
-    AVLocationData(5, 'Eribu - Upper Eribu Bomb Check', AVRegions.UPPER_ERIBU, conditions.upper_eribu_bomb_access),
-    AVLocationData(6, 'Eribu - Bubble Jail', AVRegions.UPPER_ERIBU, conditions.bubble_jail_access),
-    AVLocationData(7, 'Eribu - Outside Laboratory', AVRegions.UPPER_ERIBU, conditions.outside_lab_access),
+    AVLocationData(4, AVArea.ERIBU, 'Upper Right', AVRegions.UPPER_ERIBU, conditions.always_accessible),
+    AVLocationData(5, AVArea.ERIBU, 'Upper Eribu Bomb Check', AVRegions.UPPER_ERIBU, conditions.upper_eribu_bomb_access),
+    AVLocationData(6, AVArea.ERIBU, 'Bubble Jail', AVRegions.UPPER_ERIBU, conditions.bubble_jail_access),
+    AVLocationData(7, AVArea.ERIBU, 'Outside Laboratory', AVRegions.UPPER_ERIBU, conditions.outside_lab_access),
 
-    AVLocationData(8, 'Eribu - Xedur Reward', AVRegions.XEDUR, conditions.can_damage_boss),
-    AVLocationData(9, 'Eribu - Below Xedur', AVRegions.XEDUR, conditions.can_drill),
+    AVLocationData(8, AVArea.ERIBU, 'Xedur Reward', AVRegions.XEDUR, conditions.can_damage_boss),
+    AVLocationData(9, AVArea.ERIBU, 'Below Xedur', AVRegions.XEDUR, conditions.can_drill),
 
-    AVLocationData(10, 'Eribu - Laboratory Gauntlet', AVRegions.LABORATORY, conditions.always_accessible),
+    AVLocationData(10, AVArea.ERIBU, 'Laboratory Gauntlet', AVRegions.LABORATORY, conditions.always_accessible),
 
     AVLocationData(
         11,
-        'Eribu - Sentry Bot Tunnel',
+        AVArea.ERIBU, 'Sentry Bot Tunnel',
         AVRegions.LOWER_ERIBU,
         lambda s, c: conditions.has_drone(s, c) and (c.floor_grapple_clip_enabled or conditions.has_glitch_bomb(s, c)),
     ),
     AVLocationData(
         12,
-        'Eribu - Outside Passcode Room',
+        AVArea.ERIBU, 'Outside Passcode Room',
         AVRegions.LOWER_ERIBU,
         lambda s, c: conditions.any_glitch(s, c) and conditions.can_damage(s, c) or conditions.has_drone(s, c) or conditions.has_grapple(s, c) or conditions.has_trenchcoat(s, c),
     ),
-    AVLocationData(13, 'Eribu - Passcode Room', AVRegions.LOWER_ERIBU, conditions.dalkhu_subtum_access),
-    AVLocationData(14, 'Eribu - Path to Absu', AVRegions.LOWER_ERIBU, conditions.always_accessible),
+    AVLocationData(13, AVArea.ERIBU, 'Passcode Room', AVRegions.LOWER_ERIBU, conditions.dalkhu_subtum_access),
+    AVLocationData(14, AVArea.ERIBU, 'Path to Absu', AVRegions.LOWER_ERIBU, conditions.always_accessible),
 
     AVLocationData(
         15,
-        'Eribu - Path to Indi Ceiling',
+        AVArea.ERIBU, 'Path to Indi Ceiling',
         AVRegions.ERIBU_INDI,
         lambda s, c: (
             conditions.has_red_coat(s, c) and (conditions.has_grapple(s, c) or conditions.has_high_jump(s, c))
@@ -219,162 +220,169 @@ location_data: t.Tuple[AVLocationData] = (
         )
     ),
 
-    AVLocationData(16, 'Absu - Main Room Rock Shaft', AVRegions.WEST_ABSU, conditions.can_drill),
+    AVLocationData(16, AVArea.ABSU, 'Main Room Rock Shaft', AVRegions.WEST_ABSU, conditions.can_drill),
     AVLocationData(
         17,
-        'Absu - Diatom Room',
+        AVArea.ABSU, 'Diatom Room',
         AVRegions.WEST_ABSU,
         lambda s, c: conditions.has_red_coat(s, c) or conditions.any_glitch(s, c) and (conditions.any_coat(s, c) or conditions.can_pierce_wall(s, c)),
     ),
-    AVLocationData(18, 'Absu - Skeleton Tunnel', AVRegions.WEST_ABSU, conditions.has_drone),
-    AVLocationData(19, 'Absu - Below Skeleton Tunnel', AVRegions.WEST_ABSU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
+    AVLocationData(18, AVArea.ABSU, 'Skeleton Tunnel', AVRegions.WEST_ABSU, conditions.has_drone),
+    AVLocationData(19, AVArea.ABSU, 'Below Skeleton Tunnel', AVRegions.WEST_ABSU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
 
-    AVLocationData(20, 'Absu - Switch Cage', AVRegions.WEST_ATTIC, lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c)),
-    AVLocationData(21, 'Absu - Attic Far Left', AVRegions.WEST_ATTIC, conditions.basic_attic_access),
-    AVLocationData(22, 'Absu - Attic Middle Left', AVRegions.WEST_ATTIC, conditions.attic_transition_upper),
+    AVLocationData(20, AVArea.ABSU, 'Switch Cage', AVRegions.WEST_ATTIC, lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c)),
+    AVLocationData(21, AVArea.ABSU, 'Attic Far Left', AVRegions.WEST_ATTIC, conditions.basic_attic_access),
+    AVLocationData(22, AVArea.ABSU, 'Attic Middle Left', AVRegions.WEST_ATTIC, conditions.attic_transition_upper),
 
-    AVLocationData(23, 'Absu - Attic Midddle Right', AVRegions.EAST_ATTIC, conditions.basic_attic_access),
-    AVLocationData(24, 'Absu - Attic Far Right', AVRegions.EAST_ATTIC, conditions.attic_far_right_access),
+    AVLocationData(23, AVArea.ABSU, 'Attic Midddle Right', AVRegions.EAST_ATTIC, conditions.basic_attic_access),
+    AVLocationData(24, AVArea.ABSU, 'Attic Far Right', AVRegions.EAST_ATTIC, conditions.attic_far_right_access),
 
-    AVLocationData(25, 'Absu - Elsenova', AVRegions.ELSENOVA, conditions.always_accessible),
+    AVLocationData(25, AVArea.ABSU, 'Elsenova', AVRegions.ELSENOVA, conditions.always_accessible),
 
-    AVLocationData(26, 'Absu - Behind Glitch Barrier', AVRegions.ABSU_BASEMENT, conditions.always_accessible),
+    AVLocationData(26, AVArea.ABSU, 'Behind Glitch Barrier', AVRegions.ABSU_BASEMENT, conditions.always_accessible),
 
-    AVLocationData(27, 'Absu - Zombie Jail', AVRegions.LOWER_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c)),
-    AVLocationData(28, 'Absu - Lowest Point', AVRegions.LOWER_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c)),
+    AVLocationData(27, AVArea.ABSU, 'Zombie Jail', AVRegions.LOWER_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c)),
+    AVLocationData(28, AVArea.ABSU, 'Lowest Point', AVRegions.LOWER_ABSU, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c)),
 
-    AVLocationData(29, 'Absu - Floating Platform', AVRegions.LOWER_CORRIDOR, conditions.floating_platform_access),
+    AVLocationData(29, AVArea.ABSU, 'Floating Platform', AVRegions.LOWER_CORRIDOR, conditions.floating_platform_access),
 
-    AVLocationData(31, 'Absu - Telal Reward', AVRegions.TELAL, conditions.always_accessible),
+    AVLocationData(31, AVArea.ABSU, 'Telal Reward', AVRegions.TELAL, conditions.always_accessible),
 
-    AVLocationData(32, 'Absu - Indi Tunnel Side Room', AVRegions.INDI_TUNNEL, conditions.any_height),
+    AVLocationData(32, AVArea.ABSU, 'Indi Tunnel Side Room', AVRegions.INDI_TUNNEL, conditions.any_height),
 
-    AVLocationData(33, 'Absu - Trapped Diatoms', AVRegions.EA_LEDGE, conditions.always_accessible),
-    AVLocationData(30, 'Absu - Zombie Tunnel', AVRegions.EAST_ABSU, conditions.zombie_tunnel_access),
-    AVLocationData(34, 'Absu - Vertical Shaft Behind Telal', AVRegions.EA_BEHIND_TELAL, conditions.always_accessible),
-    AVLocationData(35, 'Absu - Wall Alcove', AVRegions.EA_ALCOVE, conditions.always_accessible),
-    AVLocationData(36, 'Absu - Hidden Shrine', AVRegions.EA_HIDDEN_SHRINE, conditions.always_accessible),
-    AVLocationData(37, 'Absu - Chasm Room Tunnel', AVRegions.EA_CHASM_TUNNEL, conditions.always_accessible),
-    AVLocationData(38, 'Absu - Gated Alcove', AVRegions.EAST_ABSU, conditions.gated_alcove_access),
-    AVLocationData(39, 'Absu - Purple Shrine', AVRegions.EAST_ABSU, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_glitch_2(s, c) and conditions.can_drill(s, c)),
-    AVLocationData(40, 'Absu - Zi Entrance', AVRegions.EA_ZI_ENTRANCE, conditions.always_accessible),
+    AVLocationData(33, AVArea.ABSU, 'Trapped Diatoms', AVRegions.EA_LEDGE, conditions.always_accessible),
+    AVLocationData(30, AVArea.ABSU, 'Zombie Tunnel', AVRegions.EAST_ABSU, conditions.zombie_tunnel_access),
+    AVLocationData(34, AVArea.ABSU, 'Vertical Shaft Behind Telal', AVRegions.EA_BEHIND_TELAL, conditions.always_accessible),
+    AVLocationData(35, AVArea.ABSU, 'Wall Alcove', AVRegions.EA_ALCOVE, conditions.always_accessible),
+    AVLocationData(36, AVArea.ABSU, 'Hidden Shrine', AVRegions.EA_HIDDEN_SHRINE, conditions.always_accessible),
+    AVLocationData(37, AVArea.ABSU, 'Chasm Room Tunnel', AVRegions.EA_CHASM_TUNNEL, conditions.always_accessible),
+    AVLocationData(38, AVArea.ABSU, 'Gated Alcove', AVRegions.EAST_ABSU, conditions.gated_alcove_access),
+    AVLocationData(39, AVArea.ABSU, 'Purple Shrine', AVRegions.EAST_ABSU, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_glitch_2(s, c) and conditions.can_drill(s, c)),
+    AVLocationData(40, AVArea.ABSU, 'Zi Entrance', AVRegions.EA_ZI_ENTRANCE, conditions.always_accessible),
 
-    AVLocationData(41, 'Zi - Behind False Wall', AVRegions.LOWER_ZI, lambda s, c: conditions.any_coat(s, c) and conditions.any_height(s, c)),
-    AVLocationData(42, 'Zi - Disappointment Hill', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
+    AVLocationData(41, AVArea.ZI, 'Behind False Wall', AVRegions.LOWER_ZI, lambda s, c: conditions.any_coat(s, c) and conditions.any_height(s, c)),
+    AVLocationData(42, AVArea.ZI, 'Disappointment Hill', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
     AVLocationData(
         43,
-        'Zi - Secret Room near lower Save',
+        AVArea.ZI, 'Secret Room near lower Save',
         AVRegions.LOWER_ZI,
         lambda s, c: conditions.can_drill(s, c) and (conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
     ),
-    AVLocationData(44, 'Zi - Furglot Tunnel', AVRegions.LOWER_ZI, conditions.furglot_tunnel_access),
-    AVLocationData(45, 'Zi - False Roof Alcove', AVRegions.LOWER_ZI, conditions.zi_false_roof_access),
+    AVLocationData(44, AVArea.ZI, 'Furglot Tunnel', AVRegions.LOWER_ZI, conditions.furglot_tunnel_access),
+    AVLocationData(45, AVArea.ZI, 'False Roof Alcove', AVRegions.LOWER_ZI, conditions.zi_false_roof_access),
 
-    AVLocationData(46, 'Zi - Above Veruska', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
-    AVLocationData(47, 'Zi - Behind Veruska Left', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
-    AVLocationData(48, 'Zi - Behind Veruska Right', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
+    AVLocationData(46, AVArea.ZI, 'Above Veruska', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
+    AVLocationData(47, AVArea.ZI, 'Behind Veruska Left', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
+    AVLocationData(48, AVArea.ZI, 'Behind Veruska Right', AVRegions.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
 
-    AVLocationData(49, 'Zi - Ceiling Alcove Below Uruku', AVRegions.UPPER_ZI, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c) or conditions.can_drill(s, c) and conditions.any_height(s, c)),
-    AVLocationData(50, 'Zi - Drone Tunnel Upper', AVRegions.UPPER_ZI, lambda s, c: conditions.has_drone(s, c) and conditions.has_power_nodes(s, c, 2)),
-    AVLocationData(51, 'Zi - Drone Tunnel End', AVRegions.UPPER_ZI, lambda s, c: conditions.has_drone(s, c) and conditions.has_power_nodes(s, c, 2)),
+    AVLocationData(49, AVArea.ZI, 'Ceiling Alcove Below Uruku', AVRegions.UPPER_ZI, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c) or conditions.can_drill(s, c) and conditions.any_height(s, c)),
+    AVLocationData(50, AVArea.ZI, 'Drone Tunnel Upper', AVRegions.UPPER_ZI, lambda s, c: conditions.has_drone(s, c) and conditions.has_power_nodes(s, c, 2)),
+    AVLocationData(51, AVArea.ZI, 'Drone Tunnel End', AVRegions.UPPER_ZI, lambda s, c: conditions.has_drone(s, c) and conditions.has_power_nodes(s, c, 2)),
 
-    AVLocationData(52, 'Zi - Preview Room', AVRegions.PREVIEW_ROOM, conditions.always_accessible),
+    AVLocationData(52, AVArea.ZI, 'Preview Room', AVRegions.PREVIEW_ROOM, conditions.always_accessible),
 
     #TODO: Proper Implement Uruku
-    AVLocationData(53, 'Zi - Uruku Reward', AVRegions.URUKU, conditions.has_trenchcoat),
-    AVLocationData(54, 'Zi - Uruku Cage', AVRegions.URUKU, conditions.any_coat),
-    AVLocationData(55, 'Zi - Behind Uruku Rooftop Ledge', AVRegions.URUKU, conditions.has_grapple),
+    AVLocationData(53, AVArea.ZI, 'Uruku Reward', AVRegions.URUKU, conditions.has_trenchcoat),
+    AVLocationData(54, AVArea.ZI, 'Uruku Cage', AVRegions.URUKU, conditions.any_coat),
+    AVLocationData(55, AVArea.ZI, 'Behind Uruku Rooftop Ledge', AVRegions.URUKU, conditions.has_grapple),
 
-    AVLocationData(56, 'Kur - Drone Tunnel Before Gauntlet', AVRegions.LOWER_CAVES, conditions.has_drone),
-    AVLocationData(57, 'Kur - High Jump Shrine', AVRegions.LOWER_CAVES, conditions.always_accessible),
-    AVLocationData(58, 'Kur - High Jump Shrine False Wall', AVRegions.LOWER_CAVES, lambda s, c: conditions.has_drone(s, c) or conditions.any_height(s, c)),
-    AVLocationData(59, 'Kur - Above Lower Save Room', AVRegions.LOWER_CAVES, conditions.above_lower_kur_save_access),
+    AVLocationData(56, AVArea.KUR, 'Drone Tunnel Before Gauntlet', AVRegions.LOWER_CAVES, conditions.has_drone),
+    AVLocationData(57, AVArea.KUR, 'High Jump Shrine', AVRegions.LOWER_CAVES, conditions.always_accessible),
+    AVLocationData(58, AVArea.KUR, 'High Jump Shrine False Wall', AVRegions.LOWER_CAVES, lambda s, c: conditions.has_drone(s, c) or conditions.any_height(s, c)),
+    AVLocationData(59, AVArea.KUR, 'Above Lower Save Room', AVRegions.LOWER_CAVES, conditions.above_lower_kur_save_access),
 
-    AVLocationData(60, 'Kur - Gauntlet Reward', AVRegions.GAUNTLET_REWARD, conditions.always_accessible),
+    AVLocationData(60, AVArea.KUR, 'Gauntlet Reward', AVRegions.GAUNTLET_REWARD, conditions.always_accessible),
 
-    AVLocationData(61, 'Kur - Near Indi Entrance', AVRegions.UPPER_CAVES, conditions.always_accessible),
+    AVLocationData(61, AVArea.KUR, 'Near Indi Entrance', AVRegions.UPPER_CAVES, conditions.always_accessible),
 
-    AVLocationData(62, 'Kur - Cliffside Cave Shrine', AVRegions.MOUNTAIN_BASE, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),
+    AVLocationData(62, AVArea.KUR, 'Cliffside Cave Shrine', AVRegions.MOUNTAIN_BASE, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),
 
-    AVLocationData(63, 'Kur - Above Twin Save Rooms', AVRegions.UPPER_CAVES, conditions.not_implemented),
-    AVLocationData(64, 'Kur - Floating Ledge', AVRegions.UPPER_CAVES, conditions.not_implemented),
-    AVLocationData(65, 'Kur - Inside Cliff', AVRegions.UPPER_CAVES, conditions.has_red_coat),
-    AVLocationData(66, 'Kur - Upper Cliffs Shrine', AVRegions.UPPER_CAVES, conditions.has_drone),
-    AVLocationData(67, 'Kur - Drone Odyssey Behind Wall', AVRegions.UPPER_CAVES, conditions.has_drone),
-    AVLocationData(68, 'Kur - Drone Odyssey Reward', AVRegions.UPPER_CAVES, conditions.has_drone),
-    AVLocationData(69, 'Kur - Snowy Cliffs Ledge Upper', AVRegions.UPPER_CAVES, conditions.not_implemented),
-    AVLocationData(70, 'Kur - Snowy Cliffs Ledge Lower', AVRegions.UPPER_CAVES, conditions.has_red_coat),
-    AVLocationData(71, 'Kur - Loop Room', AVRegions.UPPER_CAVES, conditions.not_implemented),
-    AVLocationData(72, 'Kur - Peak Cliff Ledge', AVRegions.UPPER_CAVES, conditions.kur_peak_access),
+    AVLocationData(63, AVArea.KUR, 'Above Twin Save Rooms', AVRegions.UPPER_CAVES, conditions.not_implemented),
+    AVLocationData(64, AVArea.KUR, 'Floating Ledge', AVRegions.UPPER_CAVES, conditions.not_implemented),
+    AVLocationData(65, AVArea.KUR, 'Inside Cliff', AVRegions.UPPER_CAVES, conditions.has_red_coat),
+    AVLocationData(66, AVArea.KUR, 'Upper Cliffs Shrine', AVRegions.UPPER_CAVES, conditions.has_drone),
+    AVLocationData(67, AVArea.KUR, 'Drone Odyssey Behind Wall', AVRegions.UPPER_CAVES, conditions.has_drone),
+    AVLocationData(68, AVArea.KUR, 'Drone Odyssey Reward', AVRegions.UPPER_CAVES, conditions.has_drone),
+    AVLocationData(69, AVArea.KUR, 'Snowy Cliffs Ledge Upper', AVRegions.UPPER_CAVES, conditions.not_implemented),
+    AVLocationData(70, AVArea.KUR, 'Snowy Cliffs Ledge Lower', AVRegions.UPPER_CAVES, conditions.has_red_coat),
+    AVLocationData(71, AVArea.KUR, 'Loop Room', AVRegions.UPPER_CAVES, conditions.not_implemented),
+    AVLocationData(72, AVArea.KUR, 'Peak Cliff Ledge', AVRegions.UPPER_CAVES, conditions.kur_peak_access),
 
-    AVLocationData(73, 'Kur - Gir-Tab Lower Entrance Drone Tunnel', AVRegions.LOWER_GIR_TAB, conditions.has_drone),
+    AVLocationData(73, AVArea.KUR, 'Gir-Tab Lower Entrance Drone Tunnel', AVRegions.LOWER_GIR_TAB, conditions.has_drone),
 
-    AVLocationData(74, 'Kur - Gir-Tab Upper Entrance', AVRegions.UPPER_GIR_TAB, conditions.always_accessible),
+    AVLocationData(74, AVArea.KUR, 'Gir-Tab Upper Entrance', AVRegions.UPPER_GIR_TAB, conditions.always_accessible),
 
-    AVLocationData(75, 'Kur - Internal Cliffs near False Floor', AVRegions.BEHIND_GIR_TAB, conditions.not_implemented),
-    AVLocationData(76, 'Kur - Internal Cliffs Shrine', AVRegions.BEHIND_GIR_TAB, conditions.not_implemented),
-    AVLocationData(77, 'Kur - Internal Cliffs Above Shrine', AVRegions.BEHIND_GIR_TAB, conditions.not_implemented),
+    AVLocationData(75, AVArea.KUR, 'Internal Cliffs near False Floor', AVRegions.BEHIND_GIR_TAB, conditions.not_implemented),
+    AVLocationData(76, AVArea.KUR, 'Internal Cliffs Shrine', AVRegions.BEHIND_GIR_TAB, conditions.not_implemented),
+    AVLocationData(77, AVArea.KUR, 'Internal Cliffs Above Shrine', AVRegions.BEHIND_GIR_TAB, conditions.not_implemented),
 
-    AVLocationData(78, 'Indi - Path to Eribu', AVRegions.WEST_INDI, conditions.has_drone),
-    AVLocationData(79, 'Indi - Outside Save Room', AVRegions.INDI, conditions.has_trenchcoat),
+    AVLocationData(78, AVArea.INDI, 'Path to Eribu', AVRegions.WEST_INDI, conditions.has_drone),
+    AVLocationData(79, AVArea.INDI, 'Outside Save Room', AVRegions.INDI, conditions.has_trenchcoat),
 
-    AVLocationData(81, 'Ukkin-Na - Annihiwaiter Room', AVRegions.UKKIN_NA_BASE, conditions.not_implemented),
+    AVLocationData(81, AVArea.UKKIN_NA, 'Annihiwaiter Room', AVRegions.UKKIN_NA_BASE, conditions.not_implemented),
 
-    AVLocationData(80, 'Ukkin-Na - Long Fall Shaft Base', AVRegions.OPHELIA, conditions.has_trenchcoat),
-    AVLocationData(82, 'Ukkin-Na - Secret Room Below Floor', AVRegions.OPHELIA, conditions.ukkin_na_secret_floor_access),
-    AVLocationData(83, 'Ukkin-Na - Blurst Room', AVRegions.OPHELIA, lambda s, c: (conditions.has_trenchcoat(s, c) or conditions.floor_grapple_clip(s, c)) and conditions.has_drone(s, c)),
-    AVLocationData(84, 'Ukkin-Na - Midway Shaft Lower', AVRegions.OPHELIA, conditions.has_trenchcoat),
-    AVLocationData(85, 'Ukkin-Na - Midway Shaft Upper', AVRegions.OPHELIA, conditions.always_accessible),
-    AVLocationData(86, 'Ukkin-Na - Hidden Shrine', AVRegions.OPHELIA, conditions.ukkin_na_shrine_access),
-    AVLocationData(87, 'Ukkin-Na - Chamber Above Vision Room', AVRegions.OPHELIA, conditions.not_implemented),
-    AVLocationData(88, 'Ukkin-Na - Tunnel Below Vision Room', AVRegions.OPHELIA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
-    AVLocationData(89, 'Ukkin-Na - Outside Ophelia', AVRegions.OPHELIA, conditions.always_accessible),
-    AVLocationData(90, 'Ukkin-Na - Above Ophelia Ledge', AVRegions.OPHELIA, conditions.ophelia_ledge_access),
+    AVLocationData(80, AVArea.UKKIN_NA, 'Long Fall Shaft Base', AVRegions.OPHELIA, conditions.has_trenchcoat),
+    AVLocationData(82, AVArea.UKKIN_NA, 'Secret Room Below Floor', AVRegions.OPHELIA, conditions.ukkin_na_secret_floor_access),
+    AVLocationData(83, AVArea.UKKIN_NA, 'Blurst Room', AVRegions.OPHELIA, lambda s, c: (conditions.has_trenchcoat(s, c) or conditions.floor_grapple_clip(s, c)) and conditions.has_drone(s, c)),
+    AVLocationData(84, AVArea.UKKIN_NA, 'Midway Shaft Lower', AVRegions.OPHELIA, conditions.has_trenchcoat),
+    AVLocationData(85, AVArea.UKKIN_NA, 'Midway Shaft Upper', AVRegions.OPHELIA, conditions.always_accessible),
+    AVLocationData(86, AVArea.UKKIN_NA, 'Hidden Shrine', AVRegions.OPHELIA, conditions.ukkin_na_shrine_access),
+    AVLocationData(87, AVArea.UKKIN_NA, 'Chamber Above Vision Room', AVRegions.OPHELIA, conditions.not_implemented),
+    AVLocationData(88, AVArea.UKKIN_NA, 'Tunnel Below Vision Room', AVRegions.OPHELIA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
+    AVLocationData(89, AVArea.UKKIN_NA, 'Outside Ophelia', AVRegions.OPHELIA, conditions.always_accessible),
+    AVLocationData(90, AVArea.UKKIN_NA, 'Above Ophelia Ledge', AVRegions.OPHELIA, conditions.ophelia_ledge_access),
 
-    AVLocationData(91, 'Edin - Roof Ledge Near Ukkin-Na', AVRegions.LOWER_EDIN, conditions.edin_roof_ledge_access),
-    AVLocationData(92, 'Edin - Roof Cage', AVRegions.LOWER_EDIN, conditions.roof_cage_access),
-    AVLocationData(93, 'Edin - Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
-    AVLocationData(94, 'Edin - Secret Tunnel Below Zombies', AVRegions.LOWER_EDIN, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
-    AVLocationData(95, 'Edin - Above Indi Entrance', AVRegions.LOWER_EDIN, lambda s, c: conditions.any_glitch(s, c) and conditions.can_drill(s, c)),
-    AVLocationData(96, 'Edin - Clone Path Inside Blocks', AVRegions.LOWER_EDIN, lambda s, c: conditions.any_glitch(s, c) and conditions.can_drill(s, c)),
-    AVLocationData(97, 'Edin - Clone Path Rooftop Ledge', AVRegions.LOWER_EDIN, conditions.clone_rooftop_ledge_access),
-    AVLocationData(98, 'Edin - Clone Path Roof Before Save', AVRegions.LOWER_EDIN, conditions.clone_roof_save_access),
+    AVLocationData(91, AVArea.EDIN, 'Roof Ledge Near Ukkin-Na', AVRegions.LOWER_EDIN, conditions.edin_roof_ledge_access),
+    AVLocationData(92, AVArea.EDIN, 'Roof Cage', AVRegions.LOWER_EDIN, conditions.roof_cage_access),
+    AVLocationData(93, AVArea.EDIN, 'Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
+    AVLocationData(94, AVArea.EDIN, 'Secret Tunnel Below Zombies', AVRegions.LOWER_EDIN, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
+    AVLocationData(95, AVArea.EDIN, 'Above Indi Entrance', AVRegions.LOWER_EDIN, lambda s, c: conditions.any_glitch(s, c) and conditions.can_drill(s, c)),
+    AVLocationData(96, AVArea.EDIN, 'Clone Path Inside Blocks', AVRegions.LOWER_EDIN, lambda s, c: conditions.any_glitch(s, c) and conditions.can_drill(s, c)),
+    AVLocationData(97, AVArea.EDIN, 'Clone Path Rooftop Ledge', AVRegions.LOWER_EDIN, conditions.clone_rooftop_ledge_access),
+    AVLocationData(98, AVArea.EDIN, 'Clone Path Roof Before Save', AVRegions.LOWER_EDIN, conditions.clone_roof_save_access),
 
-    AVLocationData(99, 'Edin - False Wall Shrine', AVRegions.UKHU, conditions.always_accessible),
-    AVLocationData(100, 'Edin - Ukhu Path Drone Tunnel', AVRegions.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
-    AVLocationData(101, 'Edin - Ukhu Path Side Room', AVRegions.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
-    AVLocationData(102, 'Edin - In Structure Ruins', AVRegions.UKHU, conditions.structure_ruins_access),
-    AVLocationData(103, 'Edin - Ukhu Reward', AVRegions.UKHU, conditions.ukhu_reward_access),
+    AVLocationData(99, AVArea.EDIN, 'False Wall Shrine', AVRegions.UKHU, conditions.always_accessible),
+    AVLocationData(100, AVArea.EDIN, 'Ukhu Path Drone Tunnel', AVRegions.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
+    AVLocationData(101, AVArea.EDIN, 'Ukhu Path Side Room', AVRegions.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
+    AVLocationData(102, AVArea.EDIN, 'In Structure Ruins', AVRegions.UKHU, conditions.structure_ruins_access),
+    AVLocationData(103, AVArea.EDIN, 'Ukhu Reward', AVRegions.UKHU, conditions.ukhu_reward_access),
 
-    AVLocationData(104, 'Edin - Hangar', AVRegions.EAST_EDIN, conditions.always_accessible),
+    AVLocationData(104, AVArea.EDIN, 'Hangar', AVRegions.EAST_EDIN, conditions.always_accessible),
 
-    AVLocationData(105, 'Edin - Double Check Tunnel Left', AVRegions.EAST_EDIN, conditions.double_check_tunnel_access),
-    AVLocationData(106, 'Edin - Double Check Tunnel Right', AVRegions.EAST_EDIN, conditions.double_check_tunnel_access),
+    AVLocationData(105, AVArea.EDIN, 'Double Check Tunnel Left', AVRegions.EAST_EDIN, conditions.double_check_tunnel_access),
+    AVLocationData(106, AVArea.EDIN, 'Double Check Tunnel Right', AVRegions.EAST_EDIN, conditions.double_check_tunnel_access),
 
-    AVLocationData(107, 'E-Kur-Mah - Entry Chamber Breakable Wall', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
-    AVLocationData(108, 'E-Kur-Mah - Key Door on Key Chamber Path', AVRegions.UPPER_E_KUR_MAH, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_sudran_key(s, c)),
-    AVLocationData(109, 'E-Kur-Mah - Key Chamber Upper', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
-    AVLocationData(110, 'E-Kur-Mah - Key Chamber Lower', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(107, AVArea.E_KUR_MAH, 'Entry Chamber Breakable Wall', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(108, AVArea.E_KUR_MAH, 'Key Door on Key Chamber Path', AVRegions.UPPER_E_KUR_MAH, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_sudran_key(s, c)),
+    AVLocationData(109, AVArea.E_KUR_MAH, 'Key Chamber Upper', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(110, AVArea.E_KUR_MAH, 'Key Chamber Lower', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
 
-    AVLocationData(111, 'E-Kur-Mah - Midway Down East Shaft', AVRegions.LOWER_E_KUR_MAH, conditions.has_red_coat),
-    AVLocationData(112, 'E-Kur-Mah - Passcode Check', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
-    AVLocationData(113, 'E-Kur-Mah - Hidden Drone Tunnel', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
-    AVLocationData(114, 'E-Kur-Mah - Area Reward', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
-    AVLocationData(115, 'E-Kur-Mah - Lowest Area Inside Wall', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(111, AVArea.E_KUR_MAH, 'Midway Down East Shaft', AVRegions.LOWER_E_KUR_MAH, conditions.has_red_coat),
+    AVLocationData(112, AVArea.E_KUR_MAH, 'Passcode Check', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(113, AVArea.E_KUR_MAH, 'Hidden Drone Tunnel', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(114, AVArea.E_KUR_MAH, 'Area Reward', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(115, AVArea.E_KUR_MAH, 'Lowest Area Inside Wall', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
 
-    AVLocationData(116, 'Mar-Uru - Alcove After Sentinel', AVRegions.POST_SENTINEL, conditions.sentinel_alcove_access),
-    AVLocationData(117, 'Mar-Uru - Sentry Bot Puzzle', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
-    AVLocationData(118, 'Mar-Uru - Below Sentry Bot Puzzle', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
-    AVLocationData(119, 'Mar-Uru - Below Sentry Bot Puzzle In Wall', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
-    AVLocationData(120, 'Mar-Uru - Inside Corridor Block', AVRegions.POST_SENTINEL, conditions.always_accessible),
-    AVLocationData(121, 'Mar-Uru - Behind Wall Before Athetos Ascent', AVRegions.POST_SENTINEL, conditions.always_accessible),
-    AVLocationData(122, 'Mar-Uru - Tie-Flighter Puzzle', AVRegions.POST_SENTINEL, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_fat_beam(s, c)),
-    AVLocationData(123, 'Mar-Uru - Athethos Ascent Drone Tunnel', AVRegions.POST_SENTINEL, conditions.not_implemented),
+    AVLocationData(116, AVArea.MAR_URU, 'Alcove After Sentinel', AVRegions.POST_SENTINEL, conditions.sentinel_alcove_access),
+    AVLocationData(117, AVArea.MAR_URU, 'Sentry Bot Puzzle', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
+    AVLocationData(118, AVArea.MAR_URU, 'Below Sentry Bot Puzzle', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
+    AVLocationData(119, AVArea.MAR_URU, 'Below Sentry Bot Puzzle In Wall', AVRegions.SENTRY_BOT_ROOM, conditions.always_accessible),
+    AVLocationData(120, AVArea.MAR_URU, 'Inside Corridor Block', AVRegions.POST_SENTINEL, conditions.always_accessible),
+    AVLocationData(121, AVArea.MAR_URU, 'Behind Wall Before Athetos Ascent', AVRegions.POST_SENTINEL, conditions.always_accessible),
+    AVLocationData(122, AVArea.MAR_URU, 'Tie-Flighter Puzzle', AVRegions.POST_SENTINEL, lambda s, c: conditions.has_glitch_2(s, c) or conditions.has_fat_beam(s, c)),
+    AVLocationData(123, AVArea.MAR_URU, 'Athethos Ascent Drone Tunnel', AVRegions.POST_SENTINEL, conditions.not_implemented),
 
-    AVLocationData(124, 'Glitch a Blurst', AVRegions.BLURST, conditions.any_glitch),
+    AVLocationData(124, '', 'Glitch a Blurst', AVRegions.BLURST, conditions.any_glitch),
 )
 
 
-LOCATION_NAME_TO_ID: t.Dict[str, int] = {
+LOCATION_NAME_TO_ID: dict[str, int] = {
     data.name: data.id for data in location_data
 }
+
+def build_location_groups() -> dict[str, set[str]]:
+    location_groups = {}
+    for area in AVArea:
+        location_groups[area] = {location.name for location in location_data if location.area_name == area}
+
+    return location_groups

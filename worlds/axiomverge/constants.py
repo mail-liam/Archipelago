@@ -21,6 +21,17 @@ class AVItemType(StrEnum):
     TENDRILS = "Tendrils"
     WEAPON = "Weapon"
 
+class AVArea(StrEnum):
+    ERIBU = 'Eribu'
+    ABSU = 'Absu'
+    ZI = 'Zi'
+    KUR = 'Kur'
+    INDI = 'Indi'
+    UKKIN_NA = 'Ukkin-Na'
+    EDIN = 'Edin'
+    E_KUR_MAH = 'E-Kur-Mah'
+    MAR_URU = 'Mar-Uru'
+
 
 class AVRegions(StrEnum):
     # Eribu

@@ -2,9 +2,9 @@ from worlds.AutoWorld import WebWorld, World
 
 from .constants import START_OPTION_MAP
 from .item_data import item_data, ITEM_NAME_TO_ID
-from .items import AVItem
-from .location_data import LOCATION_NAME_TO_ID
-from .options import AxiomVergeOptions, AllowRocketJumps, AllowWallGrappleClips
+from .items import AVItem, item_groups
+from .location_data import LOCATION_NAME_TO_ID, build_location_groups
+from .options import AxiomVergeOptions, AllowRocketJumps
 from .regions import create_regions
 from .types import LogicContext
 
@@ -35,7 +35,8 @@ class AxiomVergeWorld(World):
     item_names = set(ITEM_NAME_TO_ID)
     location_names = set(LOCATION_NAME_TO_ID)
 
-    # item_name_groups = item_groups
+    item_name_groups = item_groups
+    location_name_groups = build_location_groups()
 
 
     def generate_early(self):
