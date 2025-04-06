@@ -76,15 +76,25 @@ class AVRegions(StrEnum):
 
     # Kur
     LOWER_CAVES = "Lower Caves"
-    KUR_INDI = "Kur-Indi"
+    UPPER_CAVES = "Upper Caves"
+    
+    GAUNTLET_ENTRANCE = "Gauntlet Entrance"
     GAUNTLET_ROOM = "Gauntlet Room"
     GAUNTLET_REWARD = "Gauntlet Reward"
-    UPPER_CAVES = "Upper Caves"
-    KUR_EDIN = "Kur-Edin"
+    
     MOUNTAIN_BASE = "Mountain Base"
-    LOWER_GIR_TAB = "Lower Gir-Tab"
-    UPPER_GIR_TAB = "Upper Gir-Tab"
-    BEHIND_GIR_TAB = "Behind Gir-Tab"
+    MOUNTAIN_TOP = "Mountain Top"
+    MOUNTAIN_PEAK = "Mountain Peak"
+
+    GIR_TAB_LOWER_ENTRANCE = "Gir-Tab Lower Entrance"
+    GIR_TAB_UPPER_ENTRANCE = "Gir-Tab Upper Entrance"
+    ABOVE_GIR_TAB = "Above Gir-Tab"
+    GRAPPLE_CLIFFS = "Grapple Cliffs"
+
+    DRONE_ODYSSEY = "Drone Odyssey"
+
+    KUR_INDI = "Kur-Indi"
+    KUR_EDIN = "Kur-Edin"
 
     # Indi
     INDI = "Indi"
