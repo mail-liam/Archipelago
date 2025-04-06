@@ -555,7 +555,7 @@ def ukkin_na_secret_floor_access(s: CollectionState, c: LogicContext):
 
 def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
     return has_drone(s, c) and (
-        has_glitch_2(s, c) or has_red_coat(s, c) or easy_grapple_clip(s, c)
+        has_glitch_2(s, c) or has_red_coat(s, c) or floor_grapple_clip(s, c)
     )
 
 
@@ -564,6 +564,15 @@ def ophelia_ledge_access(s: CollectionState, c: LogicContext):
         has_strict_trenchcoat(s, c) and has_grapple(s, c)
         or has_strict_trenchcoat(s, c) and has_high_jump(s, c)
         or has_high_jump(s, c) and has_grapple(s, c)
+    )
+
+
+def ukkin_na_above_vision_chamber_access(s: CollectionState, c: LogicContext):
+    return (
+        can_fly(s, c)
+        or has_red_coat(s, c) and (has_drone_launch(s, c) or has_grapple(s, c) and has_drone(s, c)) and (
+            has_high_jump(s, c) or c.red_rocket_jump_enabled
+        )
     )
 
 
@@ -657,7 +666,7 @@ def edin_hangar_left_access(s: CollectionState, c: LogicContext):
     return has_glitch_bomb(s, c) or has_red_coat(s, c) and OBSCURE_SKIP
 
 
-def double_check_tunnel_access(s: CollectionState, c: LogicContext):
+def edin_double_check_tunnel_access(s: CollectionState, c: LogicContext):
     return (
         has_trenchcoat(s, c) and (
             can_fly(s, c)
@@ -668,6 +677,61 @@ def double_check_tunnel_access(s: CollectionState, c: LogicContext):
             )
         ) or has_red_coat(s, c) and has_grapple(s, c) and (
             has_high_jump(s, c) or c.red_rocket_jump_enabled
+        )
+    )
+
+
+def e_kur_mah_upper_peak_access(s: CollectionState, c: LogicContext):
+    return has_red_coat(s, c) or has_trenchcoat(s, c) and has_drone_tele(s, c)
+
+
+def e_kur_mah_mid_upper_access(s: CollectionState, c: LogicContext):
+    return has_red_coat(s, c) and (
+        has_drone_tele(s, c) or has_grapple(s, c) or has_high_jump(s, c)
+    )
+
+
+def e_kur_mah_lower_mid_access(s: CollectionState, c: LogicContext):
+    return (
+        has_red_coat(s, c) and (
+            has_drone_tele(s, c) or has_high_jump(s, c) and (
+                has_grapple(s, c) or c.red_rocket_jump_enabled
+            )
+        )
+    )
+
+
+def e_kur_mah_passcode_check_access(s: CollectionState, c: LogicContext):
+    return (
+        has_passcode(s, c) and (
+            can_fly(s, c)
+            or has_trenchcoat(s, c) and has_grapple(s, c) and (
+                has_high_jump(s, c) or has_drone_tele(s, c)
+            )
+            or has_red_coat(s, c) and has_high_jump(s, c) and has_drone_tele(s, c)
+        )
+    )
+
+
+def e_kur_mah_drone_tunnel_access(s: CollectionState, c: LogicContext):
+    return (
+        can_fly(s, c)
+        or has_drone(s, c) and (
+            has_red_coat(s, c) and (
+                has_high_jump(s, c) or has_grapple(s, c) or c.red_rocket_jump_enabled
+            )
+            or has_trenchcoat(s, c) and has_high_jump(s, c)
+        )
+    )
+
+
+def e_kur_mah_lower_cliffs_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c) and can_drill(s, c) and (
+            has_drone_tele(s, c) or has_grapple(s, c)
+        )
+        or has_red_coat(s, c) and (
+            has_high_jump(s, c) or has_grapple(s, c)
         )
     )
 

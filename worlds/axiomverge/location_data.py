@@ -114,7 +114,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
 
     (AVRegions.LOWER_CAVES, AVRegions.GAUNTLET_ENTRANCE, conditions.kur_gauntlet_entrance_access, False),
     (AVRegions.GAUNTLET_ENTRANCE, AVRegions.GAUNTLET_ROOM, conditions.kur_gauntlet_room_access, False),
-    (AVRegions.GAUNTLET_ENTRANCE, AVRegions.GIR_TAB_FRONT, conditions.can_displacement_warp, False),
+    (AVRegions.GAUNTLET_ENTRANCE, AVRegions.GIR_TAB_LOWER_ENTRANCE, conditions.can_displacement_warp, False),
     (AVRegions.GAUNTLET_ENTRANCE, AVRegions.MOUNTAIN_BASE, conditions.can_displacement_warp, False),
     (AVRegions.GAUNTLET_ROOM, AVRegions.MOUNTAIN_PEAK, conditions.kur_gauntlet_warp, False),
     (AVRegions.GAUNTLET_ROOM, AVRegions.DRONE_ODYSSEY, conditions.kur_gauntlet_warp, False),
@@ -174,11 +174,19 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.CLONE, AVRegions.HANGAR, conditions.clone_to_hangar_access, False),
     (AVRegions.HANGAR, AVRegions.EAST_EDIN, conditions.has_glitch_bomb, True),
 
+    (AVRegions.UPPER_E_KUR_MAH, AVRegions.KEY_CHAMBER, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone_tele(s, c), False),
+    (AVRegions.UPPER_E_KUR_MAH, AVRegions.MOUNTAIN_PEAK, conditions.e_kur_mah_upper_peak_access, False),
+    (AVRegions.KEY_CHAMBER, AVRegions.MID_E_KUR_MAH, lambda s, c: conditions.floor_grapple_clip(s, c), False),
+    (AVRegions.UPPER_E_KUR_MAH, AVRegions.MID_E_KUR_MAH, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_sudran_key(s, c), False),
+    (AVRegions.MID_E_KUR_MAH, AVRegions.UPPER_E_KUR_MAH, conditions.e_kur_mah_mid_upper_access, False),
+    (AVRegions.MID_E_KUR_MAH, AVRegions.LOWER_E_KUR_MAH, conditions.always_accessible, False),
+    (AVRegions.LOWER_E_KUR_MAH, AVRegions.MID_E_KUR_MAH, conditions.e_kur_mah_lower_mid_access, False),
+    (AVRegions.LOWER_E_KUR_MAH, AVRegions.GRAPPLE_CLIFFS, conditions.e_kur_mah_lower_cliffs_access, False),
 
     (AVRegions.OPHELIA, AVRegions.MAR_URU_ENTRANCE, conditions.mar_uru_access, False),
     (AVRegions.MAR_URU_ENTRANCE, AVRegions.POST_SENTINEL, conditions.post_sentinel_access, False),
     (AVRegions.POST_SENTINEL, AVRegions.SENTRY_BOT_ROOM, lambda s, c: conditions.has_glitch_2(s, c) or conditions.floor_grapple_clip(s, c), False),
-    (AVRegions.POST_SENTINEL, AVRegions.ATHETOS, conditions.not_implemented, False),
+    (AVRegions.POST_SENTINEL, AVRegions.ATHETOS, conditions.always_accessible, False),
 
     # Microregions (Separated for sanity)
     (AVRegions.EAST_ABSU, AVRegions.EA_LEDGE, lambda s, c: conditions.can_drill(s, c) or conditions.any_glitch(s, c), False),
@@ -193,9 +201,6 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.EAST_ABSU_DRONE, AVRegions.EA_CHASM_TUNNEL, conditions.always_accessible, False),
     (AVRegions.EAST_ABSU, AVRegions.EA_ZI_ENTRANCE, conditions.can_drill, False),
     (AVRegions.EAST_ABSU_DRONE, AVRegions.EA_ZI_ENTRANCE, conditions.always_accessible, False),
-
-    # WIP
-    (AVRegions.LOWER_E_KUR_MAH, AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented, True),
 )
 
 
@@ -349,7 +354,7 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(84, AVArea.UKKIN_NA, 'Midway Shaft Lower', AVRegions.OPHELIA, conditions.has_trenchcoat),
     AVLocationData(85, AVArea.UKKIN_NA, 'Midway Shaft Upper', AVRegions.OPHELIA, conditions.always_accessible),
     AVLocationData(86, AVArea.UKKIN_NA, 'Hidden Shrine', AVRegions.OPHELIA, conditions.ukkin_na_shrine_access),
-    AVLocationData(87, AVArea.UKKIN_NA, 'Chamber Above Vision Room', AVRegions.OPHELIA, conditions.not_implemented),
+    AVLocationData(87, AVArea.UKKIN_NA, 'Chamber Above Vision Room', AVRegions.OPHELIA, conditions.ukkin_na_above_vision_chamber_access),
     AVLocationData(88, AVArea.UKKIN_NA, 'Tunnel Below Vision Room', AVRegions.OPHELIA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
     AVLocationData(89, AVArea.UKKIN_NA, 'Outside Ophelia', AVRegions.OPHELIA, conditions.always_accessible),
     AVLocationData(90, AVArea.UKKIN_NA, 'Above Ophelia Ledge', AVRegions.OPHELIA, conditions.ophelia_ledge_access),
@@ -371,16 +376,18 @@ location_data: tuple[AVLocationData] = (
 
     AVLocationData(104, AVArea.EDIN, 'Hangar', AVRegions.EAST_EDIN, conditions.always_accessible),
 
-    AVLocationData(105, AVArea.EDIN, 'Double Check Tunnel Left', AVRegions.EAST_EDIN, conditions.double_check_tunnel_access),
-    AVLocationData(106, AVArea.EDIN, 'Double Check Tunnel Right', AVRegions.EAST_EDIN, conditions.double_check_tunnel_access),
+    AVLocationData(105, AVArea.EDIN, 'Double Check Tunnel Left', AVRegions.EAST_EDIN, conditions.edin_double_check_tunnel_access),
+    AVLocationData(106, AVArea.EDIN, 'Double Check Tunnel Right', AVRegions.EAST_EDIN, conditions.edin_double_check_tunnel_access),
 
     AVLocationData(107, AVArea.E_KUR_MAH, 'Entry Chamber Breakable Wall', AVRegions.UPPER_E_KUR_MAH, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.can_drill(s, c)),
     AVLocationData(108, AVArea.E_KUR_MAH, 'Key Door on Key Chamber Path', AVRegions.UPPER_E_KUR_MAH, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_sudran_key(s, c)),
-    AVLocationData(109, AVArea.E_KUR_MAH, 'Key Chamber Upper', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
-    AVLocationData(110, AVArea.E_KUR_MAH, 'Key Chamber Lower', AVRegions.UPPER_E_KUR_MAH, conditions.not_implemented),
 
-    AVLocationData(111, AVArea.E_KUR_MAH, 'Midway Down East Shaft', AVRegions.LOWER_E_KUR_MAH, conditions.has_red_coat),
-    AVLocationData(112, AVArea.E_KUR_MAH, 'Passcode Check', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(109, AVArea.E_KUR_MAH, 'Key Chamber Upper', AVRegions.KEY_CHAMBER, conditions.always_accessible),
+    AVLocationData(110, AVArea.E_KUR_MAH, 'Key Chamber Lower', AVRegions.KEY_CHAMBER, conditions.always_accessible),
+
+    AVLocationData(111, AVArea.E_KUR_MAH, 'Midway Down East Shaft', AVRegions.MID_E_KUR_MAH, conditions.has_red_coat),
+
+    AVLocationData(112, AVArea.E_KUR_MAH, 'Passcode Check', AVRegions.LOWER_E_KUR_MAH, conditions.e_kur_mah_passcode_check_access),
     AVLocationData(113, AVArea.E_KUR_MAH, 'Hidden Drone Tunnel', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
     AVLocationData(114, AVArea.E_KUR_MAH, 'Area Reward', AVRegions.LOWER_E_KUR_MAH, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.can_drill(s, c)),
     AVLocationData(115, AVArea.E_KUR_MAH, 'Lowest Area Inside Wall', AVRegions.LOWER_E_KUR_MAH, conditions.has_red_coat),

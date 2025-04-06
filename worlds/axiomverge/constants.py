@@ -5,21 +5,21 @@ AP_ID_BASE = 2 ** 50
 
 
 class AVItemType(StrEnum):
-    COAT = "Coat"
-    DRILL = "Drill"
-    DRONE = "Drone"
-    GLITCH = "Glitch"
-    HEALTH_NODE = "Health Node"
-    HEALTH_NODE_FRAGMENT = "Health Node Fragment"
-    KEY = "Key"
+    COAT = "Coats"
+    DRILL = "Drills"
+    DRONE = "Drones"
+    GLITCH = "Glitches"
+    HEALTH_NODE = "Health Nodes"
+    HEALTH_NODE_FRAGMENT = "Health Node Fragments"
+    KEY = "Keys"
     MOVEMENT = "Movement"
-    NOTE = "Note"
-    POWER_NODE = "Power Node"
-    POWER_NODE_FRAGMENT = "Power Node Fragment"
-    RANGE_NODE = "Range Node"
-    SIZE_NODE = "Size Node"
+    # NOTE = "Note"
+    POWER_NODE = "Power Nodes"
+    POWER_NODE_FRAGMENT = "Power Node Fragments"
+    RANGE_NODE = "Range Nodes"
+    SIZE_NODE = "Size Nodes"
     TENDRILS = "Tendrils"
-    WEAPON = "Weapon"
+    WEAPON = "Weapons"
 
 class AVArea(StrEnum):
     ERIBU = 'Eribu'
@@ -77,11 +77,11 @@ class AVRegions(StrEnum):
     # Kur
     LOWER_CAVES = "Lower Caves"
     UPPER_CAVES = "Upper Caves"
-    
+
     GAUNTLET_ENTRANCE = "Gauntlet Entrance"
     GAUNTLET_ROOM = "Gauntlet Room"
     GAUNTLET_REWARD = "Gauntlet Reward"
-    
+
     MOUNTAIN_BASE = "Mountain Base"
     MOUNTAIN_TOP = "Mountain Top"
     MOUNTAIN_PEAK = "Mountain Peak"
@@ -116,7 +116,9 @@ class AVRegions(StrEnum):
     EAST_EDIN = "East Edin"
 
     # E-Kur-Mah
+    KEY_CHAMBER = "Key Chamber"
     UPPER_E_KUR_MAH = "Upper E-Kur-Mah"
+    MID_E_KUR_MAH = "Middle E-Kur-Mah"
     LOWER_E_KUR_MAH = "Lower E-Kur-Mah"
 
     # Mar-Uru
