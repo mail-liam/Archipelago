@@ -75,7 +75,7 @@ def easy_grapple_clip(state: CollectionState, context: LogicContext):
 
 
 def extra_brown_height(state: CollectionState, context: LogicContext):
-    return has_strict_trenchcoat(state, context) and (
+    return has_trenchcoat(state, context) and (
         context.brown_rocket_jump_enabled or has_high_jump(state, context)
     )
 
@@ -116,6 +116,15 @@ def has_grapple(state: CollectionState, context: LogicContext):
     return state.has("Grapple", context.player)
 
 
+def has_health_nodes(state: CollectionState, context: LogicContext):
+    return (
+        state.has("Health Node", context.player, count=3)
+        or state.has("Health Node", context.player, count=2) and state.has("Health Node Fragment", context.player, count=5)
+        or state.has("Health Node", context.player, count=1) and state.has("Health Node Fragment", context.player, count=10)
+        or state.has("Health Node Fragment", context.player, count=15)
+    )
+
+
 def has_high_jump(state: CollectionState, context: LogicContext):
     return state.has("Field Disruptor", context.player)
 
@@ -124,11 +133,13 @@ def has_passcode(state: CollectionState, context: LogicContext):
     return state.has("Passcode Tool", context.player)
 
 
-def has_power_nodes(state: CollectionState, context: LogicContext, count: int):
-    return True  # TODO: Implement properly when decided upon
-    # if not context.node_requirements_enabled:
-    #     return True  # Short-circuit if not enabled
-    # return state.has("Power Node", context.player, count=2) or state.has("Power Node Fragment", context.player, count=12)
+def has_power_nodes(state: CollectionState, context: LogicContext):
+    return (
+        state.has("Power Node", context.player, count=3)
+        or state.has("Power Node", context.player, count=2) and state.has("Power Node Fragment", context.player, count=6)
+        or state.has("Power Node", context.player, count=1) and state.has("Power Node Fragment", context.player, count=12)
+        or state.has("Power Node Fragment", context.player, count=18)
+    )
 
 
 def has_red_coat(state: CollectionState, context: LogicContext):
@@ -305,7 +316,7 @@ def east_absu_indi_tunnel_access(s: CollectionState, c: LogicContext):
     return (
         has_trenchcoat(s, c)
         or any_coat(s, c) and (has_drone_tele(s, c) or has_grapple(s, c))
-        or hard_grapple_clip(s, c)
+        or swing_clip(s, c)
     )
 
 
@@ -330,7 +341,13 @@ def zi_false_roof_access(s: CollectionState, c: LogicContext):
 
 
 def lower_east_zi_access(s: CollectionState, c: LogicContext):
-    return can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c)
+    return has_health_nodes(s, c) and (
+        can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c)
+    )
+
+
+def zi_drone_tunnel_access(s: CollectionState, c: LogicContext):
+    return has_drone(s, c) and has_power_nodes(s, c)
 
 
 def zi_indi_access(s: CollectionState, c: LogicContext):
@@ -342,6 +359,55 @@ def zi_indi_access(s: CollectionState, c: LogicContext):
             has_high_jump(s, c) or has_grapple(s, c)
         )
     )
+
+
+def can_kill_uruku(s: CollectionState, c: LogicContext):
+    return (
+        can_damage_boss(s, c) and any_glitch(s, c)
+        or s.has_any(
+            ("Fat Beam", "Voranj", "Axiom Disruptor", "Data Bomb", "Nova", "Heat Seeker", "Turbine Pulse", "Hypo-Atomizer", "Orbital Discharge", "Reflector", "Inertial Pulse", "Ion Beam"),
+            c.player,
+        )
+    )
+
+
+def uruku_bottom_access(s: CollectionState, c: LogicContext):
+    return has_trenchcoat(s, c) or any_coat(s, c) and any_glitch(s, c)
+
+
+def uruku_top_access(s: CollectionState, c: LogicContext):
+    return (
+        can_kill_uruku(s, c) and (
+            can_fly(s, c)
+            or has_drone_tele(s, c) and has_drone_launch(s, c)
+            or has_high_jump(s, c) and has_grapple(s, c) and OBSCURE_SKIP
+            or any_glitch(s, c) and has_grapple(s, c)
+        )
+        or any_glitch(s, c) and (
+            has_high_jump(s, c) or has_trenchcoat(s, c)
+        ) and (
+            can_kill_uruku(s, c) or has_trenchcoat(s, c)
+        )
+    )
+
+
+def uruku_bottom_top_access(s: CollectionState, c: LogicContext):
+    return (
+        (has_red_coat(s, c) or has_trenchcoat(s, c) and has_high_jump(s, c))
+        and (roof_grapple_clip(s, c) or has_grapple(s, c) and has_drone_tele(s, c))
+    )
+
+
+def uruku_bottom_back_ledge_access(s: CollectionState, c: LogicContext):
+    return (
+        can_fly(s, c) or has_drone_launch(s, c) and (
+            has_red_coat(s, c) or extra_brown_height(s, c)
+        )
+    )
+
+
+def uruku_cage_access(s: CollectionState, c: LogicContext):
+    return any_coat(s, c) or floor_grapple_clip(s, c)
 
 
 def above_lower_kur_save_access(s: CollectionState, c: LogicContext):
@@ -364,9 +430,12 @@ def kur_gauntlet_entrance_access(s: CollectionState, c: LogicContext):
     )
 
 
-def kur_gauntlet_room_access(s: CollectionState, c: LogicContext):
+def kur_gauntlet_roof_access(s: CollectionState, c: LogicContext):
     return (
-        any_coat(s, c) and any_glitch(s, c)  # and has_health_node(3)
+        any_coat(s, c) and any_glitch(s, c) and has_health_nodes(s, c)
+        or has_high_jump(s, c) or has_drone_launch(s, c) and (
+            c.red_rocket_jump_enabled or has_drone_tele(s, c) and has_grapple(s, c)
+        )
     )
 
 
@@ -400,11 +469,26 @@ def kur_above_twin_saves_access(s: CollectionState, c: LogicContext):
     )
 
 
+def can_kill_gir_tab(s: CollectionState, c: LogicContext):
+    return has_health_nodes(s, c) and has_power_nodes(s, c) and s.has_any(
+        ("Hypo-Atomizer", "Fat Beam", "Inertial Pulse", "Nova", "Voranj", "Tethered Charge", "Flamethrower", "Reverse Slicer", "Scissor"),
+        c.player,
+    )
+
+
+def gir_tab_lower_above_access(s: CollectionState, c: LogicContext):
+    return has_trenchcoat(s, c) or can_kill_gir_tab(s, c) and non_grapple_height(s, c)
+
+
 def indi_upper_caves_access(s: CollectionState, c: LogicContext):
     return (
         has_trenchcoat(s, c)
         or non_grapple_height(s, c) and (any_coat(s, c) or hard_grapple_clip(s, c))
     )
+
+
+def indi_east_taxi_access(s: CollectionState, c: LogicContext):
+    return has_red_coat(s, c) or has_grapple(s, c) or has_drone_tele(s, c) or has_trenchcoat(s, c) and has_high_jump(s, c)
 
 
 def kur_caves_to_base_access(s: CollectionState, c: LogicContext):
@@ -550,7 +634,11 @@ def ophelia_ascent_access(s: CollectionState, c: LogicContext):
 
 
 def ukkin_na_secret_floor_access(s: CollectionState, c: LogicContext):
-    return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and has_fat_beam(s, c)
+    return has_red_coat(s, c) or has_trenchcoat(s, c) and (
+        has_fat_beam(s, c)
+        or s.has("FlameThrower", c.player) and s.has("Size Node", c.player, 5)
+        or s.has("Reverse Slicer", c.player) and s.has("")
+    )
 
 
 def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):

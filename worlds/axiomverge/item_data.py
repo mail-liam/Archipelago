@@ -39,7 +39,7 @@ raw_item_data: t.Tuple[AVItemData] = (
     AVItemData(17, "FlameThrower", AVItemType.WEAPON, ItemClassification.progression_skip_balancing, True),
     AVItemData(18, "Kilver", AVItemType.WEAPON, ItemClassification.progression, True),
     AVItemData(19, "Reverse Slicer", AVItemType.WEAPON, ItemClassification.progression, True),
-    AVItemData(20, "Fat Beam", AVItemType.WEAPON, ItemClassification.progression_skip_balancing, True),
+    AVItemData(20, "Fat Beam", AVItemType.WEAPON, ItemClassification.progression, True),
     AVItemData(21, "Heat Seeker", AVItemType.WEAPON, ItemClassification.progression_skip_balancing, True),
     AVItemData(22, "Scissor Beam", AVItemType.WEAPON, ItemClassification.progression_skip_balancing, True),
     AVItemData(23, "Address Disruptor 1", AVItemType.GLITCH, ItemClassification.progression, False),

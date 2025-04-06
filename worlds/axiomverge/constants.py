@@ -73,13 +73,16 @@ class AVRegions(StrEnum):
     PREVIEW_ROOM = "Preview Room"
     ZI_INDI = "Zi-Indi"
     URUKU = "Uruku"
+    URUKU_TOP = "Uruku Top"
+    URUKU_BOTTOM = "Uruku Bottom"
+    URUKU_BACK_LEDGE = "Uruku Back Ledge"
 
     # Kur
     LOWER_CAVES = "Lower Caves"
     UPPER_CAVES = "Upper Caves"
 
     GAUNTLET_ENTRANCE = "Gauntlet Entrance"
-    GAUNTLET_ROOM = "Gauntlet Room"
+    GAUNTLET_ROOF = "Gauntlet Roof"
     GAUNTLET_REWARD = "Gauntlet Reward"
 
     MOUNTAIN_BASE = "Mountain Base"
@@ -99,6 +102,7 @@ class AVRegions(StrEnum):
     # Indi
     INDI = "Indi"
     WEST_INDI = "West Indi"
+    EAST_INDI = "East Indi"
 
     # Ukkin-Na
     WEST_UKKIN_NA_EXIT = "West Ukkin-Na Exit"
