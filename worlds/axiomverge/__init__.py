@@ -1,4 +1,5 @@
 from worlds.AutoWorld import WebWorld, World
+from BaseClasses import ItemClassification
 
 from .constants import START_OPTION_MAP
 from .item_data import item_data, ITEM_NAME_TO_ID
@@ -49,6 +50,8 @@ class AxiomVergeWorld(World):
             red_rocket_jump_enabled=options.allow_rocket_jumps in {AllowRocketJumps.option_red, AllowRocketJumps.option_both},
             roof_grapple_clip_enabled=bool(options.allow_roof_grapple_clips),
             start_location=options.start_location,
+            obscure_skips=bool(options.allow_obscure_skips),
+            require_nodes=bool(options.require_nodes),
             wall_grapple_clip_difficulty=self.options.allow_wall_grapple_clips,
             player=self.player,
         )
@@ -94,10 +97,19 @@ class AxiomVergeWorld(World):
             av_itempool.append(self.create_item("Remote Drone"))
             av_itempool.append(self.create_item("Enhanced Drone Launch"))
 
-        av_itempool.extend(self.create_item("Health Node") for _ in range(10))
+        # Create some progressive nodes, for rules/balance purposes
+        for i in range(10):
+            item = self.create_item("Health Node")
+            if self.context.require_nodes and i in {0, 1, 2}:
+                item.classification = ItemClassification.progression
+            av_itempool.append(item)
         av_itempool.extend(self.create_item("Health Node Fragment") for _ in range(30))
 
-        av_itempool.extend(self.create_item("Power Node") for _ in range(8))
+        for i in range(8):
+            item = self.create_item("Power Node")
+            if self.context.require_nodes and i in {0, 1, 2}:
+                item.classification = ItemClassification.progression
+            av_itempool.append(item)
         av_itempool.extend(self.create_item("Power Node Fragment") for _ in range(30))
 
         av_itempool.extend(self.create_item("Range Node") for _ in range(4))

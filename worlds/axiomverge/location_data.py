@@ -49,7 +49,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (
         AVRegions.WEST_ABSU,
         AVRegions.LOWER_ABSU,
-        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c) or conditions.easy_grapple_clip(s, c),
+        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c) or conditions.any_wall_grapple_clip(s, c),
         False,
     ),
     (
@@ -67,7 +67,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (
         AVRegions.ELSENOVA,
         AVRegions.LOWER_ABSU,
-        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c) or conditions.easy_grapple_clip(s, c),
+        lambda s, c: conditions.can_pierce_wall(s, c) or conditions.any_coat(s, c) or conditions.any_wall_grapple_clip(s, c),
         False,
     ),
     (
@@ -79,7 +79,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (
         AVRegions.LOWER_ABSU,
         AVRegions.ABSU_BASEMENT,
-        lambda s, c: conditions.can_displacement_warp(s, c) and conditions.has_red_coat(s, c) or conditions.floor_grapple_clip,
+        lambda s, c: conditions.can_displacement_warp(s, c) and conditions.has_red_coat(s, c) or conditions.floor_grapple_clip(s, c),
         False,
     ),
     (AVRegions.LOWER_ABSU, AVRegions.TELAL, lambda s, c: conditions.can_damage_boss(s, c) or conditions.any_coat(s, c), False),
@@ -127,10 +127,10 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.GAUNTLET_ROOF, AVRegions.DRONE_ODYSSEY, conditions.kur_gauntlet_warp, False),
     (AVRegions.GAUNTLET_ROOF, AVRegions.GAUNTLET_REWARD, conditions.kur_gauntlet_room_reward_access, False),
     (AVRegions.LOWER_CAVES, AVRegions.GAUNTLET_REWARD, lambda s, c: conditions.has_fat_beam(s, c) and conditions.has_trenchcoat(s, c), False),
-    (AVRegions.LOWER_CAVES, AVRegions.KUR_INDI, lambda s, c: conditions.any_coat(s, c) or conditions.easy_grapple_clip(s, c), False),
+    (AVRegions.LOWER_CAVES, AVRegions.KUR_INDI, lambda s, c: conditions.any_coat(s, c) or conditions.any_wall_grapple_clip(s, c), False),
     (AVRegions.KUR_INDI, AVRegions.LOWER_CAVES, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c), False),
     (AVRegions.UPPER_CAVES, AVRegions.KUR_INDI, lambda s, c: conditions.any_coat(s, c) or conditions.floor_grapple_clip(s, c), False),
-    (AVRegions.KUR_INDI, AVRegions.UPPER_CAVES, conditions.indi_upper_caves_access, False),
+    (AVRegions.KUR_INDI, AVRegions.UPPER_CAVES, conditions.kur_indi_upper_caves_access, False),
     (AVRegions.UPPER_CAVES, AVRegions.KUR_EDIN, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_glitch_2(s, c), True),
     (AVRegions.KUR_EDIN, AVRegions.EAST_EDIN, conditions.always_accessible, True),
 
@@ -159,20 +159,22 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.WEST_INDI, AVRegions.INDI, conditions.any_height, False),
     (AVRegions.INDI, AVRegions.WEST_INDI, conditions.always_accessible, False),
     (AVRegions.INDI, AVRegions.INDI_TUNNEL, conditions.always_accessible, False),
-    (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.has_trenchcoat, True),
+    (AVRegions.INDI, AVRegions.LOWER_EDIN, conditions.indi_edin_access, False),
     (AVRegions.INDI, AVRegions.EAST_INDI, conditions.always_accessible, False),
     (AVRegions.INDI, AVRegions.BLURST, conditions.always_accessible, False),
     (AVRegions.EAST_INDI, AVRegions.INDI, conditions.indi_east_taxi_access, False),
     (AVRegions.KUR_INDI, AVRegions.EAST_INDI, conditions.always_accessible, True),
+    (AVRegions.INDI, AVRegions.SOUTH_UKKIN_NA_EXIT, conditions.indi_ukkin_na_access, False),
 
     (AVRegions.WEST_UKKIN_NA_EXIT, AVRegions.UKKIN_NA_BASE, conditions.any_coat, True),
     (AVRegions.UKKIN_NA_BASE, AVRegions.VISION, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_high_jump(s, c), False),
     (AVRegions.UKKIN_NA_BASE, AVRegions.OPHELIA, conditions.ophelia_ascent_access, True),
-    (AVRegions.OPHELIA, AVRegions.BLURST, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.easy_grapple_clip(s, c), False),
-    (AVRegions.OPHELIA, AVRegions.SOUTH_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.easy_grapple_clip(s, c), False),
-    (AVRegions.SOUTH_UKKIN_NA_EXIT, AVRegions.OPHELIA, lambda s, c: conditions.any_coat(s, c) or conditions.easy_grapple_clip(s, c), False),
-    (AVRegions.SOUTH_UKKIN_NA_EXIT, AVRegions.EAST_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.easy_grapple_clip(s, c), True),
+    (AVRegions.OPHELIA, AVRegions.BLURST, conditions.has_trenchcoat, False),
+    (AVRegions.OPHELIA, AVRegions.SOUTH_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.swing_clip(s, c), False),
+    (AVRegions.SOUTH_UKKIN_NA_EXIT, AVRegions.OPHELIA, lambda s, c: conditions.any_coat(s, c) or conditions.swing_clip(s, c), False),
+    (AVRegions.SOUTH_UKKIN_NA_EXIT, AVRegions.EAST_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.swing_clip(s, c), True),
     (AVRegions.EAST_UKKIN_NA_EXIT, AVRegions.LOWER_EDIN, conditions.always_accessible, True),
+    (AVRegions.SOUTH_UKKIN_NA_EXIT, AVRegions.INDI, conditions.ukkin_na_indi_access, False),
 
     (AVRegions.LOWER_EDIN, AVRegions.UKHU, conditions.ukhu_access, False),
     (AVRegions.UKHU, AVRegions.LOWER_EDIN, conditions.ukhu_exit_access, False),
@@ -181,6 +183,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.LOWER_EDIN, AVRegions.HANGAR, conditions.edin_hangar_left_access, True),
     (AVRegions.CLONE, AVRegions.HANGAR, conditions.clone_to_hangar_access, False),
     (AVRegions.HANGAR, AVRegions.EAST_EDIN, conditions.has_glitch_bomb, True),
+    (AVRegions.LOWER_EDIN, AVRegions.INDI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.floor_grapple_clip(s, c), False),
 
     (AVRegions.UPPER_E_KUR_MAH, AVRegions.KEY_CHAMBER, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone_tele(s, c), False),
     (AVRegions.UPPER_E_KUR_MAH, AVRegions.MOUNTAIN_PEAK, conditions.e_kur_mah_upper_peak_access, False),
@@ -203,7 +206,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.EAST_ABSU_DRONE, AVRegions.EA_BEHIND_TELAL, conditions.always_accessible, False),
     (AVRegions.EAST_ABSU, AVRegions.EA_ALCOVE, conditions.can_drill, False),
     (AVRegions.EAST_ABSU_DRONE, AVRegions.EA_ALCOVE, conditions.always_accessible, False),
-    (AVRegions.EAST_ABSU, AVRegions.EA_HIDDEN_SHRINE, lambda s, c: conditions.easy_grapple_clip(s, c) or conditions.any_coat(s, c) and conditions.any_height(s, c), False),
+    (AVRegions.EAST_ABSU, AVRegions.EA_HIDDEN_SHRINE, lambda s, c: conditions.any_wall_grapple_clip(s, c) or conditions.any_coat(s, c) and conditions.any_height(s, c), False),
     (AVRegions.EAST_ABSU_DRONE, AVRegions.EA_HIDDEN_SHRINE, conditions.always_accessible, False),
     (AVRegions.EAST_ABSU, AVRegions.EA_CHASM_TUNNEL, conditions.has_red_coat, False),
     (AVRegions.EAST_ABSU_DRONE, AVRegions.EA_CHASM_TUNNEL, conditions.always_accessible, False),
@@ -233,7 +236,7 @@ location_data: tuple[AVLocationData] = (
         11,
         AVArea.ERIBU, 'Sentry Bot Tunnel',
         AVRegions.LOWER_ERIBU,
-        lambda s, c: conditions.has_drone(s, c) and (c.floor_grapple_clip_enabled or conditions.has_glitch_bomb(s, c)),
+        lambda s, c: conditions.has_drone(s, c) and (conditions.floor_grapple_clip(s, c) or conditions.has_glitch_bomb(s, c)),
     ),
     AVLocationData(
         12,
@@ -298,7 +301,7 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(42, AVArea.ZI, 'Disappointment Hill', AVRegions.LOWER_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
     AVLocationData(
         43,
-        AVArea.ZI, 'Secret Room near lower Save',
+        AVArea.ZI, 'Secret Room near Lower Save',
         AVRegions.LOWER_ZI,
         lambda s, c: conditions.can_drill(s, c) and (conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
     ),
@@ -333,10 +336,10 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(64, AVArea.KUR, 'Floating Ledge', AVRegions.MOUNTAIN_BASE, conditions.kur_floating_ledge_access),
     AVLocationData(65, AVArea.KUR, 'Inside Cliff', AVRegions.MOUNTAIN_BASE, conditions.has_red_coat),
 
-    AVLocationData(66, AVArea.KUR, 'Upper Cliffs Shrine', AVRegions.DRONE_ODYSSEY, conditions.has_drone),
     AVLocationData(67, AVArea.KUR, 'Drone Odyssey Behind Wall', AVRegions.DRONE_ODYSSEY, conditions.always_accessible),
     AVLocationData(68, AVArea.KUR, 'Drone Odyssey Reward', AVRegions.DRONE_ODYSSEY, conditions.always_accessible),
 
+    AVLocationData(66, AVArea.KUR, 'Upper Cliffs Shrine', AVRegions.MOUNTAIN_TOP, conditions.has_drone),
     AVLocationData(69, AVArea.KUR, 'Snowy Cliffs Ledge Upper', AVRegions.MOUNTAIN_TOP, conditions.kur_snowy_cliffs_ledge_upper_access),
     AVLocationData(70, AVArea.KUR, 'Snowy Cliffs Ledge Lower', AVRegions.MOUNTAIN_TOP, conditions.kur_snowy_cliffs_ledge_lower_access),
     AVLocationData(71, AVArea.KUR, 'Loop Room', AVRegions.MOUNTAIN_TOP, conditions.always_accessible),
@@ -353,12 +356,12 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(78, AVArea.INDI, 'Path to Eribu', AVRegions.WEST_INDI, conditions.has_drone),
     AVLocationData(79, AVArea.INDI, 'Outside Save Room', AVRegions.INDI, conditions.has_trenchcoat),
 
-    AVLocationData(81, AVArea.UKKIN_NA, 'Annihiwaiter Room', AVRegions.UKKIN_NA_BASE, conditions.not_implemented),
+    AVLocationData(81, AVArea.UKKIN_NA, 'Annihiwaiter Room', AVRegions.UKKIN_NA_BASE, conditions.has_trenchcoat),
 
     AVLocationData(80, AVArea.UKKIN_NA, 'Long Fall Shaft Base', AVRegions.OPHELIA, conditions.has_trenchcoat),
     AVLocationData(82, AVArea.UKKIN_NA, 'Secret Room Below Floor', AVRegions.OPHELIA, conditions.ukkin_na_secret_floor_access),
-    AVLocationData(83, AVArea.UKKIN_NA, 'Blurst Room', AVRegions.OPHELIA, lambda s, c: (conditions.has_trenchcoat(s, c) or conditions.floor_grapple_clip(s, c)) and conditions.has_drone(s, c)),
-    AVLocationData(84, AVArea.UKKIN_NA, 'Midway Shaft Lower', AVRegions.OPHELIA, conditions.has_trenchcoat),
+    AVLocationData(83, AVArea.UKKIN_NA, 'Blurst Room', AVRegions.OPHELIA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
+    AVLocationData(84, AVArea.UKKIN_NA, 'Midway Shaft Lower', AVRegions.OPHELIA, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.swing_clip(s, c)),
     AVLocationData(85, AVArea.UKKIN_NA, 'Midway Shaft Upper', AVRegions.OPHELIA, conditions.always_accessible),
     AVLocationData(86, AVArea.UKKIN_NA, 'Hidden Shrine', AVRegions.OPHELIA, conditions.ukkin_na_shrine_access),
     AVLocationData(87, AVArea.UKKIN_NA, 'Chamber Above Vision Room', AVRegions.OPHELIA, conditions.ukkin_na_above_vision_chamber_access),

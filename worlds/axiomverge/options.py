@@ -25,7 +25,7 @@ class StartLocation(Choice):
 # Item Options
 class ProgressiveAddressDisruptor(Choice):
     """
-    Combine Address Disruptors into a progressive upgrade. Can optionally keep bomb seperate.
+    Combine Address Disruptors into a single progressive upgrade. Can optionally keep bomb seperate.
     """
     option_false = 0
     option_exclude_bomb = 1
@@ -47,7 +47,7 @@ class ProgressiveDrone(DefaultOnToggle):
 
 
 class ShuffleSecretWorldWeapons(DefaultOnToggle):
-    """Randomize Secret world weapons into the item pool."""
+    """Randomize Secret world weapons into the item pool. Currently not implemented."""
 
 
 # Logic Options
@@ -64,12 +64,16 @@ class AllowRoofGrappleClips(Toggle):
 
 
 class AllowWallGrappleClips(Choice):
-    """Allows for grapple clips through 1 width walls to be considered in logic."""
+    """
+    Allows for grapple clips through 1 width walls to be considered in logic.
+
+    Swing: Include all 5 height walls (Extend grapple and swing to clip through wall)
+    All: Include walls of any height
+    """
 
     option_off = 0
-    option_easy = 1
-    option_hard = 2
-    option_insane = 3
+    option_swing = 1
+    option_all = 2
 
 
 class AllowFloorGrappleClips(Toggle):
@@ -85,6 +89,22 @@ class AllowRocketJumps(Choice):
     option_both = 3
 
 
+class AllowObscureSkips(Toggle):
+    """
+    Allow for unintended/difficult to find progression paths.
+
+    For example, using coats to pass bomb checks, or grappling along an uneven roof.
+    """
+
+
+class RequireNodes(DefaultOnToggle):
+    """
+    Disable any node requirements on transitions/items.
+
+    WARNING: This may require you to do later game checks with little health/damage. Disable at own risk!
+    """
+
+
 @dataclass
 class AxiomVergeOptions(PerGameCommonOptions):
     allow_displacement_warps: AllowDisplacementWarps
@@ -93,9 +113,11 @@ class AxiomVergeOptions(PerGameCommonOptions):
     allow_roof_grapple_clips: AllowRoofGrappleClips
     allow_rocket_jumps: AllowRocketJumps
     allow_wall_grapple_clips: AllowWallGrappleClips
+    allow_obscure_skips: AllowObscureSkips
     goal: Goal
     progressive_address_disruptor: ProgressiveAddressDisruptor
     progressive_coat: ProgressiveCoat
     progressive_drone: ProgressiveDrone
     secret_world_weapons: ShuffleSecretWorldWeapons
+    require_nodes: RequireNodes
     start_location: StartLocation
