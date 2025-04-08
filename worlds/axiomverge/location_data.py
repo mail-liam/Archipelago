@@ -154,7 +154,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.MOUNTAIN_PEAK, AVRegions.MOUNTAIN_TOP, conditions.always_accessible, False),
 
     (AVRegions.MOUNTAIN_PEAK, AVRegions.UPPER_E_KUR_MAH, conditions.kur_upper_e_kur_mah_access, False),
-    (AVRegions.MOUNTAIN_PEAK, AVRegions.DRONE_ODYSSEY, lambda s, c: conditions.has_drone(s, c) and conditions.has_power_nodes(s, c), False),
+    (AVRegions.MOUNTAIN_PEAK, AVRegions.DRONE_ODYSSEY, conditions.kur_peak_odyssey_access, False),
 
     (AVRegions.WEST_INDI, AVRegions.INDI, conditions.any_height, False),
     (AVRegions.INDI, AVRegions.WEST_INDI, conditions.always_accessible, False),
@@ -271,7 +271,7 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(21, AVArea.ABSU, 'Attic Far Left', AVRegions.WEST_ATTIC, conditions.basic_attic_access),
     AVLocationData(22, AVArea.ABSU, 'Attic Middle Left', AVRegions.WEST_ATTIC, conditions.attic_transition_upper),
 
-    AVLocationData(23, AVArea.ABSU, 'Attic Midddle Right', AVRegions.EAST_ATTIC, conditions.basic_attic_access),
+    AVLocationData(23, AVArea.ABSU, 'Attic Middle Right', AVRegions.EAST_ATTIC, conditions.basic_attic_access),
     AVLocationData(24, AVArea.ABSU, 'Attic Far Right', AVRegions.EAST_ATTIC, conditions.attic_far_right_access),
 
     AVLocationData(25, AVArea.ABSU, 'Elsenova', AVRegions.ELSENOVA, conditions.always_accessible),

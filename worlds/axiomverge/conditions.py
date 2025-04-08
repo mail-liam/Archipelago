@@ -607,6 +607,10 @@ def kur_peak_ledge_access(s: CollectionState, c: LogicContext):
     )
 
 
+def kur_peak_odyssey_acesss(s: CollectionState, c: LogicContext):
+    return has_drone(s, c) and (has_power_nodes(s, c) or has_drone_tele(s, c))
+
+
 def ophelia_ascent_access(s: CollectionState, c: LogicContext):
     return s.has("Vision Defeated", c.player) and (
         has_trenchcoat(s, c) or has_high_jump(s, c)
@@ -715,7 +719,7 @@ def clone_to_hangar_access(s: CollectionState, c: LogicContext):
 
 def ukhu_access(s: CollectionState, c: LogicContext):
     return has_glitch_bomb(s, c) or has_red_coat(s, c) or has_trenchcoat(s, c) and (
-        roof_grapple_clip(s, c) or c.obscure_skips
+        roof_grapple_clip(s, c) or has_high_jump(s, c) and c.obscure_skips
     )
 
 def ukhu_exit_access(s: CollectionState, c: LogicContext):
@@ -845,8 +849,8 @@ def mar_uru_access(s: CollectionState, c: LogicContext):
             or has_drone_tele(s, c) and (
                 has_drone_launch(s, c) or has_high_jump(s, c) and c.red_rocket_jump_enabled
             )
+            or has_high_jump(s, c) and has_grapple(s, c) and c.red_rocket_jump_enabled
         )
-        or has_high_jump(s, c) and has_grapple(s, c) and c.red_rocket_jump_enabled
     )
 
 
