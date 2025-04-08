@@ -607,7 +607,7 @@ def kur_peak_ledge_access(s: CollectionState, c: LogicContext):
     )
 
 
-def kur_peak_odyssey_acesss(s: CollectionState, c: LogicContext):
+def kur_peak_odyssey_access(s: CollectionState, c: LogicContext):
     return has_drone(s, c) and (has_power_nodes(s, c) or has_drone_tele(s, c))
 
 
