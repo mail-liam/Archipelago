@@ -422,6 +422,6 @@ LOCATION_NAME_TO_ID: dict[str, int] = {
 def build_location_groups() -> dict[str, set[str]]:
     location_groups = {}
     for area in AVArea:
-        location_groups[area] = {location.name for location in location_data if location.area_name == area}
+        location_groups[area.value] = {location.name for location in location_data if location.area_name == area}
 
     return location_groups

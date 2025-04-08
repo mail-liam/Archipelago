@@ -13,7 +13,7 @@ class AVItem(Item):
 
 item_groups = defaultdict(set)
 for group_name in AVItemType:
-    item_groups[group_name] = {item.name for item in item_data.values() if item.group_name == group_name}
+    item_groups[group_name.value] = {item.name for item in item_data.values() if item.group_name == group_name}
 item_groups["Drill"] |= {"Remote Drone"}
 item_groups["Health"] = item_groups[AVItemType.HEALTH_NODE] | item_groups[AVItemType.HEALTH_NODE_FRAGMENT]
 item_groups["Power"] = item_groups[AVItemType.POWER_NODE] | item_groups[AVItemType.POWER_NODE_FRAGMENT]
