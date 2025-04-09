@@ -16,11 +16,6 @@ RANGED_WEAPONS = ALL_WEAPONS - {"Tethered Charge", "Kilver", "Distortion Field",
 
 
 # Logic primitives that are used either independently or part of more complex expressions
-def not_implemented(state: CollectionState, context: LogicContext):
-    """Sentinel function for unimplemented logic."""
-    return has_red_coat(state, context) and has_drone_tele(state, context)
-
-
 def always_accessible(state: CollectionState, context: LogicContext):
     return True
 
@@ -35,6 +30,10 @@ def any_glitch(state: CollectionState, context: LogicContext):
 
 def any_height(state: CollectionState, context: LogicContext):
     return has_trenchcoat(state, context) or has_drone_tele(state, context) or has_grapple(state, context) or has_high_jump(state, context)
+
+
+def any_wall_grapple_clip(state: CollectionState, context: LogicContext):
+    return has_grapple(state, context) and context.wall_grapple_clip_difficulty == AllowWallGrappleClips.option_all
 
 
 def can_angle_shoot(state: CollectionState, context: LogicContext):
@@ -126,16 +125,8 @@ def has_red_coat(state: CollectionState, context: LogicContext):
     return state.has("Red Coat", context.player) or state.has("Progressive Coat", context.player, count=3)
 
 
-def has_strict_trenchcoat(state: CollectionState, context: LogicContext):
-    return state.has("Trenchcoat", context.player) or state.has("Progressive Coat", context.player, count=2)
-
-
 def has_sudran_key(state: CollectionState, context: LogicContext):
     return state.has("Sudran Key", context.player)
-
-
-def swing_clip(state: CollectionState, context: LogicContext):
-    return has_grapple(state, context) and context.wall_grapple_clip_difficulty >= AllowWallGrappleClips.option_swing
 
 
 def has_trenchcoat(state: CollectionState, context: LogicContext):
@@ -154,8 +145,8 @@ def roof_grapple_clip(state: CollectionState, context: LogicContext):
     return has_grapple(state, context) and context.roof_grapple_clip_enabled
 
 
-def any_wall_grapple_clip(state: CollectionState, context: LogicContext):
-    return has_grapple(state, context) and context.wall_grapple_clip_difficulty == AllowWallGrappleClips.option_all
+def swing_clip(state: CollectionState, context: LogicContext):
+    return has_grapple(state, context) and context.wall_grapple_clip_difficulty >= AllowWallGrappleClips.option_swing
 
 
 # Specific location checks, that are here mainly to avoid complexity in the data structure
@@ -174,7 +165,7 @@ def dingergisbar_access(s: CollectionState, c: LogicContext):
             has_red_coat(s, c) and (has_grapple(s, c) or has_drone_tele(s, c))
             or has_glitch_2(s, c) and has_drone_tele(s, c) and (
                 has_drone_launch(s, c) or c.flight_enabled or (
-                    has_strict_trenchcoat(s, c) and (has_grapple(s, c) or c.brown_rocket_jump_enabled and has_high_jump(s, c))
+                    has_trenchcoat(s, c) and (has_grapple(s, c) or c.brown_rocket_jump_enabled and has_high_jump(s, c))
                 )
             )
         )
@@ -196,13 +187,13 @@ def bubble_jail_access(s: CollectionState, c: LogicContext):
         or has_red_coat(s, c)
         or has_grapple(s, c)
         or has_drone(s, c)
-        or has_strict_trenchcoat(s, c) and can_damage_boss(s, c)
+        or has_trenchcoat(s, c) and can_damage_boss(s, c)
     )
 
 
 def outside_lab_access(s: CollectionState, c: LogicContext):
     return has_red_coat(s, c) or has_drone(s, c) or (
-        can_drill(s, c) and (can_angle_shoot(s, c) or can_pierce_wall(s, c) or has_strict_trenchcoat(s, c) or has_grapple(s, c))
+        can_drill(s, c) and (can_angle_shoot(s, c) or can_pierce_wall(s, c) or has_trenchcoat(s, c) or has_grapple(s, c))
     )
 
 
@@ -227,7 +218,7 @@ def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
         or has_red_coat(s, c)
         or has_drone_tele(s, c)
         or has_drone(s, c) and any_glitch(s, c) and has_high_jump(s, c)
-        or has_strict_trenchcoat(s, c) and (has_drone(s, c) or has_high_jump(s, c))
+        or has_trenchcoat(s, c) and (has_drone(s, c) or has_high_jump(s, c))
     )
 
 
@@ -249,9 +240,9 @@ def attic_far_right_access(s: CollectionState, c: LogicContext):
     return (
         has_red_coat(s, c)
         or has_drone(s, c) and (
-            has_grapple(s, c) or has_drone_tele(s, c) or has_high_jump(s, c) or has_drone_launch(s, c) or has_strict_trenchcoat(s, c)
+            has_grapple(s, c) or has_drone_tele(s, c) or has_high_jump(s, c) or has_drone_launch(s, c) or has_trenchcoat(s, c)
         )
-        or has_strict_trenchcoat(s, c) and (has_grapple(s, c) or has_high_jump(s, c))
+        or has_trenchcoat(s, c) and (has_grapple(s, c) or has_high_jump(s, c))
     )
 
 
@@ -405,7 +396,7 @@ def kur_gauntlet_entrance_access(s: CollectionState, c: LogicContext):
         or has_drone_tele(s, c) and (
             has_high_jump(s, c) or has_trenchcoat(s, c) or has_drone_launch(s, c)
         )
-        or has_high_jump(s, c) and has_strict_trenchcoat(s, c) and c.brown_rocket_jump_enabled and can_drill(s, c)
+        or has_high_jump(s, c) and has_trenchcoat(s, c) and c.brown_rocket_jump_enabled and can_drill(s, c)
         or can_fly(s, c)
     )
 
@@ -569,12 +560,12 @@ def kur_snowy_cliffs_ledge_lower_access(s: CollectionState, c: LogicContext):
 def kur_mountain_top_peak_access(s: CollectionState, c: LogicContext):
     return (
         has_red_coat(s, c)
-        or has_strict_trenchcoat(s, c) and has_high_jump(s, c)
+        or has_trenchcoat(s, c) and has_high_jump(s, c)
         or has_grapple(s, c) and (
-            has_strict_trenchcoat(s, c) or has_high_jump(s, c)
+            has_trenchcoat(s, c) or has_high_jump(s, c)
         )
         or has_drone_tele(s, c) and (
-            has_high_jump(s, c) or has_strict_trenchcoat(s, c) or has_grapple(s, c)
+            has_high_jump(s, c) or has_trenchcoat(s, c) or has_grapple(s, c)
         )
         or can_displacement_warp(s, c) and has_drone_tele(s, c) and (
             s.has_any(
@@ -591,7 +582,7 @@ def kur_upper_e_kur_mah_access(s: CollectionState, c: LogicContext):
         has_red_coat(s, c) and has_drone_tele(s, c) and (
             can_fly(s, c) or has_drone_launch(s, c) or has_high_jump(s, c) and c.red_rocket_jump_enabled
         )
-        or has_strict_trenchcoat(s, c) and has_drone_tele(s, c) and (
+        or has_trenchcoat(s, c) and has_drone_tele(s, c) and (
             can_fly(s, c) or has_drone_launch(s, c) or has_high_jump(s, c) and c.brown_rocket_jump_enabled
         )
     )
@@ -599,7 +590,8 @@ def kur_upper_e_kur_mah_access(s: CollectionState, c: LogicContext):
 
 def kur_peak_ledge_access(s: CollectionState, c: LogicContext):
     return (
-        has_drone_tele(s, c) and has_drone_launch(s, c)
+        can_fly(s, c)
+        or has_drone_tele(s, c) and has_drone_launch(s, c)
         or has_trenchcoat(s, c) and roof_grapple_clip(s, c) and has_drone(s, c)
         or has_red_coat(s, c) and roof_grapple_clip(s, c) and (
             has_drone(s, c) or has_high_jump(s, c)
@@ -633,8 +625,8 @@ def ukkin_na_shrine_access(s: CollectionState, c: LogicContext):
 
 def ophelia_ledge_access(s: CollectionState, c: LogicContext):
     return has_drone_tele(s, c) or has_red_coat(s, c) or (
-        has_strict_trenchcoat(s, c) and has_grapple(s, c)
-        or has_strict_trenchcoat(s, c) and has_high_jump(s, c)
+        has_trenchcoat(s, c) and has_grapple(s, c)
+        or has_trenchcoat(s, c) and has_high_jump(s, c)
         or has_high_jump(s, c) and has_grapple(s, c)
     )
 
@@ -711,7 +703,7 @@ def clone_roof_save_access(s: CollectionState, c: LogicContext):
 def clone_to_hangar_access(s: CollectionState, c: LogicContext):
     return (
         has_red_coat(s, c)
-        or has_strict_trenchcoat(s, c) and (
+        or has_trenchcoat(s, c) and (
             has_drone_tele(s, c) or has_grapple(s, c) or has_high_jump(s, c)
         )
     )
@@ -723,7 +715,7 @@ def ukhu_access(s: CollectionState, c: LogicContext):
     )
 
 def ukhu_exit_access(s: CollectionState, c: LogicContext):
-    return has_glitch_bomb(s, c) or has_red_coat(s, c) or has_strict_trenchcoat(s, c) and c.obscure_skips
+    return has_glitch_bomb(s, c) or has_red_coat(s, c) or has_trenchcoat(s, c) and c.obscure_skips
 
 
 def can_kill_ukhu(s: CollectionState, c: LogicContext):
@@ -746,13 +738,13 @@ def ukhu_reward_access(s: CollectionState, c: LogicContext):
 
 
 def structure_ruins_access(s: CollectionState, c: LogicContext):
-    return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and can_drill(s, c) and (
+    return has_red_coat(s, c) or has_trenchcoat(s, c) and can_drill(s, c) and (
         has_drone_tele(s, c) or floor_grapple_clip(s, c)
     )
 
 
 def vanilla_clone_access(s: CollectionState, c: LogicContext):
-    return has_red_coat(s, c) or has_strict_trenchcoat(s, c) and (
+    return has_red_coat(s, c) or has_trenchcoat(s, c) and (
         has_high_jump(s, c) or has_drone_tele(s, c) or has_grapple(s, c) and roof_grapple_clip(s, c)
     )
 

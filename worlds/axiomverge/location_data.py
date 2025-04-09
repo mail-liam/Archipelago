@@ -44,7 +44,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegions.LOWER_ERIBU, AVRegions.WEST_ABSU, conditions.always_accessible, True),
     (AVRegions.WEST_ABSU, AVRegions.WEST_ATTIC, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.can_drill(s, c), True),
     (AVRegions.WEST_ABSU, AVRegions.ELSENOVA, conditions.can_drill, True),
-    (AVRegions.WEST_ABSU, AVRegions.ELSENOVA, lambda s, c: conditions.has_strict_trenchcoat(s, c) and conditions.roof_grapple_clip(s, c), False, "Elsenova Roof Grapple Entrance"),
+    (AVRegions.WEST_ABSU, AVRegions.ELSENOVA, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.roof_grapple_clip(s, c), False, "Elsenova Roof Grapple Entrance"),
     (AVRegions.WEST_ABSU, AVRegions.ABSU_BASEMENT, conditions.basement_regular_access, False),
     (
         AVRegions.WEST_ABSU,
@@ -398,7 +398,7 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(111, AVArea.E_KUR_MAH, 'Midway Down East Shaft', AVRegions.MID_E_KUR_MAH, conditions.has_red_coat),
 
     AVLocationData(112, AVArea.E_KUR_MAH, 'Passcode Check', AVRegions.LOWER_E_KUR_MAH, conditions.e_kur_mah_passcode_check_access),
-    AVLocationData(113, AVArea.E_KUR_MAH, 'Hidden Drone Tunnel', AVRegions.LOWER_E_KUR_MAH, conditions.not_implemented),
+    AVLocationData(113, AVArea.E_KUR_MAH, 'Hidden Drone Tunnel', AVRegions.LOWER_E_KUR_MAH, conditions.e_kur_mah_drone_tunnel_access),
     AVLocationData(114, AVArea.E_KUR_MAH, 'Area Reward', AVRegions.LOWER_E_KUR_MAH, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.can_drill(s, c)),
     AVLocationData(115, AVArea.E_KUR_MAH, 'Lowest Area Inside Wall', AVRegions.LOWER_E_KUR_MAH, conditions.has_red_coat),
 
