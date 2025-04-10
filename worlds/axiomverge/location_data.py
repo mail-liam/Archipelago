@@ -283,7 +283,7 @@ location_data: tuple[AVLocationData] = (
 
     AVLocationData(29, AVArea.ABSU, 'Floating Platform', AVRegions.LOWER_CORRIDOR, conditions.floating_platform_access),
 
-    AVLocationData(31, AVArea.ABSU, 'Telal Reward', AVRegions.TELAL, conditions.always_accessible),
+    AVLocationData(31, AVArea.ABSU, 'Telal Reward', AVRegions.TELAL, conditions.can_damage),
 
     AVLocationData(32, AVArea.ABSU, 'Indi Tunnel Side Room', AVRegions.INDI_TUNNEL, conditions.any_height),
 
