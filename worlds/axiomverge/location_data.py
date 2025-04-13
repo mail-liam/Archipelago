@@ -222,7 +222,7 @@ location_data: tuple[AVLocationData] = (
 
     AVLocationData(3, AVArea.ERIBU, 'FlameThrower', AVRegions.DINGER_GISBAR, conditions.always_accessible),
 
-    AVLocationData(4, AVArea.ERIBU, 'Upper Right', AVRegions.UPPER_ERIBU, conditions.always_accessible),
+    AVLocationData(4, AVArea.ERIBU, 'Upper Right', AVRegions.UPPER_ERIBU, conditions.can_damage),
     AVLocationData(5, AVArea.ERIBU, 'Upper Eribu Bomb Check', AVRegions.UPPER_ERIBU, conditions.upper_eribu_bomb_access),
     AVLocationData(6, AVArea.ERIBU, 'Bubble Jail', AVRegions.UPPER_ERIBU, conditions.bubble_jail_access),
     AVLocationData(7, AVArea.ERIBU, 'Outside Laboratory', AVRegions.UPPER_ERIBU, conditions.outside_lab_access),
@@ -320,7 +320,7 @@ location_data: tuple[AVLocationData] = (
 
     AVLocationData(53, AVArea.ZI, 'Uruku Reward', AVRegions.URUKU_BOTTOM, conditions.always_accessible),
     AVLocationData(54, AVArea.ZI, 'Uruku Cage', AVRegions.URUKU_TOP, conditions.uruku_cage_access),
-    AVLocationData(55, AVArea.ZI, 'Behind Uruku Rooftop Ledge', AVRegions.URUKU, conditions.always_accessible),
+    AVLocationData(55, AVArea.ZI, 'Behind Uruku Rooftop Ledge', AVRegions.URUKU_BACK_LEDGE, conditions.always_accessible),
 
     AVLocationData(56, AVArea.KUR, 'Drone Tunnel Before Gauntlet', AVRegions.LOWER_CAVES, conditions.has_drone),
     AVLocationData(57, AVArea.KUR, 'High Jump Shrine', AVRegions.LOWER_CAVES, conditions.always_accessible),
@@ -373,10 +373,11 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(92, AVArea.EDIN, 'Roof Cage', AVRegions.LOWER_EDIN, conditions.roof_cage_access),
     AVLocationData(93, AVArea.EDIN, 'Central Structure Behind Glitch', AVRegions.LOWER_EDIN, conditions.has_glitch_bomb),
     AVLocationData(94, AVArea.EDIN, 'Secret Tunnel Below Zombies', AVRegions.LOWER_EDIN, lambda s, c: conditions.has_trenchcoat(s, c) and conditions.has_drone(s, c)),
-    AVLocationData(95, AVArea.EDIN, 'Above Indi Entrance', AVRegions.LOWER_EDIN, lambda s, c: conditions.any_glitch(s, c) and conditions.can_drill(s, c)),
-    AVLocationData(96, AVArea.EDIN, 'Clone Path Inside Blocks', AVRegions.LOWER_EDIN, lambda s, c: conditions.any_glitch(s, c) and conditions.can_drill(s, c)),
-    AVLocationData(97, AVArea.EDIN, 'Clone Path Rooftop Ledge', AVRegions.LOWER_EDIN, conditions.clone_rooftop_ledge_access),
-    AVLocationData(98, AVArea.EDIN, 'Clone Path Roof Before Save', AVRegions.LOWER_EDIN, conditions.clone_roof_save_access),
+
+    AVLocationData(95, AVArea.EDIN, 'Above Indi Entrance', AVRegions.CLONE, lambda s, c: conditions.any_glitch(s, c) or conditions.can_drill(s, c)),
+    AVLocationData(96, AVArea.EDIN, 'Clone Path Inside Blocks', AVRegions.CLONE, lambda s, c: conditions.any_glitch(s, c) or conditions.can_drill(s, c)),
+    AVLocationData(97, AVArea.EDIN, 'Clone Path Rooftop Ledge', AVRegions.CLONE, conditions.clone_rooftop_ledge_access),
+    AVLocationData(98, AVArea.EDIN, 'Clone Path Roof Before Save', AVRegions.CLONE, conditions.clone_roof_save_access),
 
     AVLocationData(99, AVArea.EDIN, 'False Wall Shrine', AVRegions.UKHU, conditions.always_accessible),
     AVLocationData(100, AVArea.EDIN, 'Ukhu Path Drone Tunnel', AVRegions.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
@@ -384,7 +385,7 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(102, AVArea.EDIN, 'In Structure Ruins', AVRegions.UKHU, conditions.structure_ruins_access),
     AVLocationData(103, AVArea.EDIN, 'Ukhu Reward', AVRegions.UKHU, conditions.ukhu_reward_access),
 
-    AVLocationData(104, AVArea.EDIN, 'Hangar', AVRegions.EAST_EDIN, conditions.always_accessible),
+    AVLocationData(104, AVArea.EDIN, 'Hangar', AVRegions.HANGAR, conditions.always_accessible),
 
     AVLocationData(105, AVArea.EDIN, 'Double Check Tunnel Left', AVRegions.EAST_EDIN, conditions.edin_double_check_tunnel_access),
     AVLocationData(106, AVArea.EDIN, 'Double Check Tunnel Right', AVRegions.EAST_EDIN, conditions.edin_double_check_tunnel_access),

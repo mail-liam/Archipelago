@@ -745,7 +745,7 @@ def structure_ruins_access(s: CollectionState, c: LogicContext):
 
 def vanilla_clone_access(s: CollectionState, c: LogicContext):
     return has_red_coat(s, c) or has_trenchcoat(s, c) and (
-        has_high_jump(s, c) or has_drone_tele(s, c) or has_grapple(s, c) and roof_grapple_clip(s, c)
+        has_high_jump(s, c) or has_drone_tele(s, c) or roof_grapple_clip(s, c)
     )
 
 
