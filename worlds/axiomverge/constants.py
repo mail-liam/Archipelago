@@ -140,4 +140,5 @@ START_OPTION_MAP = [
     (AVRegions.WEST_ERIBU, "Area1", "SaveRoom1"),
     (AVRegions.ELSENOVA, "Area2", "SaveRoom2"),
     (AVRegions.EAST_ABSU, "Area2", "SaveRoom4"),
+    (AVRegions.LOWER_CAVES, "Area4", "SaveRoom1"),
 ]

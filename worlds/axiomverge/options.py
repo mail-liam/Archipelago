@@ -20,6 +20,7 @@ class StartLocation(Choice):
     option_eribu = 0
     option_elsenova = 1
     option_purple_absu = 2
+    option_lower_kur = 3
     default = 0
 
 # Item Options
