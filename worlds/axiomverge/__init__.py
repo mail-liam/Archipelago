@@ -5,7 +5,7 @@ from .constants import START_OPTION_MAP, AVArea
 from .creature_data import creature_data
 from .item_data import item_data, ITEM_NAME_TO_ID
 from .items import AVItem, item_groups
-from .location_data import LOCATION_NAME_TO_ID, location_data
+from .location_data import location_data
 from .options import AxiomVergeOptions, AllowRocketJumps
 from .regions import create_regions, create_glitchsanity_regions
 from .types import LogicContext

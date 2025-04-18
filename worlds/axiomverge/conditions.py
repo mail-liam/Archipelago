@@ -191,6 +191,15 @@ def bubble_jail_access(s: CollectionState, c: LogicContext):
     )
 
 
+def bubble_jail_trace_access(s: CollectionState, c: LogicContext):
+    return (
+        can_angle_shoot(s, c)
+        or can_pierce_wall(s, c)
+        or has_grapple(s, c)
+        or has_trenchcoat(s, c)
+    )
+
+
 def outside_lab_access(s: CollectionState, c: LogicContext):
     return has_red_coat(s, c) or has_drone(s, c) or (
         can_drill(s, c) and (can_angle_shoot(s, c) or can_pierce_wall(s, c) or has_trenchcoat(s, c) or has_grapple(s, c))
