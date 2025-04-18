@@ -1,15 +1,30 @@
 from worlds.AutoWorld import WebWorld, World
 from BaseClasses import ItemClassification
 
-from .constants import START_OPTION_MAP
+from .constants import START_OPTION_MAP, AVArea
+from .creature_data import creature_data
 from .item_data import item_data, ITEM_NAME_TO_ID
 from .items import AVItem, item_groups
-from .location_data import LOCATION_NAME_TO_ID, build_location_groups
+from .location_data import LOCATION_NAME_TO_ID, location_data
 from .options import AxiomVergeOptions, AllowRocketJumps
-from .regions import create_regions
+from .regions import create_regions, create_glitchsanity_regions
 from .types import LogicContext
 
 from Utils import visualize_regions
+
+
+LOCATION_NAME_TO_ID = {
+    **{ data.name: data.id for data in location_data },
+    **{ data.name: data.id for data in creature_data },
+}
+
+
+def build_location_groups() -> dict[str, set[str]]:
+    location_groups = {}
+    for area in AVArea:
+        location_groups[area.value] = {location.name for location in location_data if location.area_name == area}
+
+    return location_groups
 
 
 class AxiomVergeWebWorld(WebWorld):
@@ -59,6 +74,9 @@ class AxiomVergeWorld(World):
 
     def create_regions(self):
         create_regions(self.context, self.multiworld)
+
+        if self.options.glitchsanity:
+            create_glitchsanity_regions(self.context, self.multiworld)
 
 
     def create_item(self, item_name):

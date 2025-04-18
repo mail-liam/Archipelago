@@ -246,10 +246,8 @@ def attic_far_right_access(s: CollectionState, c: LogicContext):
     )
 
 
-def elsenova_west_attic_access(s: CollectionState, c: LogicContext):
-    return can_drill(s, c) and (
-        has_drone_tele(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c) or any_glitch(s, c)
-    )
+def elsenova_junction_access(s: CollectionState, c: LogicContext):
+    return has_drone_tele(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c) or any_glitch(s, c)
 
 
 def floating_platform_access(s: CollectionState, c: LogicContext):
@@ -307,11 +305,7 @@ def furglot_tunnel_access(s: CollectionState, c: LogicContext):
     return has_glitch_2(s, c) and any_height(s, c) or has_trenchcoat(s, c) and (any_glitch(s, c) or s.has_any(RANGED_WEAPONS, c.player))
 
 
-def zi_false_roof_access(s: CollectionState, c: LogicContext):
-    return any_height(s, c) and (can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c))
-
-
-def lower_east_zi_access(s: CollectionState, c: LogicContext):
+def zi_corridor_access(s: CollectionState, c: LogicContext):
     return has_health_nodes(s, c) and (
         can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c)
     )

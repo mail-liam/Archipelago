@@ -33,7 +33,7 @@ class AVArea(StrEnum):
     MAR_URU = 'Mar-Uru'
 
 
-class AVRegions(StrEnum):
+class AVRegion(StrEnum):
     # Eribu
     WEST_ERIBU = "West Eribu"
     DINGER_GISBAR = "Dinger-Gisbar"
@@ -48,6 +48,7 @@ class AVRegions(StrEnum):
     WEST_ABSU = "West Absu"
     WEST_ATTIC = "West Attic"
     EAST_ATTIC = "East Attic"
+    ATTIC_JUNCTION = "Attic Junction"
     ELSENOVA = "Elsenova"
     LOWER_ABSU = "Lower Absu"
     ABSU_BASEMENT = "Absu Basement"
@@ -68,6 +69,7 @@ class AVRegions(StrEnum):
     # Zi
     ABSU_ZI = "Absu-Zi"
     LOWER_ZI = "Lower Zi"
+    ZI_CORRIDOR = "Zi Corridor"
     EAST_ZI = "East Zi"
     UPPER_ZI = "Upper Zi"
     PREVIEW_ROOM = "Preview Room"
@@ -133,12 +135,17 @@ class AVRegions(StrEnum):
 
     MENU = "Menu"
     BLURST = "Blurst"
-    
+
+
+# Glitchsanity-specfic regions
+class AVGlitchRegion(StrEnum):
+    MOGRA = "Mogra"
+    SWARMILY = "Swarmily"
 
 
 START_OPTION_MAP = [
-    (AVRegions.WEST_ERIBU, "Area1", "SaveRoom1"),
-    (AVRegions.ELSENOVA, "Area2", "SaveRoom2"),
-    (AVRegions.EAST_ABSU, "Area2", "SaveRoom4"),
-    (AVRegions.LOWER_CAVES, "Area4", "SaveRoom1"),
+    (AVRegion.WEST_ERIBU, "Area1", "SaveRoom1"),
+    (AVRegion.ELSENOVA, "Area2", "SaveRoom2"),
+    (AVRegion.EAST_ABSU, "Area2", "SaveRoom4"),
+    (AVRegion.LOWER_CAVES, "Area4", "SaveRoom1"),
 ]

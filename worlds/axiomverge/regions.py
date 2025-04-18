@@ -3,7 +3,7 @@ from __future__ import annotations
 import typing as t
 from BaseClasses import ItemClassification, Location, MultiWorld, Region
 
-from .constants import AVRegions, START_OPTION_MAP
+from .constants import AVRegion, START_OPTION_MAP
 from .location_data import entrance_data, location_data
 from .items import AVItem
 
@@ -17,7 +17,7 @@ class AVLocation(Location):
 
 def create_regions(context: LogicContext, multiworld: MultiWorld):
     regions: t.Dict[str, Region] = {}
-    for enum_type in AVRegions:
+    for enum_type in AVRegion:
         region_name = enum_type.value
         region = Region(region_name, context.player, multiworld)
         multiworld.regions.append(region)
@@ -37,7 +37,7 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
 
     # Dynamically set Menu region connection based on options
     start_region = START_OPTION_MAP[context.start_location][0]
-    regions[AVRegions.MENU].connect(regions[start_region])
+    regions[AVRegion.MENU].connect(regions[start_region])
 
     for data in location_data:
         region = regions[data.region_name]
@@ -46,11 +46,15 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
         region.locations.append(location)
 
     # Always place Vision Defeated item, regardless of goal
-    vision = AVLocation(context.player, 'Vision', None, regions[AVRegions.VISION])
+    vision = AVLocation(context.player, 'Vision', None, regions[AVRegion.VISION])
     vision.place_locked_item(AVItem("Vision Defeated", ItemClassification.progression, None, context.player))
-    regions[AVRegions.VISION].locations.append(vision)
+    regions[AVRegion.VISION].locations.append(vision)
 
     # TODO: Other goals
-    athetos = AVLocation(context.player, 'Athetos', None, regions[AVRegions.ATHETOS])
+    athetos = AVLocation(context.player, 'Athetos', None, regions[AVRegion.ATHETOS])
     athetos.place_locked_item(AVItem("Athetos Defeated", ItemClassification.progression, None, context.player))
-    regions[AVRegions.ATHETOS].locations.append(athetos)
+    regions[AVRegion.ATHETOS].locations.append(athetos)
+
+
+def create_glitchsanity_regions(context: LogicContext, multiworld: MultiWorld):
+    pass
