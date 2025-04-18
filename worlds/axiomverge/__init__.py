@@ -1,7 +1,7 @@
 from worlds.AutoWorld import WebWorld, World
 from BaseClasses import ItemClassification
 
-from .constants import START_OPTION_MAP, AVArea
+from .constants import AVArea
 from .creature_data import creature_data
 from .item_data import item_data, ITEM_NAME_TO_ID
 from .items import AVItem, item_groups
@@ -145,6 +145,4 @@ class AxiomVergeWorld(World):
 
 
     def fill_slot_data(self):
-        _, area, room = START_OPTION_MAP[self.options.start_location]
-
-        return {"goal": int(self.options.goal), "start_area": area, "start_room": room}
+        return {"goal": int(self.options.goal), "start_option": self.options.start_location }

@@ -36,7 +36,7 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
             destination.connect(source, rule=access_rule)
 
     # Dynamically set Menu region connection based on options
-    start_region = START_OPTION_MAP[context.start_location][0]
+    start_region = START_OPTION_MAP[context.start_location]
     multiworld.get_region(AVRegion.MENU, context.player).connect(multiworld.get_region(start_region, context.player))
 
     for data in location_data:

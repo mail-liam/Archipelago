@@ -144,8 +144,8 @@ class AVGlitchRegion(StrEnum):
 
 
 START_OPTION_MAP = [
-    (AVRegion.WEST_ERIBU, "Area1", "SaveRoom1"),
-    (AVRegion.ELSENOVA, "Area2", "SaveRoom2"),
-    (AVRegion.EAST_ABSU, "Area2", "SaveRoom4"),
-    (AVRegion.LOWER_CAVES, "Area4", "SaveRoom1"),
+    AVRegion.WEST_ERIBU,
+    AVRegion.ELSENOVA,
+    AVRegion.EAST_ABSU,
+    AVRegion.LOWER_CAVES,
 ]
