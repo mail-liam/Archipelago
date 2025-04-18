@@ -9,6 +9,7 @@ class AVItemType(StrEnum):
     DRILL = "Drills"
     DRONE = "Drones"
     GLITCH = "Glitches"
+    HEALTH = "Health"
     HEALTH_NODE = "Health Nodes"
     HEALTH_NODE_FRAGMENT = "Health Node Fragments"
     KEY = "Keys"

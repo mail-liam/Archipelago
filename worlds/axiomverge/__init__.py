@@ -84,6 +84,8 @@ class AxiomVergeWorld(World):
         data = item_data[item_name]
         return AVItem(item_name, data.ap_classification, data.id, self.player)
 
+    def get_filler_item_name(self) -> str:
+        return "Health Pickup"
 
     def create_items(self):
         options = self.options
