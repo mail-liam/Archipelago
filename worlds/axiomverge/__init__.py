@@ -150,4 +150,4 @@ class AxiomVergeWorld(World):
 
 
     def fill_slot_data(self):
-        return {"goal": int(self.options.goal), "start_option": self.options.start_location }
+        return {"goal": self.options.goal.value, "start_option": self.options.start_location.value }
