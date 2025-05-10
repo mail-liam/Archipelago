@@ -141,6 +141,7 @@ class AVRegion(StrEnum):
 # Glitchsanity-specfic regions
 class AVGlitchRegion(StrEnum):
     MOGRA = "Mogra"
+    SPITBUG = "Spitbug"
     SWARMILY = "Swarmily"
 
 

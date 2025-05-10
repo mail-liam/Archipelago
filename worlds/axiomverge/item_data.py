@@ -68,6 +68,7 @@ raw_item_data: t.Tuple[AVItemData] = (
     AVItemData(45, "Progressive Address Disruptor", AVItemType.GLITCH, ItemClassification.progression, False),
     AVItemData(46, "Progressive Coat", AVItemType.COAT, ItemClassification.progression, False),
     AVItemData(47, "Progressive Drone", AVItemType.DRONE, ItemClassification.progression, False),
+    # Default Filler
     AVItemData(48, "Health Pickup", AVItemType.HEALTH, ItemClassification.filler, False),
 )
 

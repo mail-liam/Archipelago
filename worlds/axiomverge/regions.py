@@ -59,12 +59,16 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
 
 
 def create_glitchsanity_regions(context: LogicContext, multiworld: MultiWorld):
-    # Create Swarmily and Mogra ahead of the loop, so the region can be shared
+    # Create some shared regions ahead of the loop
     swarmily = Region(AVGlitchRegion.SWARMILY, context.player, multiworld)
     multiworld.get_region(AVRegion.EAST_ABSU, context.player).connect(swarmily, rule=lambda s, c=context: conditions.has_red_coat(s, c) or conditions.has_glitch_2(s, c))
     multiworld.get_region(AVRegion.UPPER_ERIBU, context.player).connect(swarmily, rule=lambda s, c=context: conditions.bubble_jail_trace_access(s, c))
     multiworld.regions.append(swarmily)
-    swarmily.connect
+
+    spitbug = Region(AVGlitchRegion.SPITBUG, context.player, multiworld)
+    multiworld.get_region(AVRegion.EAST_ABSU, context.player).connect(spitbug)
+    multiworld.get_region(AVRegion.UPPER_ERIBU, context.player).connect(spitbug)
+    multiworld.regions.append(spitbug)
 
     mogra = Region(AVGlitchRegion.MOGRA, context.player, multiworld)
     multiworld.get_region(AVRegion.MOUNTAIN_TOP, context.player).connect(mogra)
