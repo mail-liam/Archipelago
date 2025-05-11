@@ -80,14 +80,14 @@ def create_glitchsanity_regions(context: LogicContext, multiworld: MultiWorld):
             # Single-region enemy. Just place their item in the region
             region = multiworld.get_region(data.parent_region, context.player)
             location = AVLocation(context.player, data.location_name, data.id, region)
-            location.access_rule = lambda s, c=context: data.glitch_level(s, c)
+            location.access_rule = lambda s, data=data: data.glitch_level(s, context)
             region.locations.append(location)
             continue
 
         # Multi-region enemy. Create a microregion for it, and connect all provided regions to it.
         enemy_region = Region(data.name, context.player, multiworld)
         location = AVLocation(context.player, data.location_name, data.id, enemy_region)
-        location.access_rule = lambda s, c=context: data.glitch_level(s, c)
+        location.access_rule = lambda s, data=data: data.glitch_level(s, context)
         enemy_region.locations.append(location)
         multiworld.regions.append(enemy_region)
         for region_name, condition_func in data.entrances:
