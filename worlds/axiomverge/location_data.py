@@ -346,7 +346,8 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(69, AVArea.KUR, 'Snowy Cliffs Ledge Upper', AVRegion.MOUNTAIN_TOP, conditions.kur_snowy_cliffs_ledge_upper_access),
     AVLocationData(70, AVArea.KUR, 'Snowy Cliffs Ledge Lower', AVRegion.MOUNTAIN_TOP, conditions.kur_snowy_cliffs_ledge_lower_access),
     AVLocationData(71, AVArea.KUR, 'Loop Room', AVRegion.MOUNTAIN_TOP, conditions.always_accessible),
-    AVLocationData(72, AVArea.KUR, 'Peak Cliff Ledge', AVRegion.MOUNTAIN_TOP, conditions.kur_peak_ledge_access),
+
+    AVLocationData(72, AVArea.KUR, 'Peak Cliff Ledge', AVRegion.MOUNTAIN_PEAK, conditions.kur_peak_ledge_access),
 
     AVLocationData(73, AVArea.KUR, 'Gir-Tab Lower Entrance Drone Tunnel', AVRegion.GIR_TAB_LOWER_ENTRANCE, conditions.gir_tab_lower_drone_tunnel_access),
 
