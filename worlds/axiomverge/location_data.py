@@ -262,7 +262,7 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(16, AVArea.ABSU, 'Entrance Shaft', AVRegion.WEST_ABSU, conditions.can_drill),
     AVLocationData(
         17,
-        AVArea.ABSU, 'Absu - Entrance Shaft Vault',
+        AVArea.ABSU, 'Entrance Shaft Vault',
         AVRegion.WEST_ABSU,
         lambda s, c: conditions.has_red_coat(s, c) or conditions.any_glitch(s, c) and (conditions.any_coat(s, c) or conditions.can_pierce_wall(s, c)),
     ),
