@@ -284,7 +284,8 @@ def telal_east_absu_access(s: CollectionState, c: LogicContext):
     # NOTE: This rule is concerned with conditions not permitted by the above access rule (Lower to East)
     # Hence really the "any" here should be white, but a higher coat works here and via Lower to East, so it's ok
     return (
-        any_coat(s, c) and s.has_any(("Reverse Slicer", "Flamethrower"), c.player)
+        any_glitch(s, c)
+        or any_coat(s, c) and s.has_any(("Reverse Slicer", "Flamethrower"), c.player)
         or s.has("Range Node", c.player, count=2) and s.has("Flamethrower", c.player)
         or s.has_any(("Fat Beam", "Scissor Beam"), c.player)
     )
