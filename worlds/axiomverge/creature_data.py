@@ -8,14 +8,14 @@ from .types import AccessRule
 @dataclass
 class AVGlitchLocationData:
     id: int
-    name: str
+    enemy: str
     glitch_level: AccessRule
     parent_region: str | None
     entrances: tuple[tuple[AVRegion, AccessRule]] | None
 
     def __post_init__(self):
         self.id += AP_ID_BASE
-        self.location_name = f'Glitch a {self.name}'
+        self.name = f'Glitch a {self.enemy}'
 
 
 creature_data: tuple[AVGlitchLocationData] = (
