@@ -10,9 +10,6 @@ from .options import AxiomVergeOptions, AllowRocketJumps
 from .regions import create_regions, create_glitchsanity_regions
 from .types import LogicContext
 
-from Utils import visualize_regions
-
-
 LOCATION_NAME_TO_ID = {
     **{ data.name: data.id for data in location_data },
     **{ data.name: data.id for data in creature_data },
@@ -145,8 +142,6 @@ class AxiomVergeWorld(World):
     def set_rules(self):
         # TODO: Other goals
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Athetos Defeated", self.player)
-
-        # visualize_regions(self.multiworld.get_region("Menu", self.player), "axiomverge.puml")
 
 
     def fill_slot_data(self):
