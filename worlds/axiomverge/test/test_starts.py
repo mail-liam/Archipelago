@@ -11,3 +11,9 @@ class TestPurpleAbsuStart(AVTestBase):
     options = {
         "start_location": 2,
     }
+
+
+class TestLowerKurStart(AVTestBase):
+    options = {
+        "start_location": 3,
+    }
