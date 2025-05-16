@@ -681,6 +681,16 @@ def roof_cage_access(s: CollectionState, c: LogicContext):
     )
 
 
+def edin_wall_access(s: CollectionState, c: LogicContext):
+    return(
+        can_fly(s, c)
+        or has_trenchcoat(s, c)
+        or has_drone_tele(s, c) and (
+            has_drone_launch(s, c) or has_high_jump(s, c)
+        )
+    )
+
+
 def clone_rooftop_ledge_access(s: CollectionState, c: LogicContext):
     return (
         can_fly(s, c)

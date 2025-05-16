@@ -116,7 +116,9 @@ class AVRegion(StrEnum):
     EAST_UKKIN_NA_EXIT = "East Ukkin-Na Exit"
 
     # Edin
-    LOWER_EDIN = "Lower Edin"
+    LOWER_EDIN_LEFT = "Lower Edin Left"
+    EDIN_WALL = "Edin Wall"
+    LOWER_EDIN_RIGHT = "Lower Edin Right"
     UKHU = "Ukhu"
     CLONE = "Clone"
     HANGAR = "Hangar"

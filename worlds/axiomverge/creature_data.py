@@ -207,7 +207,7 @@ creature_data: tuple[AVGlitchLocationData] = (
             (AVRegion.LABORATORY, conditions.always_accessible),
             (AVRegion.EAST_ABSU, conditions.zombie_tunnel_access),
             (AVRegion.ABOVE_GIR_TAB, conditions.always_accessible),
-            (AVRegion.LOWER_EDIN, conditions.always_accessible),
+            (AVRegion.LOWER_EDIN_RIGHT, conditions.always_accessible),
             (AVRegion.EAST_EDIN, conditions.edin_double_check_tunnel_access),
         ),
     ),
@@ -217,7 +217,7 @@ creature_data: tuple[AVGlitchLocationData] = (
     AVGlitchLocationData(157, "Glugg", conditions.has_glitch_2, AVRegion.INDI, None),
     AVGlitchLocationData(158, "Blurst", conditions.any_glitch, AVRegion.BLURST, None),
     AVGlitchLocationData(159, "Blurst Swarm", conditions.any_glitch, AVRegion.BLURST, None),
-    AVGlitchLocationData(160, "Jorm", conditions.has_glitch_2, AVRegion.LOWER_EDIN, None),
+    AVGlitchLocationData(160, "Jorm", conditions.has_glitch_2, AVRegion.LOWER_EDIN_RIGHT, None),
     AVGlitchLocationData(161, "Space Bat", conditions.has_glitch_2, AVRegion.CLONE, None),
     AVGlitchLocationData(
         162,
@@ -226,7 +226,8 @@ creature_data: tuple[AVGlitchLocationData] = (
         None,
         (
             (AVRegion.GAUNTLET_ROOF, conditions.always_accessible),
-            (AVRegion.LOWER_EDIN, conditions.always_accessible),
+            (AVRegion.LOWER_EDIN_LEFT, conditions.always_accessible),
+            (AVRegion.LOWER_EDIN_RIGHT, conditions.always_accessible),
             (AVRegion.EAST_EDIN, conditions.always_accessible),
         ),
     ),
@@ -260,7 +261,8 @@ creature_data: tuple[AVGlitchLocationData] = (
         conditions.has_glitch_2,
         None,
         (
-            (AVRegion.LOWER_EDIN, conditions.always_accessible),
+            (AVRegion.LOWER_EDIN_LEFT, conditions.always_accessible),
+            (AVRegion.LOWER_EDIN_RIGHT, conditions.always_accessible),
             (AVRegion.EAST_ABSU, conditions.always_accessible),
         ),
     ),
