@@ -263,7 +263,7 @@ creature_data: tuple[AVGlitchLocationData] = (
         (
             (AVRegion.LOWER_EDIN_LEFT, conditions.always_accessible),
             (AVRegion.LOWER_EDIN_RIGHT, conditions.always_accessible),
-            (AVRegion.EAST_ABSU, conditions.always_accessible),
+            (AVRegion.EAST_EDIN, conditions.always_accessible),
         ),
     ),
     AVGlitchLocationData(170, "Annihiwaiter", conditions.has_glitch_2, AVRegion.UKKIN_NA_BASE, None),

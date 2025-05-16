@@ -150,6 +150,10 @@ def swing_clip(state: CollectionState, context: LogicContext):
 
 
 # Specific location checks, that are here mainly to avoid complexity in the data structure
+def wheelchair_room_access(s: CollectionState, c: LogicContext):
+    return can_displacement_warp(s, c) or has_drone_tele(s, c))and any_coat(s, c)
+
+
 def west_caves_pool_access(s: CollectionState, c: LogicContext):
     return (
         has_red_coat(s, c)
@@ -215,9 +219,10 @@ def xedur_access(s: CollectionState, c: LogicContext):
 
 def laboratory_access(s: CollectionState, c: LogicContext):
     return (
-        has_red_coat(s, c)
+        has_drone_tele(s, c) and has_passcode(s, c)
+        or has_red_coat(s, c)
         or can_drill(s, c) and (has_grapple(s, c) or extra_brown_height(s, c))
-    ) and (has_fat_beam(s, c) or has_passcode(s, c)) or has_drone_tele(s, c) and has_passcode(s, c)
+    ) and (has_fat_beam(s, c) and c.obscure_skips or has_passcode(s, c))
 
 
 
@@ -410,9 +415,11 @@ def kur_gauntlet_entrance_access(s: CollectionState, c: LogicContext):
 
 def kur_gauntlet_roof_access(s: CollectionState, c: LogicContext):
     return (
-        any_coat(s, c) and any_glitch(s, c) and has_health_nodes(s, c)
-        or has_high_jump(s, c) or has_drone_launch(s, c) and (
-            c.red_rocket_jump_enabled or has_drone_tele(s, c) and has_grapple(s, c)
+        any_coat(s, c) and (
+            any_glitch(s, c) and has_health_nodes(s, c)
+            or has_high_jump(s, c) and has_drone_launch(s, c) and (
+                c.red_rocket_jump_enabled or has_drone_tele(s, c) and has_grapple(s, c)
+            )
         )
     )
 

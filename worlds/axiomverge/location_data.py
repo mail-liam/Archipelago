@@ -223,7 +223,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
 
 location_data: tuple[AVLocationData] = (
     AVLocationData(0, AVArea.ERIBU, 'Starter Weapon', AVRegion.WEST_ERIBU, conditions.always_accessible),
-    AVLocationData(1, AVArea.ERIBU, 'Wheelchair Room', AVRegion.WEST_ERIBU, lambda s, c: conditions.can_displacement_warp(s, c) or conditions.has_drone_tele(s, c)),
+    AVLocationData(1, AVArea.ERIBU, 'Wheelchair Room', AVRegion.WEST_ERIBU, conditions.wheelchair_room_access,
     AVLocationData(2, AVArea.ERIBU, 'Primordial Cave Lower', AVRegion.WEST_ERIBU, conditions.west_caves_pool_access),
 
     AVLocationData(3, AVArea.ERIBU, 'Primordial Cave Upper', AVRegion.DINGER_GISBAR, conditions.always_accessible),
