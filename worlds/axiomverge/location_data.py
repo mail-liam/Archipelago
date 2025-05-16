@@ -104,7 +104,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegion.LOWER_ZI, AVRegion.ZI_CORRIDOR, conditions.zi_corridor_access, True),
     (AVRegion.ZI_CORRIDOR, AVRegion.EAST_ZI, conditions.zi_corridor_access, True),
     (AVRegion.UPPER_ZI, AVRegion.EAST_ZI, conditions.always_accessible, False),
-    (AVRegion.EAST_ZI, AVRegion.UPPER_ZI, conditions.any_height, False),
+    (AVRegion.EAST_ZI, AVRegion.UPPER_ZI, lambda s, c: conditions.any_height(s, c) and conditions.can_damage_boss(s, c), False),
     (AVRegion.EAST_ZI, AVRegion.PREVIEW_ROOM, lambda s, c: conditions.any_coat(s, c) and conditions.any_height(s, c), False),
     (AVRegion.EAST_ZI, AVRegion.LOWER_CAVES, conditions.always_accessible, True),
     (AVRegion.UPPER_ZI, AVRegion.PREVIEW_ROOM, conditions.floor_grapple_clip, False),
