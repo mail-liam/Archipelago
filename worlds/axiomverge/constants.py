@@ -9,6 +9,7 @@ class AVItemType(StrEnum):
     DRILL = "Drills"
     DRONE = "Drones"
     GLITCH = "Glitches"
+    HEALTH = "Health"
     HEALTH_NODE = "Health Nodes"
     HEALTH_NODE_FRAGMENT = "Health Node Fragments"
     KEY = "Keys"
@@ -33,7 +34,7 @@ class AVArea(StrEnum):
     MAR_URU = 'Mar-Uru'
 
 
-class AVRegions(StrEnum):
+class AVRegion(StrEnum):
     # Eribu
     WEST_ERIBU = "West Eribu"
     DINGER_GISBAR = "Dinger-Gisbar"
@@ -48,6 +49,7 @@ class AVRegions(StrEnum):
     WEST_ABSU = "West Absu"
     WEST_ATTIC = "West Attic"
     EAST_ATTIC = "East Attic"
+    ATTIC_JUNCTION = "Attic Junction"
     ELSENOVA = "Elsenova"
     LOWER_ABSU = "Lower Absu"
     ABSU_BASEMENT = "Absu Basement"
@@ -68,6 +70,7 @@ class AVRegions(StrEnum):
     # Zi
     ABSU_ZI = "Absu-Zi"
     LOWER_ZI = "Lower Zi"
+    ZI_CORRIDOR = "Zi Corridor"
     EAST_ZI = "East Zi"
     UPPER_ZI = "Upper Zi"
     PREVIEW_ROOM = "Preview Room"
@@ -133,11 +136,18 @@ class AVRegions(StrEnum):
 
     MENU = "Menu"
     BLURST = "Blurst"
-    
+
+
+# Glitchsanity-specfic regions
+class AVGlitchRegion(StrEnum):
+    MOGRA = "Mogra"
+    SPITBUG = "Spitbug"
+    SWARMILY = "Swarmily"
 
 
 START_OPTION_MAP = [
-    (AVRegions.WEST_ERIBU, "Area1", "SaveRoom1"),
-    (AVRegions.ELSENOVA, "Area2", "SaveRoom2"),
-    (AVRegions.EAST_ABSU, "Area2", "SaveRoom4"),
+    AVRegion.WEST_ERIBU,
+    AVRegion.ELSENOVA,
+    AVRegion.EAST_ABSU,
+    AVRegion.LOWER_CAVES,
 ]

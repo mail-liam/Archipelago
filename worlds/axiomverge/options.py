@@ -20,6 +20,7 @@ class StartLocation(Choice):
     option_eribu = 0
     option_elsenova = 1
     option_purple_absu = 2
+    option_lower_kur = 3
     default = 0
 
 # Item Options
@@ -105,6 +106,12 @@ class RequireNodes(DefaultOnToggle):
     """
 
 
+class GlitchSanity(Toggle):
+    """
+    Glitching enemies provides checks. Adds 58 locations to the pool.
+    """
+
+
 @dataclass
 class AxiomVergeOptions(PerGameCommonOptions):
     allow_displacement_warps: AllowDisplacementWarps
@@ -120,4 +127,5 @@ class AxiomVergeOptions(PerGameCommonOptions):
     progressive_drone: ProgressiveDrone
     secret_world_weapons: ShuffleSecretWorldWeapons
     require_nodes: RequireNodes
+    glitchsanity: GlitchSanity
     start_location: StartLocation

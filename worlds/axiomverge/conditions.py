@@ -191,6 +191,15 @@ def bubble_jail_access(s: CollectionState, c: LogicContext):
     )
 
 
+def bubble_jail_trace_access(s: CollectionState, c: LogicContext):
+    return (
+        can_angle_shoot(s, c)
+        or can_pierce_wall(s, c)
+        or has_grapple(s, c)
+        or has_trenchcoat(s, c)
+    )
+
+
 def outside_lab_access(s: CollectionState, c: LogicContext):
     return has_red_coat(s, c) or has_drone(s, c) or (
         can_drill(s, c) and (can_angle_shoot(s, c) or can_pierce_wall(s, c) or has_trenchcoat(s, c) or has_grapple(s, c))
@@ -246,10 +255,8 @@ def attic_far_right_access(s: CollectionState, c: LogicContext):
     )
 
 
-def elsenova_west_attic_access(s: CollectionState, c: LogicContext):
-    return can_drill(s, c) and (
-        has_drone_tele(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c) or any_glitch(s, c)
-    )
+def elsenova_junction_access(s: CollectionState, c: LogicContext):
+    return has_drone_tele(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c) or any_glitch(s, c)
 
 
 def floating_platform_access(s: CollectionState, c: LogicContext):
@@ -277,7 +284,8 @@ def telal_east_absu_access(s: CollectionState, c: LogicContext):
     # NOTE: This rule is concerned with conditions not permitted by the above access rule (Lower to East)
     # Hence really the "any" here should be white, but a higher coat works here and via Lower to East, so it's ok
     return (
-        any_coat(s, c) and s.has_any(("Reverse Slicer", "Flamethrower"), c.player)
+        any_glitch(s, c)
+        or any_coat(s, c) and s.has_any(("Reverse Slicer", "Flamethrower"), c.player)
         or s.has("Range Node", c.player, count=2) and s.has("Flamethrower", c.player)
         or s.has_any(("Fat Beam", "Scissor Beam"), c.player)
     )
@@ -307,11 +315,7 @@ def furglot_tunnel_access(s: CollectionState, c: LogicContext):
     return has_glitch_2(s, c) and any_height(s, c) or has_trenchcoat(s, c) and (any_glitch(s, c) or s.has_any(RANGED_WEAPONS, c.player))
 
 
-def zi_false_roof_access(s: CollectionState, c: LogicContext):
-    return any_height(s, c) and (can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c))
-
-
-def lower_east_zi_access(s: CollectionState, c: LogicContext):
+def zi_corridor_access(s: CollectionState, c: LogicContext):
     return has_health_nodes(s, c) and (
         can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c)
     )
