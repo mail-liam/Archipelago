@@ -59,7 +59,7 @@ def can_drill(state: CollectionState, context: LogicContext):
 
 def can_fly(state: CollectionState, context: LogicContext):
     return has_drone_tele(state, context) and context.flight_enabled and (
-        state.has_any(("Address Disruptor 1", "Address Disruptor 2", "Progressive Address Disruptor"), context.player)
+        any_glitch(state, context) or state.has(("Laser Drill",), context.player)
     )
 
 
