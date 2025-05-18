@@ -144,3 +144,15 @@ class AxiomVergeWorld(World):
 
     def fill_slot_data(self):
         return {"goal": self.options.goal.value, "start_option": self.options.start_location.value }
+
+
+    def interpret_slot_data(self, slot_data):
+        if (
+            hasattr(self.multiworld,"re_gen_passthrough")
+            and isinstance(self.multiworld.re_gen_passthrough, dict) \
+            and "Axiom Verge" in self.multiworld.re_gen_passthrough
+        ):
+            return None
+
+        self.options.start_location = slot_data["start_location"]
+        return slot_data
