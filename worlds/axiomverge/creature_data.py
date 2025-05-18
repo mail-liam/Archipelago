@@ -15,7 +15,11 @@ class AVGlitchLocationData:
 
     def __post_init__(self):
         self.id += AP_ID_BASE
-        self.name = f'Glitch a {self.enemy}'
+
+        if self.enemy.startswith(("A", "E", "I", "O", "U")):
+            self.name = f'Glitch an {self.enemy}'
+        else:
+            self.name = f'Glitch a {self.enemy}'
 
 
 creature_data: tuple[AVGlitchLocationData] = (
@@ -318,5 +322,6 @@ creature_data: tuple[AVGlitchLocationData] = (
         ),
     ),
     AVGlitchLocationData(182, "Boulder", conditions.any_glitch, AVRegion.MOUNTAIN_BASE, None),
+    AVGlitchLocationData(183, "Ukhu Spawn", conditions.any_glitch, AVRegion.UKHU, None),
 )
 

@@ -104,7 +104,7 @@ class RequireNodes(DefaultOnToggle):
 
 class GlitchSanity(Toggle):
     """
-    Glitching enemies provides checks. Adds 58 locations to the pool.
+    Glitching enemies provides checks. Adds 59 locations to the pool.
     """
 
 
