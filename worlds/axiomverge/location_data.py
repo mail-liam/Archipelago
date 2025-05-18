@@ -151,7 +151,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegion.GRAPPLE_CLIFFS, AVRegion.LOWER_E_KUR_MAH, conditions.has_red_coat, False),
 
     (AVRegion.MOUNTAIN_BASE, AVRegion.MOUNTAIN_TOP, conditions.kur_mountain_base_top_access, False),
-    (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_BASE, conditions.always_accessible, False),
+    (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_BASE, lambda s, c: conditions.any_coat(s, c) or conditions.any_height(s, c), False),
     (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_PEAK, conditions.kur_mountain_top_peak_access, False),
     (AVRegion.MOUNTAIN_PEAK, AVRegion.MOUNTAIN_TOP, conditions.always_accessible, False),
 
