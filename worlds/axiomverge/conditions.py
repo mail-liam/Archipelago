@@ -151,7 +151,7 @@ def swing_clip(state: CollectionState, context: LogicContext):
 
 # Specific location checks, that are here mainly to avoid complexity in the data structure
 def wheelchair_room_access(s: CollectionState, c: LogicContext):
-    return can_displacement_warp(s, c) or has_drone_tele(s, c))and any_coat(s, c)
+    return can_displacement_warp(s, c) or has_drone_tele(s, c) and any_coat(s, c)
 
 
 def west_caves_pool_access(s: CollectionState, c: LogicContext):
