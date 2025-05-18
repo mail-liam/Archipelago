@@ -21,6 +21,7 @@ class StartLocation(Choice):
     option_elsenova = 1
     option_purple_absu = 2
     option_lower_kur = 3
+    option_kur_peak = 4
     default = 0
 
 # Item Options

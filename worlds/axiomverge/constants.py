@@ -152,4 +152,5 @@ START_OPTION_MAP = [
     AVRegion.ELSENOVA,
     AVRegion.EAST_ABSU,
     AVRegion.LOWER_CAVES,
+    AVRegion.MOUNTAIN_PEAK,
 ]

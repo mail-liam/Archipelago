@@ -17,3 +17,9 @@ class TestLowerKurStart(AVTestBase):
     options = {
         "start_location": 3,
     }
+
+
+class TestKurPeakStart(AVTestBase):
+    options = {
+        "start_location": 4,
+    }
