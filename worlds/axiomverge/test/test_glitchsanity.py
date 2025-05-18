@@ -13,7 +13,7 @@ class TestGlitchsanityDisabled(AVTestBase):
             self.can_reach_location("Glitch a Furglot")
 
         with self.assertRaises(KeyError):
-            self.can_reach_location("Glitch a Artichoker")
+            self.can_reach_location("Glitch an Artichoker")
 
 
 class TestGlitchsanityEnabled(AVTestBase):
@@ -24,4 +24,4 @@ class TestGlitchsanityEnabled(AVTestBase):
     def test_glitchsanity_location_present(self):
         self.collect_all_but([])
         self.assertTrue(self.can_reach_location("Glitch a Furglot"))
-        self.assertTrue(self.can_reach_location("Glitch a Artichoker"))
+        self.assertTrue(self.can_reach_location("Glitch an Artichoker"))
