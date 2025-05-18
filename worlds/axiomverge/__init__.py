@@ -1,7 +1,7 @@
 from worlds.AutoWorld import WebWorld, World
 from BaseClasses import ItemClassification
 
-from .constants import AVArea
+from .constants import AVArea, START_OPTION_MAP
 from .creature_data import creature_data
 from .item_data import item_data, ITEM_NAME_TO_ID
 from .items import AVItem, item_groups
@@ -147,11 +147,8 @@ class AxiomVergeWorld(World):
 
 
     def interpret_slot_data(self, slot_data):
-        if (
-            hasattr(self.multiworld,"re_gen_passthrough")
-            and "Axiom Verge" in self.multiworld.re_gen_passthrough
-        ):
-            return None
+        menu = self.get_region("Menu")
+        menu.exits.clear()
+        start_region = self.get_region(START_OPTION_MAP[slot_data["start_option"]])
 
-        self.options.start_location = slot_data["start_option"]
-        return True  # UT needs to regen for start_location
+        menu.connect(start_region)
