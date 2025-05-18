@@ -132,7 +132,7 @@ class AxiomVergeWorld(World):
         av_itempool.extend(self.create_item("Size Node") for _ in range(4))
 
         if self.options.glitchsanity:
-            av_itempool.extend(self.create_filler() for _ in range(58))
+            av_itempool.extend(self.create_filler() for _ in range(59))
 
         self.multiworld.itempool.extend(av_itempool)
 
