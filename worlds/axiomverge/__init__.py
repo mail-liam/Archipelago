@@ -149,10 +149,9 @@ class AxiomVergeWorld(World):
     def interpret_slot_data(self, slot_data):
         if (
             hasattr(self.multiworld,"re_gen_passthrough")
-            and isinstance(self.multiworld.re_gen_passthrough, dict) \
             and "Axiom Verge" in self.multiworld.re_gen_passthrough
         ):
             return None
 
-        self.options.start_location = slot_data["start_location"]
-        return slot_data
+        self.options.start_location = slot_data["start_option"]
+        return True  # UT needs to regen for start_location
