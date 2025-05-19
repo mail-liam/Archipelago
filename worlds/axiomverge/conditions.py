@@ -170,12 +170,8 @@ def west_caves_pool_access(s: CollectionState, c: LogicContext):
 def dingergisbar_access(s: CollectionState, c: LogicContext):
     return (
         has_passcode(s, c) and (
-            has_red_coat(s, c) and (has_grapple(s, c) or has_drone_tele(s, c))
-            or has_glitch_2(s, c) and has_drone_tele(s, c) and (
-                has_drone_launch(s, c) or c.flight_enabled or (
-                    has_trenchcoat(s, c) and (has_grapple(s, c) or c.brown_rocket_jump_enabled and has_high_jump(s, c))
-                )
-            )
+            (has_red_coat(s, c) and (has_grapple(s, c) or has_drone_tele(s, c)))
+            or (c.obscure_skips and has_glitch_2(s, c) and has_drone_tele(s, c) and has_trenchcoat(s, c) and roof_grapple_clip(s, c))
         )
     )
 
