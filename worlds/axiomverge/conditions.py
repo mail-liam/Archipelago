@@ -121,6 +121,10 @@ def has_power_nodes(state: CollectionState, context: LogicContext):
     return not context.require_nodes or state.has("Power Node", context.player, count=3)
 
 
+def has_ranged_weapon(state: CollectionState, context: LogicContext):
+    return state.has_any(RANGED_WEAPONS, context.player)
+
+
 def has_red_coat(state: CollectionState, context: LogicContext):
     return state.has("Red Coat", context.player) or state.has("Progressive Coat", context.player, count=3)
 
@@ -320,7 +324,7 @@ def zi_vanilla_exit(s: CollectionState, c: LogicContext):
 
 
 def furglot_tunnel_access(s: CollectionState, c: LogicContext):
-    return has_glitch_2(s, c) and any_height(s, c) or has_trenchcoat(s, c) and (any_glitch(s, c) or s.has_any(RANGED_WEAPONS, c.player))
+    return has_glitch_2(s, c) and any_height(s, c) or has_trenchcoat(s, c) and (any_glitch(s, c) or has_ranged_weapon(s, c))
 
 
 def zi_corridor_access(s: CollectionState, c: LogicContext):
