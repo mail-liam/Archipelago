@@ -326,8 +326,8 @@ def furglot_tunnel_access(s: CollectionState, c: LogicContext):
 
 
 def zi_corridor_access(s: CollectionState, c: LogicContext):
-    return has_health_nodes(s, c) and (
-        can_damage(s, c) or has_glitch_2(s, c) or has_trenchcoat(s, c)
+    return has_ranged_weapon(s, c) and (
+        s.has("Power Node", c.player) or has_glitch_2(s, c) or has_trenchcoat(s, c)
     )
 
 
