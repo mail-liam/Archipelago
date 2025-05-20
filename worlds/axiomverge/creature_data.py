@@ -258,7 +258,16 @@ creature_data: tuple[AVGlitchLocationData] = (
         ),
     ),
     AVGlitchLocationData(167, "Spungus Spore", conditions.any_glitch, AVRegion.EAST_ABSU, None),
-    AVGlitchLocationData(168, "Goolumn", conditions.has_glitch_2, AVRegion.ZI_CORRIDOR, None),
+    AVGlitchLocationData(
+        168,
+        "Goolumn",
+        conditions.has_glitch_2,
+        None,
+        (
+            (AVRegion.LOWER_ZI, conditions.always_accessible),
+            (AVRegion.EAST_ZI, conditions.always_accessible),
+        ),
+    ),
     AVGlitchLocationData(
         169,
         "Hoverling",
