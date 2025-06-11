@@ -86,6 +86,7 @@ class AxiomVergeWorld(World):
 
     def create_items(self):
         options = self.options
+        available_locations = len(self.multiworld.get_unfilled_locations(self.player))
         av_itempool = [self.create_item(item.name) for item in item_data.values() if item.is_default]
 
         if options.progressive_address_disruptor:
@@ -113,6 +114,9 @@ class AxiomVergeWorld(World):
             av_itempool.append(self.create_item("Remote Drone"))
             av_itempool.append(self.create_item("Enhanced Drone Launch"))
 
+        if options.secret_world_weapons:
+            av_itempool.extend(self.create_item(item) for item in ("Fat Beam", "Heat Seeker", "Scissor Beam"))
+
         # Create only 5 "progressive nodes", for rules/balance purposes
         for i in range(10):
             item = self.create_item("Health Node")
@@ -131,8 +135,8 @@ class AxiomVergeWorld(World):
         av_itempool.extend(self.create_item("Range Node") for _ in range(4))
         av_itempool.extend(self.create_item("Size Node") for _ in range(4))
 
-        if self.options.glitchsanity:
-            av_itempool.extend(self.create_filler() for _ in range(59))
+        filler_locations = available_locations - len(av_itempool)
+        av_itempool.extend(self.create_filler() for _ in range(filler_locations))
 
         self.multiworld.itempool.extend(av_itempool)
 

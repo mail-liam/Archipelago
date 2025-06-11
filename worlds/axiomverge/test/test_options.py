@@ -77,3 +77,25 @@ class TestOptionProgDroneOn(AVTestBase):
 
         prog_items = self.get_items_by_name(("Progressive Drone",))
         self.assertEqual(len(prog_items), 2)
+
+
+class TestOptionShuffleSecretWorldWeaponsEnabled(AVTestBase):
+    options = {
+        "secret_world_weapons": 1,
+    }
+
+    def test_secret_weapons_in_pool(self):
+        items = self.get_items_by_name(("Heat Seeker", "Fat Beam", "Scissor Beam"))
+
+        self.assertEqual(len(items), 3)
+
+
+class TestOptionShuffleSecretWorldWeaponsDisabled(AVTestBase):
+    options = {
+        "secret_world_weapons": 0,
+    }
+
+    def test_secret_weapons_not_in_pool(self):
+        items = self.get_items_by_name(("Heat Seeker", "Fat Beam", "Scissor Beam"))
+
+        self.assertListEqual(items, [])
