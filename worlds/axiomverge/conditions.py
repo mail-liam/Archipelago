@@ -224,10 +224,12 @@ def xedur_access(s: CollectionState, c: LogicContext):
 def laboratory_access(s: CollectionState, c: LogicContext):
     return (
         has_drone_tele(s, c) and has_passcode(s, c)
-        or has_red_coat(s, c)
-        or can_drill(s, c) and (has_grapple(s, c) or extra_brown_height(s, c))
-    ) and (has_fat_beam(s, c) and c.obscure_skips or has_passcode(s, c))
-
+        or has_red_coat(s, c) and (has_fat_beam(s, c) or has_passcode(s, c))
+        or can_drill(s, c) and (
+            has_grapple(s, c) and (has_fat_beam(s, c) and c.obscure_skips or has_passcode(s, c))
+            or extra_brown_height(s, c) and (has_fat_beam(s, c) or has_passcode(s, c))
+        )
+    )
 
 
 def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
