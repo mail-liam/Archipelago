@@ -113,18 +113,18 @@ class AxiomVergeWorld(World):
             av_itempool.append(self.create_item("Remote Drone"))
             av_itempool.append(self.create_item("Enhanced Drone Launch"))
 
-        # Create some progressive nodes, for rules/balance purposes
+        # Create only 5 "progressive nodes", for rules/balance purposes
         for i in range(10):
             item = self.create_item("Health Node")
-            if self.context.require_nodes and i in {0, 1, 2}:
-                item.classification = ItemClassification.progression
+            if self.context.require_nodes and i > 4:
+                item.classification = ItemClassification.useful
             av_itempool.append(item)
         av_itempool.extend(self.create_item("Health Node Fragment") for _ in range(30))
 
         for i in range(8):
             item = self.create_item("Power Node")
-            if self.context.require_nodes and i in {0, 1, 2}:
-                item.classification = ItemClassification.progression
+            if self.context.require_nodes and i > 4:
+                item.classification = ItemClassification.useful
             av_itempool.append(item)
         av_itempool.extend(self.create_item("Power Node Fragment") for _ in range(30))
 
