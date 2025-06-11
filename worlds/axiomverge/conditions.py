@@ -64,7 +64,7 @@ def can_fly(state: CollectionState, context: LogicContext):
 
 
 def can_pierce_wall(state: CollectionState, context: LogicContext):
-    return state.has_any(("Kilver", "Reverse Slicer", "FlameThrower", "Fat Beam"), context.player)
+    return state.has_any(("Kilver", "Distortion Field", "Reverse Slicer", "FlameThrower", "Fat Beam"), context.player)
 
 
 def extra_brown_height(state: CollectionState, context: LogicContext):
