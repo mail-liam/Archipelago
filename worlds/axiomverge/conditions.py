@@ -46,7 +46,7 @@ def can_damage_boss(state: CollectionState, context: LogicContext):
 
 
 def can_damage(state: CollectionState, context: LogicContext):
-    return can_damage_boss(state, context) or has_drone(state, context)
+    return can_damage_boss(state, context) or has_drone(state, context) or has_grapple(state, context)
 
 
 def can_displacement_warp(state: CollectionState, context: LogicContext):
