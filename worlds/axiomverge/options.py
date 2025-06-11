@@ -45,7 +45,7 @@ class ProgressiveDrone(DefaultOnToggle):
 
 
 class ShuffleSecretWorldWeapons(DefaultOnToggle):
-    """Randomize Secret world weapons into the item pool. Currently not implemented."""
+    """Randomize Secret world weapons into the item pool."""
 
 
 # Logic Options
