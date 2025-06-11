@@ -8,5 +8,5 @@ class TestAccessCases(AVTestBase):
         location = "Zi - False Ceiling Alcove"
         self.assertFalse(self.can_reach_location(location))
 
-        self.collect_by_name(("Kilver", "Field Disruptor", "Health Node"))
+        self.collect_by_name(("Axiom Disruptor", "Field Disruptor", "Power Node"))
         self.assertTrue(self.can_reach_location(location))
