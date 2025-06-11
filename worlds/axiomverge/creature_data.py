@@ -180,7 +180,7 @@ creature_data: tuple[AVGlitchLocationData] = (
         conditions.any_glitch,
         None,
         (
-            (AVRegion.GAUNTLET_ENTRANCE, conditions.always_accessible),
+            (AVRegion.GAUNTLET_ENTRANCE, conditions.any_coat),
             (AVRegion.GIR_TAB_LOWER_ENTRANCE, conditions.always_accessible),
             (AVRegion.GIR_TAB_UPPER_ENTRANCE, conditions.always_accessible),
         ),
