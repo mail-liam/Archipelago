@@ -147,7 +147,6 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegion.GIR_TAB_UPPER_ENTRANCE, AVRegion.ABOVE_GIR_TAB, conditions.gir_tab_upper_above_access, False),
     (AVRegion.ABOVE_GIR_TAB, AVRegion.GIR_TAB_UPPER_ENTRANCE, conditions.gir_tab_above_upper_access, False),
     (AVRegion.ABOVE_GIR_TAB, AVRegion.GRAPPLE_CLIFFS, conditions.gir_tab_grapple_cliffs_access, False),
-    (AVRegion.GRAPPLE_CLIFFS, AVRegion.ABOVE_GIR_TAB, conditions.can_damage, False),
     (AVRegion.GRAPPLE_CLIFFS, AVRegion.LOWER_E_KUR_MAH, conditions.has_red_coat, False),
 
     (AVRegion.MOUNTAIN_BASE, AVRegion.MOUNTAIN_TOP, conditions.kur_mountain_base_top_access, False),
@@ -172,8 +171,8 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegion.UKKIN_NA_BASE, AVRegion.VISION, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_high_jump(s, c), False),
     (AVRegion.UKKIN_NA_BASE, AVRegion.OPHELIA, conditions.ophelia_ascent_access, True),
     (AVRegion.OPHELIA, AVRegion.BLURST, conditions.has_trenchcoat, False),
-    (AVRegion.OPHELIA, AVRegion.SOUTH_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.swing_clip(s, c), False),
-    (AVRegion.SOUTH_UKKIN_NA_EXIT, AVRegion.OPHELIA, lambda s, c: conditions.any_coat(s, c) or conditions.swing_clip(s, c), False),
+    (AVRegion.UKKIN_NA_BASE, AVRegion.SOUTH_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.swing_clip(s, c), False),
+    (AVRegion.SOUTH_UKKIN_NA_EXIT, AVRegion.UKKIN_NA_BASE, lambda s, c: conditions.any_coat(s, c) or conditions.swing_clip(s, c), False),
     (AVRegion.SOUTH_UKKIN_NA_EXIT, AVRegion.EAST_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.swing_clip(s, c), True),
     (AVRegion.EAST_UKKIN_NA_EXIT, AVRegion.LOWER_EDIN_LEFT, conditions.always_accessible, True),
     (AVRegion.SOUTH_UKKIN_NA_EXIT, AVRegion.INDI, conditions.ukkin_na_indi_access, False),
