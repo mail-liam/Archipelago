@@ -359,7 +359,7 @@ location_data: tuple[AVLocationData] = (
 
     AVLocationData(75, AVArea.KUR, 'Cliffs Behind Gir-Tab Near Crumble Floor', AVRegion.GRAPPLE_CLIFFS, conditions.grapple_cliffs_false_floor_access),
     AVLocationData(76, AVArea.KUR, 'Cliffs Behind Gir-Tab Shrine', AVRegion.GRAPPLE_CLIFFS, conditions.grapple_cliffs_shrines_access),
-    AVLocationData(77, AVArea.KUR, 'Cliffs Behind Gir-Tab Above Shrine', AVRegion.GRAPPLE_CLIFFS, conditions.grapple_cliffs_shrines_access),
+    AVLocationData(77, AVArea.KUR, 'Cliffs Behind Gir-Tab Above Shrine', AVRegion.GRAPPLE_CLIFFS, conditions.grapple_cliffs_shrines_upper_access),
 
     AVLocationData(78, AVArea.INDI, 'Path to Eribu', AVRegion.WEST_INDI, conditions.has_drone),
     AVLocationData(79, AVArea.INDI, 'Outside Save', AVRegion.INDI, conditions.has_trenchcoat),

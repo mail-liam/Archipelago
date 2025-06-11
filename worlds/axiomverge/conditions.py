@@ -530,16 +530,34 @@ def gir_tab_grapple_cliffs_access(s: CollectionState, c: LogicContext):
 
 
 def grapple_cliffs_false_floor_access(s: CollectionState, c: LogicContext):
-    return non_grapple_height(s, c) and (
-        has_red_coat(s, c) and c.red_rocket_jump_enabled
-        or has_grapple(s, c)
-        or has_drone(s, c)
+    return (
+        non_grapple_height(s, c) and (has_red_coat(s, c) and c.red_rocket_jump_enabled or has_drone(s, c))
+        or has_grapple(s, c) and (
+            has_drone_tele(s, c) or has_trenchcoat(s, c) or has_high_jump(s, c) and (
+                can_pierce_wall(s, c) or has_drone(s, c) or any_coat(s, c) or any_wall_grapple_clip(s, c)
+            )
+        )
     )
 
 
 def grapple_cliffs_shrines_access(s: CollectionState, c: LogicContext):
     return (
-        has_trenchcoat(s, c) or has_drone_tele(s, c) or has_drone(s, c) and has_glitch_2(s, c) and any_wall_grapple_clip(s, c)
+        has_trenchcoat(s, c)
+        or has_drone_tele(s, c)
+        or has_grapple(s, c) and (any_coat(s, c) or any_wall_grapple_clip(s, c)) and can_drill(s, c) and has_glitch_2(s, c)
+        or has_high_jump(s, c) and has_grapple(s, c) and (any_coat(s, c) or any_wall_grapple_clip)
+    )
+
+
+def grapple_cliffs_shrines_upper_access(s: CollectionState, c: LogicContext):
+    return (
+        has_trenchcoat(s, c)
+        or has_drone_tele(s, c)
+        or has_grapple(s, c) and (any_coat(s, c) or any_wall_grapple_clip(s, c)) and has_drone(s, c) and has_glitch_2(s, c)
+        or has_high_jump(s, c) and (
+            has_drone(s, c)
+            or has_grapple(s, c) and (any_coat(s, c) or any_wall_grapple_clip)
+        )
     )
 
 
