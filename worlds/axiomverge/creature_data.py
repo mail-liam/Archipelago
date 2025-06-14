@@ -236,11 +236,11 @@ creature_data: tuple[AVGlitchLocationData] = (
         ),
     ),
     AVGlitchLocationData(163, "Blite", conditions.any_glitch, AVRegion.LOWER_CAVES, None),
-    AVGlitchLocationData(164, "Artichoker", conditions.has_glitch_2, AVRegion.LOWER_E_KUR_MAH, None),
+    AVGlitchLocationData(164, "Artichoker", conditions.any_glitch, AVRegion.LOWER_E_KUR_MAH, None),
     AVGlitchLocationData(
         165,
         "Furglot",
-        conditions.has_glitch_2,
+        conditions.any_glitch,
         None,
         (
             (AVRegion.LOWER_ZI, conditions.furglot_tunnel_access),
