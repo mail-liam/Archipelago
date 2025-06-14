@@ -630,7 +630,7 @@ def kur_peak_ledge_access(s: CollectionState, c: LogicContext):
     return (
         can_fly(s, c)
         or has_drone_tele(s, c) and has_drone_launch(s, c)
-        or has_trenchcoat(s, c) and roof_grapple_clip(s, c) and has_drone(s, c)
+        or has_trenchcoat(s, c) and roof_grapple_clip(s, c) and (has_drone(s, c) or c.brown_rocket_jump_enabled)
         or has_red_coat(s, c) and roof_grapple_clip(s, c) and (
             has_drone(s, c) or has_high_jump(s, c)
         )
@@ -806,11 +806,11 @@ def edin_double_check_tunnel_access(s: CollectionState, c: LogicContext):
         has_trenchcoat(s, c) and (
             can_fly(s, c)
             or has_drone_tele(s, c) and has_drone_launch(s, c)
-            or has_high_jump(s, c) and has_grapple(s, c)
+            or has_high_jump(s, c) and has_grapple(s, c) and (roof_grapple_clip(s, c) or has_drone_tele(s, c))
             or has_glitch_bomb(s, c) and (
                 has_grapple(s, c) or has_high_jump(s, c) or has_drone_tele(s, c)
             )
-        ) or has_red_coat(s, c) and has_grapple(s, c) and (
+        ) or has_red_coat(s, c) and roof_grapple_clip(s, c) and (
             has_high_jump(s, c) or c.red_rocket_jump_enabled
         )
     )
