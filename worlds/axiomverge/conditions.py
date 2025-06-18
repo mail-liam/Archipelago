@@ -526,7 +526,10 @@ def gir_tab_above_upper_access(s: CollectionState, c: LogicContext):
 
 
 def gir_tab_grapple_cliffs_access(s: CollectionState, c: LogicContext):
-    return any_coat(s, c) and can_damage(s, c) or has_fat_beam(s, c)
+    return (
+        (any_coat(s, c) and can_damage(s, c) or has_fat_beam(s, c))
+        and (has_trenchcoat(s, c) or has_high_jump(s, c) or has_grapple(s, c))
+    )
 
 
 def grapple_cliffs_false_floor_access(s: CollectionState, c: LogicContext):
