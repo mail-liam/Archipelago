@@ -333,4 +333,3 @@ creature_data: tuple[AVGlitchLocationData] = (
     AVGlitchLocationData(182, "Boulder", conditions.any_glitch, AVRegion.MOUNTAIN_BASE, None),
     AVGlitchLocationData(183, "Ukhu Spawn", conditions.any_glitch, AVRegion.UKHU, None),
 )
-

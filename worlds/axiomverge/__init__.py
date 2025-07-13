@@ -7,7 +7,7 @@ from .item_data import item_data, ITEM_NAME_TO_ID
 from .items import AVItem, item_groups
 from .location_data import location_data
 from .options import AxiomVergeOptions, AllowRocketJumps
-from .regions import create_regions, create_glitchsanity_regions
+from .regions import create_regions, create_glitchsanity_regions, create_boss_items
 from .types import LogicContext
 
 LOCATION_NAME_TO_ID = {
@@ -65,7 +65,7 @@ class AxiomVergeWorld(World):
             start_location=options.start_location,
             obscure_skips=bool(options.allow_obscure_skips),
             require_nodes=bool(options.require_nodes),
-            wall_grapple_clip_difficulty=self.options.allow_wall_grapple_clips,
+            wall_grapple_clip_difficulty=options.allow_wall_grapple_clips,
             player=self.player,
         )
 
@@ -75,6 +75,9 @@ class AxiomVergeWorld(World):
 
         if self.options.glitchsanity:
             create_glitchsanity_regions(self.context, self.multiworld)
+
+        if self.options.goal.value == 1:  # Boss Rush
+            create_boss_items(self.context, self.multiworld)
 
 
     def create_item(self, item_name):
@@ -143,7 +146,16 @@ class AxiomVergeWorld(World):
 
     def set_rules(self):
         # TODO: Other goals
-        self.multiworld.completion_condition[self.player] = lambda state: state.has("Athetos Defeated", self.player)
+        if self.options.goal.value == 0:
+            self.multiworld.completion_condition[self.player] = lambda state: state.has("Athetos Defeated", self.player)
+        elif self.options.goal.value == 1:
+            self.multiworld.completion_condition[self.player] = lambda state: state.has_all(
+                (
+                    "Xedur Defeated", "Telal Defeated", "Uruku Defeated", "Gir-Tab Defeated",
+                    "Clone Defeated", "Ukhu Defeated", "Sentinel Defeated", "Xedur Hul Defeated", "Athetos Defeated",
+                ),
+                self.player,
+            )
 
 
     def fill_slot_data(self):

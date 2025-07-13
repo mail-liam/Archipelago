@@ -4,6 +4,7 @@ import typing as t
 from BaseClasses import ItemClassification, Location, MultiWorld, Region
 
 from . import conditions
+from .boss_data import BOSS_DATA
 from .constants import AVRegion, AVGlitchRegion, START_OPTION_MAP
 from .creature_data import creature_data
 from .location_data import entrance_data, location_data
@@ -46,10 +47,7 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
         region.locations.append(location)
 
     # TODO: Other goals
-    athetos_region = multiworld.get_region(AVRegion.ATHETOS, context.player)
-    athetos = AVLocation(context.player, 'Athetos', None, athetos_region)
-    athetos.place_locked_item(AVItem("Athetos Defeated", ItemClassification.progression, None, context.player))
-    athetos_region.locations.append(athetos)
+    create_boss_item(context, multiworld, "Athetos", AVRegion.ATHETOS)
 
 
 def create_glitchsanity_regions(context: LogicContext, multiworld: MultiWorld):
@@ -88,3 +86,16 @@ def create_glitchsanity_regions(context: LogicContext, multiworld: MultiWorld):
             region = multiworld.get_region(region_name, context.player)
             access_rule = lambda state, func=condition_func: func(state, context)
             region.connect(enemy_region, rule=access_rule)
+
+
+def create_boss_item(context: LogicContext, multiworld: MultiWorld, boss_name: str, boss_region_name: str):
+    boss_region = multiworld.get_region(boss_region_name, context.player)
+    boss_location = AVLocation(context.player, boss_name, None, boss_region)
+    boss_location.place_locked_item(AVItem(f"{boss_name} Defeated", ItemClassification.progression, None, context.player))
+    boss_location.access_rule = lambda state: conditions.can_damage_boss(state, context)
+    boss_region.locations.append(boss_location)
+
+
+def create_boss_items(context: LogicContext, multiworld: MultiWorld):
+    for boss_name, boss_region in BOSS_DATA:
+        create_boss_item(context, multiworld, boss_name, boss_region)

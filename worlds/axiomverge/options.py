@@ -6,7 +6,7 @@ class Goal(Choice):
     """Victory condition."""
     display_name = "Goal"
     option_athetos = 0
-    # option_boss_rush = 1
+    option_boss_rush = 1
     # option_gun_hunt = 2
     default = 0
 
