@@ -147,12 +147,15 @@ class AxiomVergeWorld(World):
 
 
     def fill_slot_data(self):
-        return {"goal": self.options.goal.value, "start_option": self.options.start_location.value }
+        options_dict = self.options.as_dict("goal", "start_location")
+        # Keep deprecated slot option for 2 major releases
+        options_dict["start_option"] = self.options.start_location.value
+        return options_dict
 
 
     def interpret_slot_data(self, slot_data):
         menu = self.get_region("Menu")
         menu.exits.clear()
-        start_region = self.get_region(START_OPTION_MAP[slot_data["start_option"]])
+        start_region = self.get_region(START_OPTION_MAP[slot_data["start_location"]])
 
         menu.connect(start_region)
