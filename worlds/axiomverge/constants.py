@@ -111,7 +111,6 @@ class AVRegion(StrEnum):
     WEST_UKKIN_NA_EXIT = "West Ukkin-Na Exit"
     UKKIN_NA_BASE = "Ukkin-Na Base"
     SOUTH_UKKIN_NA_EXIT = "South Ukkin-Na Exit"
-    VISION = "Vision"
     OPHELIA = "Ophelia"
     EAST_UKKIN_NA_EXIT = "East Ukkin-Na Exit"
 

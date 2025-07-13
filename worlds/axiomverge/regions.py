@@ -45,12 +45,6 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
         location.access_rule = lambda state, data=data: data.access_rule(state, context)
         region.locations.append(location)
 
-    # Always place Vision Defeated item, regardless of goal
-    vision_region = multiworld.get_region(AVRegion.VISION, context.player)
-    vision = AVLocation(context.player, 'Vision', None, vision_region)
-    vision.place_locked_item(AVItem("Vision Defeated", ItemClassification.progression, None, context.player))
-    vision_region.locations.append(vision)
-
     # TODO: Other goals
     athetos_region = multiworld.get_region(AVRegion.ATHETOS, context.player)
     athetos = AVLocation(context.player, 'Athetos', None, athetos_region)

@@ -644,12 +644,6 @@ def kur_peak_odyssey_access(s: CollectionState, c: LogicContext):
     return has_drone(s, c) and (has_power_nodes(s, c) or has_drone_tele(s, c))
 
 
-def ophelia_ascent_access(s: CollectionState, c: LogicContext):
-    return s.has("Vision Defeated", c.player) and (
-        has_trenchcoat(s, c) or has_high_jump(s, c)
-    )
-
-
 def ukkin_na_secret_floor_access(s: CollectionState, c: LogicContext):
     return has_red_coat(s, c) or has_trenchcoat(s, c) and (
         has_fat_beam(s, c)
