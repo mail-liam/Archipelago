@@ -667,12 +667,7 @@ def ophelia_ledge_access(s: CollectionState, c: LogicContext):
 
 
 def ukkin_na_above_vision_chamber_access(s: CollectionState, c: LogicContext):
-    return (
-        can_fly(s, c)
-        or has_red_coat(s, c) and (has_drone_launch(s, c) or has_grapple(s, c) and has_drone(s, c)) and (
-            has_high_jump(s, c) or c.red_rocket_jump_enabled
-        )
-    )
+    return has_drone(s, c) and s.has(("Power Node",), c.player)
 
 
 def ukkin_na_indi_access(s: CollectionState, c: LogicContext):
