@@ -142,17 +142,18 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegion.GIR_TAB_LOWER_ENTRANCE, AVRegion.MOUNTAIN_BASE, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_glitch_2(s, c), False),
     (AVRegion.GIR_TAB_LOWER_ENTRANCE, AVRegion.ABOVE_GIR_TAB, conditions.gir_tab_lower_above_access, False),
     (AVRegion.ABOVE_GIR_TAB, AVRegion.GIR_TAB_LOWER_ENTRANCE, conditions.always_accessible, False),
-    (AVRegion.MOUNTAIN_BASE, AVRegion.GIR_TAB_UPPER_ENTRANCE, conditions.gir_tab_upper_entrance_access, False),
+    (AVRegion.MOUNTAIN_MID, AVRegion.GIR_TAB_UPPER_ENTRANCE, conditions.gir_tab_upper_entrance_access, False),
     (AVRegion.GIR_TAB_UPPER_ENTRANCE, AVRegion.MOUNTAIN_BASE, lambda s, c: conditions.can_drill(s, c) and conditions.any_height(s, c), False),
     (AVRegion.GIR_TAB_UPPER_ENTRANCE, AVRegion.ABOVE_GIR_TAB, conditions.gir_tab_upper_above_access, False),
     (AVRegion.ABOVE_GIR_TAB, AVRegion.GIR_TAB_UPPER_ENTRANCE, conditions.gir_tab_above_upper_access, False),
     (AVRegion.ABOVE_GIR_TAB, AVRegion.GRAPPLE_CLIFFS, conditions.gir_tab_grapple_cliffs_access, False),
     (AVRegion.ABOVE_GIR_TAB, AVRegion.LOWER_E_KUR_MAH, conditions.has_red_coat, False),
 
-    (AVRegion.MOUNTAIN_BASE, AVRegion.MOUNTAIN_TOP, conditions.kur_mountain_base_top_access, False),
-    (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_BASE, lambda s, c: conditions.any_coat(s, c) or conditions.any_height(s, c), False),
+    (AVRegion.MOUNTAIN_BASE, AVRegion.MOUNTAIN_MID, conditions.kur_mountain_base_mid_access, False),
+    (AVRegion.MOUNTAIN_MID, AVRegion.MOUNTAIN_TOP, conditions.kur_mountain_mid_top_access, False),
+    (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_BASE, conditions.always_accessible, False),
     (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_PEAK, conditions.kur_mountain_top_peak_access, False),
-    (AVRegion.MOUNTAIN_PEAK, AVRegion.MOUNTAIN_TOP, conditions.always_accessible, False),
+    (AVRegion.MOUNTAIN_PEAK, AVRegion.MOUNTAIN_TOP, lambda s, c: conditions.any_coat(s, c) or conditions.any_height(s, c), False),
 
     (AVRegion.MOUNTAIN_PEAK, AVRegion.UPPER_E_KUR_MAH, conditions.kur_upper_e_kur_mah_access, False),
     (AVRegion.MOUNTAIN_PEAK, AVRegion.DRONE_ODYSSEY, conditions.kur_peak_odyssey_access, False),
@@ -337,9 +338,10 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(61, AVArea.KUR, 'Main Shaft', AVRegion.UPPER_CAVES, conditions.always_accessible),
 
     AVLocationData(62, AVArea.KUR, 'Drone Side Quest', AVRegion.MOUNTAIN_BASE, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),
-    AVLocationData(63, AVArea.KUR, 'Above Twin Save Rooms', AVRegion.MOUNTAIN_BASE, conditions.kur_above_twin_saves_access),
-    AVLocationData(64, AVArea.KUR, 'Watch for Rolling Rocks', AVRegion.MOUNTAIN_BASE, conditions.kur_floating_ledge_access),
-    AVLocationData(65, AVArea.KUR, 'Inside Cliff', AVRegion.MOUNTAIN_BASE, conditions.has_red_coat),
+
+    AVLocationData(63, AVArea.KUR, 'Above Twin Save Rooms', AVRegion.MOUNTAIN_MID, conditions.kur_above_twin_saves_access),
+    AVLocationData(64, AVArea.KUR, 'Watch for Rolling Rocks', AVRegion.MOUNTAIN_MID, conditions.kur_floating_ledge_access),
+    AVLocationData(65, AVArea.KUR, 'Inside Cliff', AVRegion.MOUNTAIN_MID, conditions.has_red_coat),
 
     AVLocationData(67, AVArea.KUR, 'Drone Odyssey Secret', AVRegion.DRONE_ODYSSEY, conditions.always_accessible),
     AVLocationData(68, AVArea.KUR, 'Drone Odyssey Reward', AVRegion.DRONE_ODYSSEY, lambda s, c: conditions.has_power_nodes(s, c, 3)),

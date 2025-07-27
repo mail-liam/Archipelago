@@ -451,12 +451,8 @@ def kur_floating_ledge_access(s: CollectionState, c: LogicContext):
 def kur_above_twin_saves_access(s: CollectionState, c: LogicContext):
     return (
         has_trenchcoat(s, c)
-        or any_coat(s, c) and (
-            has_drone_tele(s, c)
-            or has_high_jump(s, c) and (
-                has_drone(s, c) or has_grapple(s, c)
-            )
-        )
+        or swing_clip(s, c)
+        or any_coat(s, c) and any_height(s, c)
     )
 
 
@@ -502,13 +498,12 @@ def gir_tab_lower_drone_tunnel_access(s: CollectionState, c: LogicContext):
 def gir_tab_upper_entrance_access(s: CollectionState, c: LogicContext):
     return (
         can_drill(s, c) and (
-            has_trenchcoat(s, c) or (
-                any_coat(s, c) and (
-                    has_drone_tele(s, c) or has_high_jump(s, c) and has_grapple(s, c)
-                )
+            swing_clip(s, c)
+            or has_trenchcoat(s, c)
+            or any_coat(s, c) and (
+                has_drone_tele(s, c) or has_high_jump(s, c) and has_grapple(s, c)
             )
         )
-
     )
 
 
@@ -564,7 +559,11 @@ def grapple_cliffs_shrines_upper_access(s: CollectionState, c: LogicContext):
     )
 
 
-def kur_mountain_base_top_access(s: CollectionState, c: LogicContext):
+def kur_mountain_base_mid_access(s: CollectionState, c: LogicContext):
+    return non_grapple_height(s, c) or c.obscure_skips and has_grapple(s, c)
+
+
+def kur_mountain_mid_top_access(s: CollectionState, c: LogicContext):
     return (
         has_drone_tele(s, c)
         or has_grapple(s, c) and (

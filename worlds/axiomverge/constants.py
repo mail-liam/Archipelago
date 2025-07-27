@@ -89,6 +89,7 @@ class AVRegion(StrEnum):
     GAUNTLET_REWARD = "Gauntlet Reward"
 
     MOUNTAIN_BASE = "Mountain Base"
+    MOUNTAIN_MID = "Mountain Mid"
     MOUNTAIN_TOP = "Mountain Top"
     MOUNTAIN_PEAK = "Mountain Peak"
 
