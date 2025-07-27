@@ -52,6 +52,9 @@ class AxiomVergeWorld(World):
     item_name_groups = item_groups
     location_name_groups = build_location_groups()
 
+    # Versioning for the client
+    version = 0.3
+
 
     def generate_early(self):
         options = self.options
@@ -159,9 +162,10 @@ class AxiomVergeWorld(World):
 
 
     def fill_slot_data(self):
-        options_dict = self.options.as_dict("goal", "start_location")
+        options_dict = self.options.as_dict("goal", "start_location", "glitchsanity")
         # Keep deprecated slot option for 2 major releases
         options_dict["start_option"] = self.options.start_location.value
+        options_dict["version"] = self.version
         return options_dict
 
 
