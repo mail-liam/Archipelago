@@ -47,7 +47,7 @@ def create_regions(context: LogicContext, multiworld: MultiWorld):
         region.locations.append(location)
 
     # TODO: Other goals. Maybe a better access rule
-    create_boss_item(context, multiworld, "Athetos", AVRegion.ATHETOS, conditions.always_accessible)
+    create_boss_item(context, multiworld, "Athetos", AVRegion.ATHETOS, lambda s, c=context: conditions.always_accessible(s, c))
 
 
 def create_glitchsanity_regions(context: LogicContext, multiworld: MultiWorld):
@@ -92,7 +92,7 @@ def create_boss_item(context: LogicContext, multiworld: MultiWorld, boss_name: s
     boss_region = multiworld.get_region(boss_region_name, context.player)
     boss_location = AVLocation(context.player, boss_name, None, boss_region)
     boss_location.place_locked_item(AVItem(f"{boss_name} Defeated", ItemClassification.progression, None, context.player))
-    boss_location.access_rule = boss_access_rule
+    boss_location.access_rule = lambda s, c=context: boss_access_rule(s, c)
     boss_region.locations.append(boss_location)
 
 

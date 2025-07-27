@@ -342,7 +342,7 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(65, AVArea.KUR, 'Inside Cliff', AVRegion.MOUNTAIN_BASE, conditions.has_red_coat),
 
     AVLocationData(67, AVArea.KUR, 'Drone Odyssey Secret', AVRegion.DRONE_ODYSSEY, conditions.always_accessible),
-    AVLocationData(68, AVArea.KUR, 'Drone Odyssey Reward', AVRegion.DRONE_ODYSSEY, conditions.always_accessible),
+    AVLocationData(68, AVArea.KUR, 'Drone Odyssey Reward', AVRegion.DRONE_ODYSSEY, lambda s, c: conditions.has_power_nodes(s, c, 3)),
 
     AVLocationData(66, AVArea.KUR, 'Shrine Before Drone Odyssey', AVRegion.MOUNTAIN_TOP, conditions.has_drone),
     AVLocationData(69, AVArea.KUR, 'Snowy Cliffs Ledge Upper', AVRegion.MOUNTAIN_TOP, conditions.kur_snowy_cliffs_ledge_upper_access),

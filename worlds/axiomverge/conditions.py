@@ -105,8 +105,8 @@ def has_grapple(state: CollectionState, context: LogicContext):
     return state.has("Grapple", context.player)
 
 
-def has_health_nodes(state: CollectionState, context: LogicContext):
-    return not context.require_nodes or state.has("Health Node", context.player, count=3)
+def has_health_nodes(state: CollectionState, context: LogicContext, num: int):
+    return not context.require_nodes or state.has("Health Node", context.player, count=num)
 
 
 def has_high_jump(state: CollectionState, context: LogicContext):
@@ -117,8 +117,8 @@ def has_passcode(state: CollectionState, context: LogicContext):
     return state.has("Passcode Tool", context.player)
 
 
-def has_power_nodes(state: CollectionState, context: LogicContext):
-    return not context.require_nodes or state.has("Power Node", context.player, count=3)
+def has_power_nodes(state: CollectionState, context: LogicContext, num: int):
+    return not context.require_nodes or state.has("Power Node", context.player, count=num)
 
 
 def has_ranged_weapon(state: CollectionState, context: LogicContext):
@@ -331,12 +331,12 @@ def furglot_tunnel_access(s: CollectionState, c: LogicContext):
 
 def zi_corridor_access(s: CollectionState, c: LogicContext):
     return has_ranged_weapon(s, c) and (
-        s.has("Power Node", c.player) or has_glitch_2(s, c) or has_trenchcoat(s, c)
+        has_power_nodes(s, c, 1) or has_glitch_2(s, c) or has_trenchcoat(s, c)
     )
 
 
 def zi_drone_tunnel_access(s: CollectionState, c: LogicContext):
-    return has_drone(s, c) and has_power_nodes(s, c)
+    return has_drone(s, c) and has_power_nodes(s, c, 2)
 
 
 def zi_indi_access(s: CollectionState, c: LogicContext):
@@ -422,7 +422,7 @@ def kur_gauntlet_entrance_access(s: CollectionState, c: LogicContext):
 def kur_gauntlet_roof_access(s: CollectionState, c: LogicContext):
     return (
         any_coat(s, c) and (
-            any_glitch(s, c) and has_health_nodes(s, c)
+            any_glitch(s, c) and has_health_nodes(s, c, 3)
             or has_high_jump(s, c) and has_drone_launch(s, c) and (
                 c.red_rocket_jump_enabled or has_drone_tele(s, c) and has_grapple(s, c)
             )
@@ -461,7 +461,7 @@ def kur_above_twin_saves_access(s: CollectionState, c: LogicContext):
 
 
 def can_kill_gir_tab(s: CollectionState, c: LogicContext):
-    return has_health_nodes(s, c) and has_power_nodes(s, c) and s.has_any(
+    return has_health_nodes(s, c, 2) and has_power_nodes(s, c, 2) and s.has_any(
         ("Hypo-Atomizer", "Fat Beam", "Inertial Pulse", "Nova", "Voranj", "Tethered Charge", "Flamethrower", "Reverse Slicer", "Scissor"),
         c.player,
     )
@@ -641,7 +641,7 @@ def kur_peak_ledge_access(s: CollectionState, c: LogicContext):
 
 
 def kur_peak_odyssey_access(s: CollectionState, c: LogicContext):
-    return has_drone(s, c) and (has_power_nodes(s, c) or has_drone_tele(s, c))
+    return has_drone(s, c) and (has_power_nodes(s, c, 1) or has_drone_tele(s, c))
 
 
 def ukkin_na_secret_floor_access(s: CollectionState, c: LogicContext):
@@ -667,7 +667,7 @@ def ophelia_ledge_access(s: CollectionState, c: LogicContext):
 
 
 def ukkin_na_above_vision_chamber_access(s: CollectionState, c: LogicContext):
-    return has_drone(s, c) and s.has(("Power Node",), c.player)
+    return has_drone(s, c) and has_power_nodes(s, c, 1)
 
 
 def ukkin_na_indi_access(s: CollectionState, c: LogicContext):
@@ -760,7 +760,7 @@ def ukhu_exit_access(s: CollectionState, c: LogicContext):
 
 def can_kill_ukhu(s: CollectionState, c: LogicContext):
     return (
-        has_trenchcoat(s, c) and has_health_nodes(s, c) and has_power_nodes(s, c)
+        has_trenchcoat(s, c) and has_health_nodes(s, c, 3) and has_power_nodes(s, c, 3)
         and s.has_any(
             ALL_WEAPONS - {"Multi-Disruptor", "Distortion Field", "Firewall", "Kilver", "Quantum Variegator"},
             c.player,
@@ -887,7 +887,7 @@ def mar_uru_access(s: CollectionState, c: LogicContext):
 
 
 def can_kill_sentinel(s: CollectionState, c: LogicContext):
-    return has_health_nodes(s, c) and has_power_nodes(s, c)
+    return has_health_nodes(s, c, 3) and has_power_nodes(s, c, 3)
 
 
 # NOTE: All Mar-Uru rules assume Red
