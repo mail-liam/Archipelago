@@ -84,6 +84,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
         False,
     ),
     (AVRegion.LOWER_ABSU, AVRegion.TELAL, lambda s, c: conditions.can_damage_boss(s, c) or conditions.any_coat(s, c), False),
+    (AVRegion.TELAL, AVRegion.LOWER_ABSU, conditions.absu_telal_backtrack, False),
     (AVRegion.LOWER_ABSU, AVRegion.LOWER_CORRIDOR, lambda s, c: conditions.can_drill(s, c) or conditions.has_trenchcoat(s, c), True),
     (AVRegion.LOWER_CORRIDOR, AVRegion.EAST_ABSU, conditions.lower_east_absu_access, False),
     (AVRegion.LOWER_CORRIDOR, AVRegion.EAST_ABSU_DRONE, conditions.has_drone_launch, False),

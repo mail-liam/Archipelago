@@ -305,6 +305,10 @@ def telal_east_absu_access(s: CollectionState, c: LogicContext):
     )
 
 
+def absu_telal_backtrack(s: CollectionState, c: LogicContext):
+    return any_glitch(s, c) and can_damage(s, c) and (any_coat(s, c) or has_fat_beam(s, c) or any_wall_grapple_clip(s, c))
+
+
 def east_absu_indi_tunnel_access(s: CollectionState, c: LogicContext):
     return (
         has_trenchcoat(s, c)
