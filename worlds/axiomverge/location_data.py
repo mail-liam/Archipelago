@@ -152,9 +152,9 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
 
     (AVRegion.MOUNTAIN_BASE, AVRegion.MOUNTAIN_MID, conditions.kur_mountain_base_mid_access, False),
     (AVRegion.MOUNTAIN_MID, AVRegion.MOUNTAIN_TOP, conditions.kur_mountain_mid_top_access, False),
-    (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_BASE, conditions.always_accessible, False),
+    (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_BASE, lambda s, c: conditions.any_coat(s, c) or conditions.any_height(s, c), False),
     (AVRegion.MOUNTAIN_TOP, AVRegion.MOUNTAIN_PEAK, conditions.kur_mountain_top_peak_access, False),
-    (AVRegion.MOUNTAIN_PEAK, AVRegion.MOUNTAIN_TOP, lambda s, c: conditions.any_coat(s, c) or conditions.any_height(s, c), False),
+    (AVRegion.MOUNTAIN_PEAK, AVRegion.MOUNTAIN_TOP, conditions.always_accessible, False),
 
     (AVRegion.MOUNTAIN_PEAK, AVRegion.UPPER_E_KUR_MAH, conditions.kur_upper_e_kur_mah_access, False),
     (AVRegion.MOUNTAIN_PEAK, AVRegion.DRONE_ODYSSEY, conditions.kur_peak_odyssey_access, False),
