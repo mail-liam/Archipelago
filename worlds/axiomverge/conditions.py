@@ -726,7 +726,7 @@ def clone_rooftop_ledge_access(s: CollectionState, c: LogicContext):
         or has_trenchcoat(s, c) and has_grapple(s, c) and (
             has_drone(s, c) or roof_grapple_clip(s, c)
         )
-        or has_red_coat(s, c) and has_high_jump(s, c) and has_drone_launch(s, c)  # TODO: Coyote?
+        or has_red_coat(s, c) and has_high_jump(s, c) and has_drone_launch(s, c) and c.obscure_skips
     )
 
 
