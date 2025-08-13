@@ -180,8 +180,9 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
 
     (AVRegion.LOWER_EDIN_LEFT, AVRegion.EDIN_WALL, conditions.edin_wall_access, False),
     (AVRegion.EDIN_WALL, AVRegion.LOWER_EDIN_LEFT, conditions.always_accessible, False),
-    (AVRegion.EDIN_WALL, AVRegion.UKHU, conditions.ukhu_access, False),
-    (AVRegion.UKHU, AVRegion.EDIN_WALL, conditions.ukhu_exit_access, False),
+    (AVRegion.EDIN_WALL, AVRegion.UKHU_TOWER, conditions.ukhu_access, False),
+    (AVRegion.UKHU_TOWER, AVRegion.UKHU, conditions.has_trenchcoat, False),
+    (AVRegion.UKHU_TOWER, AVRegion.EDIN_WALL, conditions.ukhu_exit_access, False),
     (AVRegion.EDIN_WALL, AVRegion.LOWER_EDIN_RIGHT, conditions.always_accessible, False),
     (AVRegion.LOWER_EDIN_RIGHT, AVRegion.EDIN_WALL, conditions.edin_wall_access, False),
     (AVRegion.LOWER_EDIN_RIGHT, AVRegion.CLONE, conditions.vanilla_clone_access, False),
@@ -390,10 +391,11 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(97, AVArea.EDIN, 'Clone Path Rooftop Ledge', AVRegion.CLONE, conditions.clone_rooftop_ledge_access),
     AVLocationData(98, AVArea.EDIN, 'Clone Path Roof Before Save', AVRegion.CLONE, conditions.clone_roof_save_access),
 
-    AVLocationData(99, AVArea.EDIN, 'False Wall Shrine', AVRegion.UKHU, conditions.always_accessible),
-    AVLocationData(100, AVArea.EDIN, 'Ukhu Path Drone Tunnel', AVRegion.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
-    AVLocationData(101, AVArea.EDIN, 'Ukhu Path Side Room', AVRegion.UKHU, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
-    AVLocationData(102, AVArea.EDIN, 'Ukhu Path Ruins', AVRegion.UKHU, conditions.structure_ruins_access),
+    AVLocationData(99, AVArea.EDIN, 'False Wall Shrine', AVRegion.UKHU_TOWER, conditions.always_accessible),
+    AVLocationData(100, AVArea.EDIN, 'Ukhu Path Drone Tunnel', AVRegion.UKHU_TOWER, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
+    AVLocationData(101, AVArea.EDIN, 'Ukhu Path Side Room', AVRegion.UKHU_TOWER, lambda s, c: conditions.has_drone_tele(s, c) and conditions.has_trenchcoat(s, c)),
+    AVLocationData(102, AVArea.EDIN, 'Ukhu Path Ruins', AVRegion.UKHU_TOWER, conditions.structure_ruins_access),
+
     AVLocationData(103, AVArea.EDIN, 'Ukhu Reward', AVRegion.UKHU, conditions.ukhu_reward_access),
 
     AVLocationData(104, AVArea.EDIN, 'Main Hangar', AVRegion.HANGAR, conditions.always_accessible),

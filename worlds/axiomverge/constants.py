@@ -119,6 +119,7 @@ class AVRegion(StrEnum):
     LOWER_EDIN_LEFT = "Lower Edin Left"
     EDIN_WALL = "Edin Wall"
     LOWER_EDIN_RIGHT = "Lower Edin Right"
+    UKHU_TOWER = "Ukhu Tower"
     UKHU = "Ukhu"
     CLONE = "Clone"
     HANGAR = "Hangar"

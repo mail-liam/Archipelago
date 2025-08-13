@@ -326,7 +326,7 @@ creature_data: tuple[AVGlitchLocationData] = (
         None,
         (
             (AVRegion.WEST_ERIBU, lambda s, c: conditions.can_displacement_warp(s, c) or conditions.non_jump_height(s, c) and conditions.can_drill(s, c)),
-            (AVRegion.UKHU, conditions.always_accessible),
+            (AVRegion.UKHU_TOWER, conditions.always_accessible),
             (AVRegion.EAST_EDIN, conditions.edin_double_check_tunnel_access),
         ),
     ),
