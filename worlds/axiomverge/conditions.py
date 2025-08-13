@@ -763,7 +763,7 @@ def ukhu_exit_access(s: CollectionState, c: LogicContext):
 
 def can_kill_ukhu(s: CollectionState, c: LogicContext):
     return (
-        has_trenchcoat(s, c) and has_health_nodes(s, c, 3) and has_power_nodes(s, c, 3)
+        has_health_nodes(s, c, 3) and has_power_nodes(s, c, 3)
         and s.has_any(
             ALL_WEAPONS - {"Multi-Disruptor", "Distortion Field", "Firewall", "Kilver", "Quantum Variegator"},
             c.player,
@@ -773,10 +773,8 @@ def can_kill_ukhu(s: CollectionState, c: LogicContext):
 
 def ukhu_reward_access(s: CollectionState, c: LogicContext):
     return (
-        has_trenchcoat(s, c) and (
-            has_drone_tele(s, c)
-            or can_kill_ukhu(s, c) and (has_drone(s, c) or floor_grapple_clip(s, c))
-        )
+        has_drone_tele(s, c)
+        or can_kill_ukhu(s, c) and (has_drone(s, c) or floor_grapple_clip(s, c))
     )
 
 
