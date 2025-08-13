@@ -170,7 +170,7 @@ entrance_data: tuple[tuple[str, str, AccessRule, bool]] = (
     (AVRegion.INDI, AVRegion.SOUTH_UKKIN_NA_EXIT, conditions.indi_ukkin_na_access, False),
 
     (AVRegion.WEST_UKKIN_NA_EXIT, AVRegion.UKKIN_NA_BASE, conditions.any_coat, True),
-    (AVRegion.UKKIN_NA_BASE, AVRegion.OPHELIA, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_high_jump(s, c), False),
+    (AVRegion.UKKIN_NA_BASE, AVRegion.OPHELIA, conditions.non_grapple_height, False),
     (AVRegion.OPHELIA, AVRegion.BLURST, conditions.has_trenchcoat, False),
     (AVRegion.UKKIN_NA_BASE, AVRegion.SOUTH_UKKIN_NA_EXIT, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.swing_clip(s, c), False),
     (AVRegion.SOUTH_UKKIN_NA_EXIT, AVRegion.UKKIN_NA_BASE, lambda s, c: conditions.any_coat(s, c) or conditions.swing_clip(s, c), False),
