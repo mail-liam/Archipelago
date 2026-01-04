@@ -1,3 +1,4 @@
+from typing import ClassVar
 from worlds.AutoWorld import WebWorld, World
 from BaseClasses import ItemClassification
 
@@ -23,6 +24,12 @@ def build_location_groups() -> dict[str, set[str]]:
     location_groups["Glitch Enemies"] = {location.name for location in creature_data}
 
     return location_groups
+
+def map_page_index(data) -> int:
+    try:
+        return int(data)
+    except (TypeError, ValueError):
+        return 0
 
 
 class AxiomVergeWebWorld(WebWorld):
@@ -54,6 +61,14 @@ class AxiomVergeWorld(World):
 
     # Versioning for the client
     version = 0.3
+    # UT config
+    tracker_world: ClassVar = {
+        "map_page_folder": "ut_map_tab",
+        "map_page_maps": "maps.json",
+        "map_page_locations" : "locations.json",
+        "map_page_setting_key": "av_maptrack_{player}",
+        "map_page_index": map_page_index,
+    }
 
 
     def generate_early(self):
