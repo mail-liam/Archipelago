@@ -243,7 +243,7 @@ location_data: tuple[AVLocationData] = (
         11,
         AVArea.ERIBU, 'Sentry Bot Tunnel',
         AVRegion.LOWER_ERIBU,
-        lambda s, c: conditions.has_drone(s, c) and (conditions.floor_grapple_clip(s, c) or conditions.has_glitch_bomb(s, c)),
+        conditions.eribu_sentry_bot_tunnel_access,
     ),
     AVLocationData(
         12,
@@ -310,11 +310,11 @@ location_data: tuple[AVLocationData] = (
         43,
         AVArea.ZI, 'Ceiling Secret Near Lower Save',
         AVRegion.LOWER_ZI,
-        lambda s, c: conditions.can_drill(s, c) and (conditions.has_trenchcoat(s, c) or conditions.has_drone_tele(s, c) or conditions.has_high_jump(s, c)),
+        conditions.zi_lower_save_secret_access,
     ),
     AVLocationData(44, AVArea.ZI, 'Furglot Tunnel', AVRegion.LOWER_ZI, conditions.furglot_tunnel_access),
 
-    AVLocationData(45, AVArea.ZI, 'False Ceiling Alcove', AVRegion.ZI_CORRIDOR, conditions.any_height),
+    AVLocationData(45, AVArea.ZI, 'False Ceiling Alcove', AVRegion.ZI_CORRIDOR, lambda s, c: conditions.any_height(s, c) or conditions.has_drone(s, c)),
 
     AVLocationData(46, AVArea.ZI, 'Above Veruska', AVRegion.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
     AVLocationData(47, AVArea.ZI, 'Behind Veruska Left', AVRegion.EAST_ZI, lambda s, c: conditions.has_trenchcoat(s, c) or conditions.has_drone(s, c)),
@@ -334,10 +334,9 @@ location_data: tuple[AVLocationData] = (
     AVLocationData(57, AVArea.KUR, 'High Jump Shrine', AVRegion.LOWER_CAVES, conditions.always_accessible),
     AVLocationData(58, AVArea.KUR, 'High Jump Shrine False Wall', AVRegion.LOWER_CAVES, lambda s, c: conditions.has_drone(s, c) or conditions.any_height(s, c)),
     AVLocationData(59, AVArea.KUR, 'Above Lower Save', AVRegion.LOWER_CAVES, conditions.above_lower_kur_save_access),
+    AVLocationData(61, AVArea.KUR, 'Main Shaft', AVRegion.LOWER_CAVES, conditions.kur_main_shaft_access),
 
     AVLocationData(60, AVArea.KUR, 'Gauntlet Reward', AVRegion.GAUNTLET_REWARD, conditions.always_accessible),
-
-    AVLocationData(61, AVArea.KUR, 'Main Shaft', AVRegion.UPPER_CAVES, conditions.always_accessible),
 
     AVLocationData(62, AVArea.KUR, 'Drone Side Quest', AVRegion.MOUNTAIN_BASE, lambda s, c: conditions.has_red_coat(s, c) or conditions.has_drone(s, c)),
 

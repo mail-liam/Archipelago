@@ -160,9 +160,9 @@ def wheelchair_room_access(s: CollectionState, c: LogicContext):
 
 def west_caves_pool_access(s: CollectionState, c: LogicContext):
     return (
-        has_red_coat(s, c)
+        has_red_coat(s, c) and c.obscure_skips
         or has_drone(s, c) and has_glitch_2(s, c) and (
-            s.has_any(("Grapple", "Drone Teleport"), c.player) or has_trenchcoat(s, c)
+            s.has_any(("Grapple", "Drone Teleport"), c.player) or has_trenchcoat(s, c) and has_high_jump(s, c)
         )
     )
 
@@ -230,6 +230,9 @@ def laboratory_access(s: CollectionState, c: LogicContext):
             or extra_brown_height(s, c) and (has_fat_beam(s, c) or has_passcode(s, c))
         )
     )
+
+def eribu_sentry_bot_tunnel_access(s: CollectionState, c: LogicContext):
+    return (floor_grapple_clip(s, c) or has_glitch_bomb(s, c)) and (has_drone(s, c) or has_red_coat(s, c))
 
 
 def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
@@ -329,6 +332,12 @@ def zi_vanilla_exit(s: CollectionState, c: LogicContext):
     return has_trenchcoat(s, c) or has_grapple(s, c) or has_drone_tele(s, c)
 
 
+def zi_lower_save_secret_access(s: CollectionState, c: LogicContext):
+    return can_drill(s, c) and (
+        non_grapple_height(s,c) or c.displacement_warp_enabled
+    )
+
+
 def furglot_tunnel_access(s: CollectionState, c: LogicContext):
     return has_glitch_2(s, c) and any_height(s, c) or has_trenchcoat(s, c) and (any_glitch(s, c) or has_ranged_weapon(s, c))
 
@@ -401,6 +410,12 @@ def uruku_bottom_back_ledge_access(s: CollectionState, c: LogicContext):
 
 def uruku_cage_access(s: CollectionState, c: LogicContext):
     return any_coat(s, c) or floor_grapple_clip(s, c)
+
+
+def kur_main_shaft_access(s: CollectionState, c: LogicContext):
+    return any_height(s, c) and (
+        any_coat(s, c) or swing_clip(s, c)
+    )
 
 
 def above_lower_kur_save_access(s: CollectionState, c: LogicContext):
