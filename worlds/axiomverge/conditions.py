@@ -64,7 +64,7 @@ def can_fly(state: CollectionState, context: LogicContext):
 
 
 def can_pierce_wall(state: CollectionState, context: LogicContext):
-    return state.has_any(("Kilver", "Distortion Field", "Reverse Slicer", "FlameThrower", "Fat Beam"), context.player)
+    return state.has_any(("Kilver", "Distortion Field", "Reverse Slicer", "FlameThrower", "Fat Beam", "Scissor Beam"), context.player)
 
 
 def extra_brown_height(state: CollectionState, context: LogicContext):
@@ -301,7 +301,7 @@ def telal_east_absu_access(s: CollectionState, c: LogicContext):
         any_glitch(s, c)
         or has_fat_beam(s, c)
         or c.obscure_skips and (
-            any_coat(s, c) and s.has_any(("Reverse Slicer", "Flamethrower"), c.player)
+            any_coat(s, c) and s.has_any(("Reverse Slicer", "FlameThrower"), c.player)
             or s.has(("Scissor Beam"), c.player)
             # or s.has("Range Node", c.player, count=2) and s.has("Flamethrower", c.player)
         )
@@ -323,7 +323,7 @@ def east_absu_indi_tunnel_access(s: CollectionState, c: LogicContext):
 def gated_alcove_access(s: CollectionState, c: LogicContext):
     return can_drill(s, c) and (
         any_glitch(s, c) or any_wall_grapple_clip(s, c) or any_coat(s, c)
-        or s.has_any(("Flamethrower", "Scissor Beam", "Reverse Slicer", "Fat Beam"), c.player)
+        or s.has_any(("FlameThrower", "Scissor Beam", "Reverse Slicer", "Fat Beam"), c.player)
     )
 
 
@@ -413,8 +413,9 @@ def uruku_cage_access(s: CollectionState, c: LogicContext):
 
 
 def kur_main_shaft_access(s: CollectionState, c: LogicContext):
-    return any_height(s, c) and (
-        any_coat(s, c) or swing_clip(s, c)
+    return (
+        any_height(s, c) and (any_coat(s, c) or swing_clip(s, c))
+        or any_coat(s, c) and any_glitch(s, c) and can_displacement_warp(s, c)
     )
 
 
@@ -693,7 +694,7 @@ def ukkin_na_indi_access(s: CollectionState, c: LogicContext):
 
 
 def indi_ukkin_na_access(s: CollectionState, c: LogicContext):
-    return has_trenchcoat(s, c) and any_wall_grapple_clip(s, c)
+    return has_trenchcoat(s, c) or any_wall_grapple_clip(s, c)
 
 
 def indi_edin_access(s: CollectionState, c: LogicContext):
@@ -718,9 +719,8 @@ def edin_roof_ledge_access(s: CollectionState, c: LogicContext):
 def roof_cage_access(s: CollectionState, c: LogicContext):
     return (
         has_trenchcoat(s, c) and (
-            can_fly(s, c)
-            or has_high_jump(s, c) and (has_grapple(s, c) or has_drone_tele(s, c))
-            or has_drone_tele(s, c) and has_drone_launch(s, c)
+            can_fly(s, c) or has_drone_tele(s, c) and (has_high_jump(s, c) or has_drone_launch(s, c))
+            or has_high_jump(s, c) and floor_grapple_clip(s, c) and c.obscure_skips
         )
     )
 
@@ -829,17 +829,19 @@ def e_kur_mah_upper_peak_access(s: CollectionState, c: LogicContext):
 
 
 def e_kur_mah_mid_upper_access(s: CollectionState, c: LogicContext):
-    return has_red_coat(s, c) and (
-        has_drone_tele(s, c) or has_grapple(s, c) or has_high_jump(s, c)
+    return (
+        can_fly(s, c)
+        or has_red_coat(s, c) and (
+            has_drone_tele(s, c) or has_grapple(s, c) or has_high_jump(s, c)
+        )
     )
 
 
 def e_kur_mah_lower_mid_access(s: CollectionState, c: LogicContext):
     return (
-        has_red_coat(s, c) and (
-            has_drone_tele(s, c) or has_high_jump(s, c) and (
-                has_grapple(s, c) or c.red_rocket_jump_enabled
-            )
+        can_fly(s, c)
+        or has_red_coat(s, c) and (
+            has_drone_tele(s, c) or has_high_jump(s, c) and c.red_rocket_jump_enabled
         )
     )
 
