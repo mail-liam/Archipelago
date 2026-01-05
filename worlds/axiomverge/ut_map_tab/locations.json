@@ -159,7 +159,7 @@
                     },
                     {
                         "map": "Eribu",
-                        "x": 225,
+                        "x": 279,
                         "y": 135
                     }
                 ]
@@ -2854,7 +2854,7 @@
             {
                 "name": "Arachnoptopus",
                 "sections": [
-                    {"name": "Glitch a Arachnoptopus"}
+                    {"name": "Glitch an Arachnoptopus"}
                 ],
                 "map_locations": [
                     {
@@ -3766,7 +3766,7 @@
                 "map_locations": [
                     {
                         "map": "Zi",
-                        "x": 135,
+                        "x": 153,
                         "y": 83,
                         "shape": "trapezoid"
                     }
