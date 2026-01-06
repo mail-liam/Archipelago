@@ -725,7 +725,7 @@ def roof_cage_access(s: CollectionState, c: LogicContext):
     return (
         has_trenchcoat(s, c) and (
             can_fly(s, c) or has_drone_tele(s, c) and (has_high_jump(s, c) or has_drone_launch(s, c))
-            or has_high_jump(s, c) and floor_grapple_clip(s, c) and c.obscure_skips
+            or has_high_jump(s, c) and roof_grapple_clip(s, c) and c.obscure_skips
         )
     )
 
@@ -846,7 +846,9 @@ def e_kur_mah_lower_mid_access(s: CollectionState, c: LogicContext):
     return (
         can_fly(s, c)
         or has_red_coat(s, c) and (
-            has_drone_tele(s, c) or has_high_jump(s, c) and c.red_rocket_jump_enabled
+            has_drone_tele(s, c) or has_high_jump(s, c) and (
+                c.red_rocket_jump_enabled or has_grapple(s, c) and c.obscure_skips
+            )
         )
     )
 
