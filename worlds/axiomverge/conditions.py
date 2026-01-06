@@ -235,6 +235,10 @@ def eribu_sentry_bot_tunnel_access(s: CollectionState, c: LogicContext):
     return (floor_grapple_clip(s, c) or has_glitch_bomb(s, c)) and (has_drone(s, c) or has_red_coat(s, c))
 
 
+def eribu_sentry_bot_tunnel_trace_access(s: CollectionState, c: LogicContext):
+    return floor_grapple_clip(s, c) or has_glitch_bomb(s, c) and any_coat(s, c)
+
+
 def dalkhu_subtum_access(s: CollectionState, c: LogicContext):
     return has_passcode(s, c) and (
         has_grapple(s, c)

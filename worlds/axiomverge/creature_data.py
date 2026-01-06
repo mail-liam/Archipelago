@@ -308,7 +308,7 @@ creature_data: tuple[AVGlitchLocationData] = (
         None,
         (
             (AVRegion.DINGER_GISBAR, conditions.always_accessible),
-            (AVRegion.LOWER_ERIBU, lambda s, c: conditions.floor_grapple_clip(s, c) or conditions.has_glitch_bomb(s, c)),
+            (AVRegion.LOWER_ERIBU, conditions.eribu_sentry_bot_tunnel_trace_access),
             (AVRegion.MAR_URU_ENTRANCE, conditions.always_accessible),
         ),
     ),
