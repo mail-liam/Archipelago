@@ -218,7 +218,16 @@ creature_data: tuple[AVGlitchLocationData] = (
     AVGlitchLocationData(154, "Small Mogra", conditions.any_glitch, AVGlitchRegion.MOGRA, None),
     AVGlitchLocationData(155, "Mogra", conditions.any_glitch, AVGlitchRegion.MOGRA, None),
     AVGlitchLocationData(156, "Pillbug", conditions.any_glitch, AVRegion.UKKIN_NA_BASE, None),
-    AVGlitchLocationData(157, "Glugg", conditions.has_glitch_2, AVRegion.INDI, None),
+    AVGlitchLocationData(
+        157,
+        "Glugg",
+        conditions.has_glitch_2,
+        None,
+        (
+            (AVRegion.INDI, conditions.always_accessible),
+            (AVRegion.OPHELIA, conditions.always_accessible),
+        ),
+    ),
     AVGlitchLocationData(158, "Blurst", conditions.any_glitch, AVRegion.BLURST, None),
     AVGlitchLocationData(159, "Blurst Swarm", conditions.any_glitch, AVRegion.BLURST, None),
     AVGlitchLocationData(160, "Jorm", conditions.has_glitch_2, AVRegion.LOWER_EDIN_RIGHT, None),
@@ -317,6 +326,7 @@ creature_data: tuple[AVGlitchLocationData] = (
         (
             (AVRegion.WEST_ERIBU, conditions.west_caves_pool_access),
             (AVRegion.INDI, conditions.always_accessible),
+            (AVRegion.OPHELIA, conditions.always_accessible),
         ),
     ),
     AVGlitchLocationData(
