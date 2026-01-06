@@ -338,7 +338,7 @@ def zi_vanilla_exit(s: CollectionState, c: LogicContext):
 
 def zi_lower_save_secret_access(s: CollectionState, c: LogicContext):
     return can_drill(s, c) and (
-        non_grapple_height(s,c) or c.displacement_warp_enabled
+        non_grapple_height(s,c) or can_displacement_warp(s, c)
     )
 
 
